@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.user;
+package de.esports.aeq.ts3bot.service;
 
 /**
  * Class description.
