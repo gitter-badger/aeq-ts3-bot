@@ -1,5 +1,6 @@
-package de.esports.aeq.ts3bot.service;
+package de.esports.aeq.ts3bot.service.api;
 
+import de.esports.aeq.ts3bot.service.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
  * @version 0.1
  * @since 16.07.2017
  */
-public class UserManager {
+public class UserService {
 
     public static @Nullable User getUserWithTS3Id(@NotNull String id) {
         return null;

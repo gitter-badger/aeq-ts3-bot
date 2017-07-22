@@ -3,6 +3,8 @@ package de.esports.aeq.ts3bot.core;
 import de.esports.aeq.ts3bot.handler.ApplicationAcceptHandler;
 import de.esports.aeq.ts3bot.handler.CommandHandler;
 import de.stefan1200.jts3servermod.interfaces.HandleTS3Events;
+import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
+import de.stefan1200.jts3serverquery.JTS3ServerQuery;
 
 import java.util.HashMap;
 
@@ -22,7 +24,9 @@ public class HandleTS3EventsImpl implements HandleTS3Events {
     }
 
     private void initializeHandlers() {
-        ApplicationAcceptHandler cmdHdApplAccept = new ApplicationAcceptHandler();
+        JTS3ServerMod_Interface jts3ServerMod = HandleBotEventsImpl.getJts3ServerMod();
+        JTS3ServerQuery jts3ServerQuery = HandleBotEventsImpl.getJts3ServerQuery();
+        CommandHandler cmdHdApplAccept = new ApplicationAcceptHandler(jts3ServerMod, jts3ServerQuery);
         this.commandHandlers.put(cmdHdApplAccept.getName(), cmdHdApplAccept);
     }
 
