@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.application;
+package de.esports.aeq.ts3bot.core.api;
 
 /**
  * Class description.

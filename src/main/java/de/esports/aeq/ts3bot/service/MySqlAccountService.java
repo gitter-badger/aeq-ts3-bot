@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.service.impl;
+package de.esports.aeq.ts3bot.service;
 
 import de.esports.aeq.ts3bot.service.api.AccountService;
 import io.reactivex.Observable;

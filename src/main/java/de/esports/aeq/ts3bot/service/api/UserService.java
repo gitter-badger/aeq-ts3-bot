@@ -1,6 +1,6 @@
 package de.esports.aeq.ts3bot.service.api;
 
-import de.esports.aeq.ts3bot.service.User;
+import de.esports.aeq.ts3bot.core.api.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
