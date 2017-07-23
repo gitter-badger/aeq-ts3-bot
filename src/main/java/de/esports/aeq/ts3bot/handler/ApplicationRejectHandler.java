@@ -1,8 +1,7 @@
 package de.esports.aeq.ts3bot.handler;
 
+import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 import de.esports.aeq.ts3bot.handler.api.TS3CommandHandler;
-import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
-import de.stefan1200.jts3serverquery.JTS3ServerQuery;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -16,13 +15,8 @@ import java.util.HashMap;
  */
 public class ApplicationRejectHandler extends TS3CommandHandler {
 
-    public ApplicationRejectHandler(@NotNull JTS3ServerMod_Interface jts3ServerMod, @NotNull JTS3ServerQuery jts3ServerQuery) {
-        super(jts3ServerMod, jts3ServerQuery);
-    }
-
-    @Override
-    public String getName() {
-        return null;
+    public ApplicationRejectHandler(@NotNull AeQESportsTS3Bot ts3Bot) {
+        super(ts3Bot);
     }
 
     @Override
