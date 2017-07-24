@@ -1,5 +1,7 @@
 package de.esports.aeq.ts3bot.handler;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
 import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 import de.esports.aeq.ts3bot.core.api.User;
 import de.esports.aeq.ts3bot.handler.api.TS3CommandHandler;
@@ -21,11 +23,19 @@ import java.util.HashMap;
  */
 public class ApplicationAcceptHandler extends TS3CommandHandler {
 
+    private ApplicationAcceptCommand command;
+
     public ApplicationAcceptHandler(@NotNull AeQESportsTS3Bot ts3Bot) {
         super(ts3Bot);
         ts3Bot.addCommandHandler("accept", this);
     }
 
+    public void parseCommand(String command) throws ParameterException {
+        String[] array = CommandHelpers.argsFromString(command);
+        JCommander.newBuilder().addObject(command).build().parse(array);
+    }
+
+    @Override
     public String getHelpText() {
         return "";
     }
@@ -36,6 +46,13 @@ public class ApplicationAcceptHandler extends TS3CommandHandler {
     }
 
     public boolean handleCommand(String msg, HashMap<String, String> eventInfo, boolean isFullAdmin, boolean isAdmin) {
+        try {
+            parseCommand(msg);
+        } catch (ParameterException e) {
+            // send usage to user
+            return true;
+        }
+
         // check if service has permissions
         String id = "";
         final User user = UserService.getUserWithTS3Id(id);
