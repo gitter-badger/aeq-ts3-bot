@@ -1,17 +1,17 @@
 package de.esports.aeq.ts3bot.handler;
 
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.ParameterException;
+import de.esports.aeq.ts3bot.command.ApplicationAcceptCommand;
+import de.esports.aeq.ts3bot.command.MessageHandler;
 import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 import de.esports.aeq.ts3bot.core.api.User;
-import de.esports.aeq.ts3bot.handler.api.TS3CommandHandler;
+import de.esports.aeq.ts3bot.messages.MessageType;
+import de.esports.aeq.ts3bot.messages.Messages;
 import de.esports.aeq.ts3bot.service.ServiceFactory;
 import de.esports.aeq.ts3bot.service.api.ApplicationService;
 import de.esports.aeq.ts3bot.service.api.UserService;
 import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 
 /**
@@ -21,60 +21,46 @@ import java.util.HashMap;
  * @version 0.1
  * @since 16.07.2017
  */
-public class ApplicationAcceptHandler extends TS3CommandHandler {
+public class ApplicationAcceptHandler extends MessageHandler<ApplicationAcceptCommand> {
 
-    private ApplicationAcceptCommand command;
+    public static final String PREFIX = "accept";
 
-    public ApplicationAcceptHandler(@NotNull AeQESportsTS3Bot ts3Bot) {
-        super(ts3Bot);
-        ts3Bot.addCommandHandler("accept", this);
-    }
-
-    public void parseCommand(String command) throws ParameterException {
-        String[] array = CommandHelpers.argsFromString(command);
-        JCommander.newBuilder().addObject(command).build().parse(array);
+    public ApplicationAcceptHandler(AeQESportsTS3Bot ts3Bot) {
+        super(ts3Bot, PREFIX);
     }
 
     @Override
-    public String getHelpText() {
-        return "";
-    }
-
-    @Override
-    public boolean canExecute(HashMap<String, String> eventInfo, boolean isFullAdmin, boolean isAdmin) {
-        return true;
-    }
-
-    public boolean handleCommand(String msg, HashMap<String, String> eventInfo, boolean isFullAdmin, boolean isAdmin) {
-        try {
-            parseCommand(msg);
-        } catch (ParameterException e) {
-            // send usage to user
-            return true;
-        }
-
-        // check if service has permissions
+    protected void onSuccessfulPermissionCheck(@NotNull ApplicationAcceptCommand command, HashMap eventInfo, boolean isFullAdmin, boolean isAdmin) {
+        JTS3ServerMod_Interface jts3ServerMod = ts3Bot.getJts3ServerMod();
+        String prefix = ts3Bot.getPrefix();
         String id = "";
         final User user = UserService.getUserWithTS3Id(id);
 
-        JTS3ServerMod_Interface jts3ServerMod = ts3Bot.getJts3ServerMod();
-        jts3ServerMod.sendMessageToClient("prefix", "chat", 0001, getStartTaskMessage());
+        sendStartTaskMessage(id);
         ApplicationService service = ServiceFactory.getServiceFactory(ServiceFactory.MYSQL).getApplicationService();
-        service.acceptApplication(user.getUsername()).subscribe((value) -> {
-            jts3ServerMod.sendMessageToClient("prefix", "chat", 0001, getSuccessMessage(user.getUsername()));
+        service.acceptApplication(command.getTs3id()).subscribe((value) -> {
+            sendSuccessMessage(user, id);
         }, error -> {
-            jts3ServerMod.sendMessageToClient("prefix", "chat", 0001, getSuccessMessage(user.getUsername()));
+            sendErrorMessage(user, id);
         });
-        return true;
     }
 
-    private String getStartTaskMessage() {
-        return "Hang on for just a moment, trying to call the remote server...";
+    private void sendStartTaskMessage(String ts3Id) {
+        JTS3ServerMod_Interface jts3ServerMod = ts3Bot.getJts3ServerMod();
+        String startTask = Messages.getRandomTranslatedMessageOfType(MessageType.WAITING);
+        jts3ServerMod.sendMessageToClient(ts3Bot.getPrefix(), "chat", Integer.valueOf(ts3Id), startTask);
     }
 
-    private String getSuccessMessage(String user) {
-        String template = "{1} has been approved and switched to recruit status, voting is now active.";
-        return MessageFormat.format(template, user);
+    private void sendSuccessMessage(User user, String ts3Id) {
+        JTS3ServerMod_Interface jts3ServerMod = ts3Bot.getJts3ServerMod();
+        String onSuccess = Messages.getTranslatedString(Messages.ACCEPT_APPLICATION_ON_SUCCESS, user.getUsername());
+        jts3ServerMod.sendMessageToClient(ts3Bot.getPrefix(), "chat", Integer.valueOf(ts3Id), onSuccess);
+    }
+
+    private void sendErrorMessage(User user, String ts3Id) {
+        JTS3ServerMod_Interface jts3ServerMod = ts3Bot.getJts3ServerMod();
+        String onError = Messages.getTranslatedString(Messages.ACCEPT_APPLICATION_ON_ERROR, user.getUsername());
+        jts3ServerMod.sendMessageToClient(ts3Bot.getPrefix(), "chat", Integer.valueOf(ts3Id), onError);
     }
 
 }

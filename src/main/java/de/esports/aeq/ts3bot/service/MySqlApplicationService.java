@@ -8,7 +8,6 @@ import io.reactivex.Observable;
  */
 public class MySqlApplicationService implements ApplicationService {
 
-
     @Override
     public Observable<Boolean> acceptApplication(String ts3id) {
         return null;
@@ -18,4 +17,5 @@ public class MySqlApplicationService implements ApplicationService {
     public Observable<Boolean> rejectApplication(String ts3id) {
         return null;
     }
+
 }
