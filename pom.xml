@@ -67,6 +67,14 @@
             <version>1.72</version>
         </dependency>
 
+        <dependency>
+            <groupId>de.stefan1200</groupId>
+            <artifactId>jts3servermod</artifactId>
+            <version>6.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/JTS3ServerMod.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
 </project>

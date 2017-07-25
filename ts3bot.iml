@@ -24,5 +24,14 @@
     <orderEntry type="library" name="Maven: io.reactivex.rxjava2:rxjava:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.72" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: de.stefan1200:jts3servermod:6.4">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/JTS3ServerMod.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
