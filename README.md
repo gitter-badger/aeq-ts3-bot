@@ -8,6 +8,10 @@ Teamspeak 3 Bot for AeQ eSports.
 
 This project is currently under active development.
 
+## Quicklinks
+
+* [Bot commands documentation](https://github.com/glains/aeq-esports-ts3-bot/wiki/Commands)
+
 ## Contributing
 
 Before contributing, please have a look at the [contribution guidelines]().
