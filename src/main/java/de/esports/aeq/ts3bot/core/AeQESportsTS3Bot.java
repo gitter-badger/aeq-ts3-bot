@@ -1,17 +1,16 @@
 package de.esports.aeq.ts3bot.core;
 
-import de.esports.aeq.ts3bot.command.Command;
-import de.esports.aeq.ts3bot.command.CommandPermissions;
-import de.esports.aeq.ts3bot.command.MessageHandler;
-import de.esports.aeq.ts3bot.handler.ApplicationAcceptHandler;
+import de.esports.aeq.ts3bot.command.CommandParser;
+import de.esports.aeq.ts3bot.command.api.Command;
+import de.esports.aeq.ts3bot.command.api.CommandPermissions;
+import de.esports.aeq.ts3bot.command.exceptions.CommandParsingException;
+import de.esports.aeq.ts3bot.handler.api.MessageHandler;
 import de.stefan1200.jts3servermod.interfaces.HandleBotEvents;
 import de.stefan1200.jts3servermod.interfaces.HandleTS3Events;
 import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
 import de.stefan1200.jts3serverquery.JTS3ServerQuery;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Lukas on 23.07.2017.
@@ -22,7 +21,6 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
     private JTS3ServerQuery jts3ServerQuery;
     private String prefix;
 
-    private HashMap<String, MessageHandler> messageHandlers = new HashMap<>();
     private HashMap<String, CommandPermissions> commandPermissions = new HashMap<>();
 
     @Override
@@ -30,7 +28,6 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
         this.jts3ServerMod = jts3ServerMod_interface;
         this.jts3ServerQuery = jts3ServerQuery;
         this.prefix = prefix;
-        initMessageHandlers();
     }
 
     @Override
@@ -75,15 +72,7 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
 
     @Override
     public String[] botChatCommandList(HashMap eventInfo, boolean isFullAdmin, boolean isAdmin) {
-        List<String> commandList = new ArrayList<>();
-        for (HashMap.Entry<String, MessageHandler> entry : messageHandlers.entrySet()) {
-            if (entry.getValue() == null) continue;
-            // Only show commands which match the permissions of the user
-            if (entry.getValue().getPermissions().match(eventInfo, isFullAdmin, isAdmin)) {
-                commandList.add(entry.getKey());
-            }
-        }
-        return commandList.toArray(new String[0]);
+        return null;
     }
 
     @Override
@@ -94,11 +83,18 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
 
     @Override
     public boolean handleChatCommands(String message, HashMap eventInfo, boolean isFullAdmin, boolean isAdmin) {
-        // TODO(glains): extract command prefix from message
-        String prefix = "";
-
-        Command command = null; // TODO(glains): Parse command here
-        MessageHandler handler = messageHandlers.get(prefix);
+        Command command = null;
+        try {
+            command = new CommandParser(message).parse();
+        } catch (CommandParsingException e) {
+            e.printStackTrace(); // TODO(glains): send error message to user, catch detailed exceptions
+            return false;
+        }
+        if (!command.getPermissions().match(eventInfo, isFullAdmin, isAdmin)) {
+            // TODO(glains): send invalid permissions error message to user
+            return true;
+        }
+        MessageHandler handler = command.createMessageHandler(this);
         if (handler != null) {
             handler.handle(command, eventInfo, isFullAdmin, isAdmin);
             return true;
@@ -111,10 +107,6 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
 
     }
 
-    private void addMessageHandler(MessageHandler messageHandler) {
-        this.messageHandlers.put(messageHandler.getPrefix(), messageHandler);
-    }
-
     public JTS3ServerMod_Interface getJts3ServerMod() {
         return jts3ServerMod;
     }
@@ -125,14 +117,6 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
 
     public String getPrefix() {
         return prefix;
-    }
-
-    private void initMessageHandlers() {
-        // TODO(glains): better automate that process, read permissions from config file etc.
-        MessageHandler handler = new ApplicationAcceptHandler(this);
-        CommandPermissions permissions = commandPermissions.get(handler.getPrefix());
-        if (permissions != null) handler.setPermissions(permissions);
-        addMessageHandler(handler);
     }
 
 }
