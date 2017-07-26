@@ -1,5 +1,7 @@
-package de.esports.aeq.ts3bot.command;
+package de.esports.aeq.ts3bot.handler.api;
 
+import de.esports.aeq.ts3bot.command.api.Command;
+import de.esports.aeq.ts3bot.command.api.CommandPermissions;
 import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 import org.jetbrains.annotations.NotNull;
 

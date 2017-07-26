@@ -1,14 +1,14 @@
 package de.esports.aeq.ts3bot.handler;
 
 import de.esports.aeq.ts3bot.command.ApplicationAcceptCommand;
-import de.esports.aeq.ts3bot.command.MessageHandler;
 import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 import de.esports.aeq.ts3bot.core.api.User;
+import de.esports.aeq.ts3bot.handler.api.MessageHandler;
 import de.esports.aeq.ts3bot.messages.MessageType;
 import de.esports.aeq.ts3bot.messages.Messages;
 import de.esports.aeq.ts3bot.service.ServiceFactory;
+import de.esports.aeq.ts3bot.service.UserService;
 import de.esports.aeq.ts3bot.service.api.ApplicationService;
-import de.esports.aeq.ts3bot.service.api.UserService;
 import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
 import org.jetbrains.annotations.NotNull;
 

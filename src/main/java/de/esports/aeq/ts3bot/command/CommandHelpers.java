@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.handler;
+package de.esports.aeq.ts3bot.command;
 
 import java.util.ArrayList;
 import java.util.List;
