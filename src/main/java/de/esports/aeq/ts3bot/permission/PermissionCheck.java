@@ -1,8 +1,6 @@
 package de.esports.aeq.ts3bot.permission;
 
-import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 import de.esports.aeq.ts3bot.core.api.User;
-import io.reactivex.Observable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -14,8 +12,6 @@ import java.util.List;
  * Created by Lukas on 25.07.2017.
  */
 public class PermissionCheck {
-
-    private AeQESportsTS3Bot ts3Bot;
 
     private List<User> users = new ArrayList<>();
 
@@ -29,8 +25,10 @@ public class PermissionCheck {
     private boolean isFullAdmin;
     private boolean isAdmin;
 
-    public PermissionCheck(AeQESportsTS3Bot ts3Bot) {
-        this.ts3Bot = ts3Bot;
+    public PermissionCheck(HashMap<String, String> eventInfo, boolean isFullAdmin, boolean isAdmin) {
+        this.eventInfo = eventInfo;
+        this.isFullAdmin = isFullAdmin;
+        this.isAdmin = isAdmin;
     }
 
     public PermissionCheck useMetadata(HashMap<String, String> eventInfo, boolean isFullAdmin, boolean isAdmin) {
@@ -70,16 +68,9 @@ public class PermissionCheck {
         return this;
     }
 
-    /**
-     * Validates if the given users match the required permissions.
-     * <p>
-     * We use an {@link Observable} here since validation may be async.
-     *
-     * @return an {@link Observable} that resolves to true if the user has the required permissions or gets rejected if
-     * an error occurred during the process
-     */
-    public Observable<Boolean> validate() {
-        return Observable.just(true);
+    public boolean validate() {
+        // TODO(glains): implement
+        return true;
     }
 
 }
