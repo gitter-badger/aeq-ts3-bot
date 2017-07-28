@@ -5,22 +5,40 @@ package de.esports.aeq.ts3bot.command.exceptions;
  */
 public class UnregisteredCommandException extends CommandParsingException {
 
+    private String prefix;
+
     public UnregisteredCommandException() {
+
     }
 
-    public UnregisteredCommandException(String message) {
-        super(message);
+    public UnregisteredCommandException(String prefix) {
+        super(generateMessage(prefix));
+        this.prefix = prefix;
     }
 
-    public UnregisteredCommandException(String message, Throwable cause) {
-        super(message, cause);
+    public UnregisteredCommandException(String prefix, Throwable cause) {
+        super(generateMessage(prefix), cause);
     }
 
     public UnregisteredCommandException(Throwable cause) {
         super(cause);
     }
 
-    public UnregisteredCommandException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public UnregisteredCommandException(String prefix, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(generateMessage(prefix), cause, enableSuppression, writableStackTrace);
     }
+
+    private static String generateMessage(String prefix) {
+        return "unrecognized prefix: " + prefix;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+
 }

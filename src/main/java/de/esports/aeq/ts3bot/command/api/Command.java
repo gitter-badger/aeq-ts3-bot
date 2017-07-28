@@ -1,9 +1,6 @@
 package de.esports.aeq.ts3bot.command.api;
 
-import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
-import de.esports.aeq.ts3bot.handler.api.MessageHandler;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import de.esports.aeq.ts3bot.command.permission.CPermission;
 
 /**
  * Interface that represents a parsable command from user input.
@@ -14,10 +11,45 @@ import org.jetbrains.annotations.Nullable;
  * @version 0.1
  * @since 25.07.2017.
  */
-public interface Command {
+public abstract class Command implements CommandHandler {
 
-    @Nullable MessageHandler createMessageHandler(@NotNull AeQESportsTS3Bot ts3Bot);
+    private String prefix;
+    private CPermission permissions;
 
-    @Nullable CommandPermissions getPermissions();
+    public Command(String prefix) {
+        this.prefix = prefix;
+    }
 
+    public Command(String prefix, CPermission permissions) {
+        this.prefix = prefix;
+        this.permissions = permissions;
+    }
+
+    /**
+     * @return the prefix that identifies this command
+     */
+    public String getPrefix() {
+        return prefix;
+    }
+
+    /**
+     * @param prefix the prefix that identifies this command
+     */
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    /**
+     * @return the permissions to execute this command
+     */
+    public CPermission getPermissions() {
+        return permissions;
+    }
+
+    /**
+     * @param permissions the permissions to execute this command
+     */
+    public void setPermissions(CPermission permissions) {
+        this.permissions = permissions;
+    }
 }

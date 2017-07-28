@@ -2,9 +2,9 @@ package de.esports.aeq.ts3bot.core;
 
 import de.esports.aeq.ts3bot.command.CommandParser;
 import de.esports.aeq.ts3bot.command.api.Command;
-import de.esports.aeq.ts3bot.command.api.CommandPermissions;
+import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
 import de.esports.aeq.ts3bot.command.exceptions.CommandParsingException;
-import de.esports.aeq.ts3bot.handler.api.MessageHandler;
+import de.esports.aeq.ts3bot.command.permission.CPermissionValidator;
 import de.stefan1200.jts3servermod.interfaces.HandleBotEvents;
 import de.stefan1200.jts3servermod.interfaces.HandleTS3Events;
 import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
@@ -21,7 +21,7 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
     private JTS3ServerQuery jts3ServerQuery;
     private String prefix;
 
-    private HashMap<String, CommandPermissions> commandPermissions = new HashMap<>();
+    private HashMap<String, CPermissionValidator> commandPermissions = new HashMap<>();
 
     @Override
     public void initClass(JTS3ServerMod_Interface jts3ServerMod_interface, JTS3ServerQuery jts3ServerQuery, String s) {
@@ -90,16 +90,18 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
             e.printStackTrace(); // TODO(glains): send error message to user, catch detailed exceptions
             return false;
         }
-        if (!command.getPermissions().match(eventInfo, isFullAdmin, isAdmin)) {
+        // TODO(glains): handling should probably be done in a new thread
+        boolean hasPermission = new CPermissionValidator(command.getPermissions()).match(eventInfo, isFullAdmin, isAdmin);
+        if (!hasPermission) {
             // TODO(glains): send invalid permissions error message to user
             return true;
         }
-        MessageHandler handler = command.createMessageHandler(this);
-        if (handler != null) {
-            handler.handle(command, eventInfo, isFullAdmin, isAdmin);
-            return true;
+        try {
+            command.handle(this, eventInfo, isFullAdmin, isAdmin);
+        } catch (CHandleException e) {
+            // TODO(glains): send error message to user
         }
-        return false;
+        return true;
     }
 
     @Override

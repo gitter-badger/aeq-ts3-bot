@@ -8,7 +8,11 @@ import de.esports.aeq.ts3bot.command.exceptions.InvalidPrefixException;
 import de.esports.aeq.ts3bot.command.exceptions.UnregisteredCommandException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Lukas on 25.07.2017.
@@ -21,7 +25,7 @@ public class CommandParser {
      * TODO(glains): we should move this to a config file. Maybe add CommandList to constructor!
      */
     static {
-        commands.put("accept", ApplicationAcceptCommand.class);
+        commands.put(CAccept.PREFIX, CAccept.class);
     }
 
     private String message;
@@ -31,14 +35,14 @@ public class CommandParser {
     }
 
     public @NotNull Command parse() throws CommandParsingException {
-        String[] args = CommandHelpers.argsFromString(message); // TODO(glains): maybe move static as private method here?!
+        String[] args = argsFromString(message);
         String prefix = args.length != 0 ? args[0] : null;
         if (prefix == null) {
             throw new InvalidPrefixException();
         }
         Class<? extends Command> clazz = commands.get(prefix);
         if (clazz == null) {
-            throw new UnregisteredCommandException(); // TODO(glains): add prefix to exception
+            throw new UnregisteredCommandException(prefix);
         }
         Command command = null;
         try {
@@ -52,7 +56,24 @@ public class CommandParser {
         } catch (ParameterException e) {
             throw new CommandParsingException(e);
         }
+        command.setPrefix(prefix);
         return command;
     }
 
+    /**
+     * Assigns the given permissions to the specified command.
+     *
+     * @param command
+     */
+    private void assignPermissions(Command command) {
+
+    }
+
+    private String[] argsFromString(String string) {
+        List<String> list = new ArrayList<String>();
+        Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(string);
+        while (m.find())
+            list.add(m.group(1).replace("\"", ""));
+        return list.toArray(new String[0]);
+    }
 }
