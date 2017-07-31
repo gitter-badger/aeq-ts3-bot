@@ -2,6 +2,7 @@ package de.esports.aeq.ts3bot.service;
 
 import de.esports.aeq.ts3bot.service.api.AccountService;
 import de.esports.aeq.ts3bot.service.api.ApplicationService;
+import de.esports.aeq.ts3bot.service.api.PermissionService;
 import de.esports.aeq.ts3bot.service.api.RecruitService;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,6 +29,9 @@ public abstract class ServiceFactory {
                 return null;
         }
     }
+
+    @NotNull
+    public abstract PermissionService getPermissionService();
 
     @NotNull
     public abstract AccountService getAccountService();

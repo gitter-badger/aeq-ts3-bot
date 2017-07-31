@@ -1,7 +1,7 @@
 package de.esports.aeq.ts3bot.command.api;
 
 import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
-import de.esports.aeq.ts3bot.command.permission.CPermission;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Interface that represents a parsable command from user input.
@@ -9,50 +9,22 @@ import de.esports.aeq.ts3bot.command.permission.CPermission;
  * All commands should implement tis interface.
  *
  * @author Lukas Kannenberg
- * @version 0.1
  * @since 25.07.2017.
  */
-public abstract class Command {
-
-    private String prefix;
-    private CPermission permissions;
-
-    public Command(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public Command(String prefix, CPermission permissions) {
-        this.prefix = prefix;
-        this.permissions = permissions;
-    }
-
-    public abstract void execute(CExecutionContext context) throws CHandleException;
+public interface Command {
 
     /**
-     * @return the prefix that identifies this command
+     * @return the prefix that identifies to this command, not null
      */
-    public String getPrefix() {
-        return prefix;
-    }
+    @NotNull
+    String getPrefix();
 
     /**
-     * @param prefix the prefix that identifies this command
+     * Executes this command with the given {@link CExecutionContext}.
+     *
+     * @param context the execution context of this command, not null
+     * @throws CHandleException if an error occurs during the execution process
      */
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+    void execute(@NotNull CExecutionContext context) throws CHandleException;
 
-    /**
-     * @return the permissions to execute this command
-     */
-    public CPermission getPermissions() {
-        return permissions;
-    }
-
-    /**
-     * @param permissions the permissions to execute this command
-     */
-    public void setPermissions(CPermission permissions) {
-        this.permissions = permissions;
-    }
 }

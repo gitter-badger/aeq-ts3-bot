@@ -1,5 +1,7 @@
 package de.esports.aeq.ts3bot.command.api;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Kannenberg
  * @version 0.1
@@ -9,7 +11,10 @@ package de.esports.aeq.ts3bot.command.api;
 public interface CommandHandler {
 
     /**
-     * Handles a given command.
+     * Handles a given {@link Command} with the provided {@link CExecutionContext}
+     *
+     * @param command the {@link Command} to be handled
+     * @param context the provided {@link CExecutionContext}
      */
-    void handle(Command command, CExecutionContext context);
+    void handle(@NotNull Command command, @NotNull CExecutionContext context);
 }

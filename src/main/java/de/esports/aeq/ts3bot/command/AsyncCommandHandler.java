@@ -4,7 +4,6 @@ import de.esports.aeq.ts3bot.command.api.CExecutionContext;
 import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.api.CommandHandler;
 import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
-import de.esports.aeq.ts3bot.command.permission.CPermissionValidator;
 import de.esports.aeq.ts3bot.messages.Messages;
 
 import java.util.concurrent.ExecutorService;
@@ -21,9 +20,7 @@ public class AsyncCommandHandler implements CommandHandler {
     @Override
     public void handle(Command command, CExecutionContext context) {
         executor.execute(() -> {
-            boolean hasPermission = new CPermissionValidator(command.getPermissions()).match(context.getEventInfo(),
-                    context.isFullAdmin(), context.isAdmin());
-            if (!hasPermission) {
+            if (!CommandHelpers.hasPermission(command, context)) {
                 String errorMessage = Messages.getTranslatedString(Messages.ERROR_INVALID_PERMISSIONS);
                 context.getBotInstance().getJts3ServerMod().sendMessageToClient(context.getBotInstance().getPrefix(),
                         "chat", 0001, errorMessage);

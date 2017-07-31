@@ -1,24 +1,26 @@
 package de.esports.aeq.ts3bot.command;
 
+import de.esports.aeq.ts3bot.command.api.CExecutionContext;
 import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
-import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
-
-import java.util.HashMap;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Lukas on 27.07.2017.
  */
-public class CVotes extends Command {
+public class CVotes implements Command {
 
     public static final String PREFIX = "votes";
 
-    public CVotes(String prefix) {
-        super(PREFIX);
+    public CVotes() { }
+
+    @Override
+    public @NotNull String getPrefix() {
+        return PREFIX;
     }
 
     @Override
-    public void handle(AeQESportsTS3Bot botInstance, HashMap eventInfo, boolean isFullAdmin, boolean isAdmin) throws CHandleException {
+    public void execute(@NotNull CExecutionContext context) throws CHandleException {
         // TODO(glains)
     }
 }

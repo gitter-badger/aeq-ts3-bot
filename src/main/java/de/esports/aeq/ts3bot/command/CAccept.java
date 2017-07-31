@@ -19,15 +19,18 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Created by Lukas on 27.07.2017.
  */
-public class CAccept extends Command {
+public class CAccept implements Command {
 
     public static final String PREFIX = "accept";
 
     @Parameter()
     private String ts3id;
 
-    public CAccept() {
-        super(PREFIX);
+    public CAccept() { }
+
+    @Override
+    public String getPrefix() {
+        return PREFIX;
     }
 
     @Override
@@ -41,12 +44,6 @@ public class CAccept extends Command {
                 value -> sendSuccessMessage(context.getBotInstance(), user, id),
                 error -> sendErrorMessage(context.getBotInstance(), user, id)
         ).dispose();
-    }
-
-    @Override
-    public CPermission getPermissions() {
-        String[] allowedUserGroups = {UserGroups.MEMBER_RECRUITER};
-        return new CPermission(true, allowedUserGroups);
     }
 
     public @NotNull String getTs3id() {
