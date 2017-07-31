@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="aeq-esports-ts3-bot" target="1.8" />
-      <module name="ts3bot" target="1.6" />
+      <module name="ts3bot" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

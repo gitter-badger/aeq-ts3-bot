@@ -11,7 +11,6 @@ import de.esports.aeq.ts3bot.message.Messages;
 import de.esports.aeq.ts3bot.service.ServiceFactory;
 import de.esports.aeq.ts3bot.service.UserService;
 import de.esports.aeq.ts3bot.service.api.ApplicationService;
-import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -24,7 +23,8 @@ public class CAccept implements Command {
     @Parameter()
     private String ts3id;
 
-    public CAccept() { }
+    public CAccept() {
+    }
 
     @Override
     public String getPrefix() {
@@ -52,20 +52,17 @@ public class CAccept implements Command {
     }
 
     private void sendStartTaskMessage(AeQESportsTS3Bot botInstance, String ts3Id) {
-        JTS3ServerMod_Interface jts3ServerMod = botInstance.getJts3ServerMod();
         String startTask = Messages.getRandomTranslatedMessageOfType(MessageType.WAITING);
-        jts3ServerMod.sendMessageToClient(botInstance.getPrefix(), "chat", Integer.valueOf(ts3Id), startTask);
+        // TODO(glains): send message to client
     }
 
     private void sendSuccessMessage(AeQESportsTS3Bot botInstance, User user, String ts3Id) {
-        JTS3ServerMod_Interface jts3ServerMod = botInstance.getJts3ServerMod();
         String onSuccess = Messages.getTranslatedString(Messages.ACCEPT_APPLICATION_ON_SUCCESS, user.getUsername());
-        jts3ServerMod.sendMessageToClient(botInstance.getPrefix(), "chat", Integer.valueOf(ts3Id), onSuccess);
+        // TODO(glains): send message to client
     }
 
     private void sendErrorMessage(AeQESportsTS3Bot botInstance, User user, String ts3Id) {
-        JTS3ServerMod_Interface jts3ServerMod = botInstance.getJts3ServerMod();
         String onError = Messages.getTranslatedString(Messages.ACCEPT_APPLICATION_ON_ERROR, user.getUsername());
-        jts3ServerMod.sendMessageToClient(botInstance.getPrefix(), "chat", Integer.valueOf(ts3Id), onError);
+        // TODO(glains): send message to client
     }
 }

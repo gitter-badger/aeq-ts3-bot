@@ -21,16 +21,14 @@ public class AsyncCommandHandler implements CommandHandler {
         executor.execute(() -> {
             if (!CommandHelpers.hasPermission(command, context)) {
                 String errorMessage = Messages.getTranslatedString(Messages.ERROR_INVALID_PERMISSIONS);
-                context.getBotInstance().getJts3ServerMod().sendMessageToClient(context.getBotInstance().getPrefix(),
-                        "chat", 0001, errorMessage);
+                // TODO(glains): send message to client
                 return;
             }
             try {
                 command.execute(context);
             } catch (CHandleException e) {
                 String errorMessage = Messages.getTranslatedString(Messages.ERROR_COMMAND_EXCEPTION);
-                context.getBotInstance().getJts3ServerMod().sendMessageToClient(context.getBotInstance().getPrefix(),
-                        "chat", 0001, errorMessage);
+                // TODO(glains): send message to client
                 return;
             }
         });

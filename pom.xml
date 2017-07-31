@@ -67,20 +67,34 @@
             <version>1.72</version>
         </dependency>
 
-        <dependency>
-            <groupId>de.stefan1200</groupId>
-            <artifactId>jts3servermod</artifactId>
-            <version>6.4</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/JTS3ServerMod.jar</systemPath>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.5.6.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.theholywaffle/teamspeak3-api -->
+        <dependency>
+            <groupId>com.github.theholywaffle</groupId>
+            <artifactId>teamspeak3-api</artifactId>
+            <version>1.0.14</version>
+        </dependency>
+
 
     </dependencies>
 
