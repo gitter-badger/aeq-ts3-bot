@@ -1,6 +1,7 @@
 package de.esports.aeq.ts3bot.command.api;
 
-import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
+import de.esports.aeq.ts3bot.command.CommandExecutionContext;
+import de.esports.aeq.ts3bot.command.exception.CHandleException;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,11 +21,10 @@ public interface Command {
     String getPrefix();
 
     /**
-     * Executes this command with the given {@link CExecutionContext}.
+     * Executes this command with the given {@link CommandExecutionContext}.
      *
      * @param context the execution context of this command, not null
      * @throws CHandleException if an error occurs during the execution process
      */
-    void execute(@NotNull CExecutionContext context) throws CHandleException;
-
+    void execute(@NotNull CommandExecutionContext context) throws CHandleException;
 }

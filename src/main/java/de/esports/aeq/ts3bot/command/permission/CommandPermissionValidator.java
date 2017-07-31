@@ -7,11 +7,11 @@ import java.util.HashMap;
 /**
  * Created by Lukas on 25.07.2017.
  */
-public class CPermissionValidator {
+public class CommandPermissionValidator {
 
-    private CPermission permissions;
+    private CommandPermissions permissions;
 
-    public CPermissionValidator(@Nullable CPermission permissions) {
+    public CommandPermissionValidator(@Nullable CommandPermissions permissions) {
         this.permissions = permissions;
     }
 
@@ -19,11 +19,11 @@ public class CPermissionValidator {
         return true;
     }
 
-    public CPermission getPermissions() {
+    public CommandPermissions getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(CPermission permissions) {
+    public void setPermissions(CommandPermissions permissions) {
         this.permissions = permissions;
     }
 }

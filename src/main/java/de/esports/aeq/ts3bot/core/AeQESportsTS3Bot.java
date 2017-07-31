@@ -1,12 +1,13 @@
 package de.esports.aeq.ts3bot.core;
 
 import de.esports.aeq.ts3bot.command.AsyncCommandHandler;
-import de.esports.aeq.ts3bot.command.CommandParser;
-import de.esports.aeq.ts3bot.command.api.CExecutionContext;
+import de.esports.aeq.ts3bot.command.CommandExecutionContext;
+import de.esports.aeq.ts3bot.command.DefaultCommandParser;
 import de.esports.aeq.ts3bot.command.api.Command;
-import de.esports.aeq.ts3bot.command.exceptions.CommandParsingException;
-import de.esports.aeq.ts3bot.command.exceptions.UnregisteredCommandException;
-import de.esports.aeq.ts3bot.messages.Messages;
+import de.esports.aeq.ts3bot.command.api.CommandParser;
+import de.esports.aeq.ts3bot.command.exception.CommandParsingException;
+import de.esports.aeq.ts3bot.command.exception.UnregisteredCommandException;
+import de.esports.aeq.ts3bot.message.Messages;
 import de.stefan1200.jts3servermod.interfaces.HandleBotEvents;
 import de.stefan1200.jts3servermod.interfaces.HandleTS3Events;
 import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
@@ -23,6 +24,7 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
     private JTS3ServerQuery jts3ServerQuery;
     private String prefix;
 
+    private CommandParser commandParser = new DefaultCommandParser();
     private AsyncCommandHandler asyncCommandHandler = new AsyncCommandHandler();
 
     @Override
@@ -88,7 +90,7 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
     public boolean handleChatCommands(String message, HashMap eventInfo, boolean isFullAdmin, boolean isAdmin) {
         Command command = null;
         try {
-            command = new CommandParser(message).parse();
+            commandParser.parse(message);
         } catch (UnregisteredCommandException e) {
             String errorMessage = Messages.getTranslatedString(Messages.UNKNOWN_COMMAND);
             jts3ServerMod.sendMessageToClient(prefix, "chat", 0001, errorMessage);
@@ -97,7 +99,7 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
             return false;
         }
         // handle each command in a new thread if it is valid
-        CExecutionContext context = new CExecutionContext(this, eventInfo, isFullAdmin, isAdmin);
+        CommandExecutionContext context = new CommandExecutionContext(this, eventInfo, isFullAdmin, isAdmin);
         asyncCommandHandler.handle(command, context);
         return true;
     }

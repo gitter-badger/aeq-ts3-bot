@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.command.exceptions;
+package de.esports.aeq.ts3bot.command.exception;
 
 /**
  * Created by Lukas on 27.07.2017.

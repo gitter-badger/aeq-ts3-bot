@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.messages;
+package de.esports.aeq.ts3bot.message;
 
 import de.esports.aeq.ts3bot.util.MathUtil;
 import org.jetbrains.annotations.Nullable;

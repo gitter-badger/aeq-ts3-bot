@@ -1,10 +1,9 @@
 package de.esports.aeq.ts3bot.command;
 
-import de.esports.aeq.ts3bot.command.api.CExecutionContext;
 import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.api.CommandHandler;
-import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
-import de.esports.aeq.ts3bot.messages.Messages;
+import de.esports.aeq.ts3bot.command.exception.CHandleException;
+import de.esports.aeq.ts3bot.message.Messages;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +17,7 @@ public class AsyncCommandHandler implements CommandHandler {
     }
 
     @Override
-    public void handle(Command command, CExecutionContext context) {
+    public void handle(Command command, CommandExecutionContext context) {
         executor.execute(() -> {
             if (!CommandHelpers.hasPermission(command, context)) {
                 String errorMessage = Messages.getTranslatedString(Messages.ERROR_INVALID_PERMISSIONS);

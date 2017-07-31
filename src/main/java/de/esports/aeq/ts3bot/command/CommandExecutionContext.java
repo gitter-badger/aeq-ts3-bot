@@ -1,17 +1,17 @@
-package de.esports.aeq.ts3bot.command.api;
+package de.esports.aeq.ts3bot.command;
 
 import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 
 import java.util.HashMap;
 
-public class CExecutionContext {
+public class CommandExecutionContext {
 
     private AeQESportsTS3Bot botInstance;
     private HashMap<String, String> eventInfo;
     private boolean isFullAdmin;
     private boolean isAdmin;
 
-    public CExecutionContext(AeQESportsTS3Bot botInstance, HashMap<String, String> eventInfo, boolean isFullAdmin, boolean isAdmin) {
+    public CommandExecutionContext(AeQESportsTS3Bot botInstance, HashMap<String, String> eventInfo, boolean isFullAdmin, boolean isAdmin) {
         this.botInstance = botInstance;
         this.eventInfo = eventInfo;
         this.isFullAdmin = isFullAdmin;

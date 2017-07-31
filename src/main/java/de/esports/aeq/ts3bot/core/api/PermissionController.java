@@ -1,6 +1,6 @@
 package de.esports.aeq.ts3bot.core.api;
 
-import de.esports.aeq.ts3bot.command.permission.CPermission;
+import de.esports.aeq.ts3bot.command.permission.CommandPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -18,12 +18,12 @@ public class PermissionController {
     }
 
     @RequestMapping(method = RequestMethod.GET, name = "/{prefix}")
-    public CPermission getPermissionsForCommand(@PathVariable String prefix) {
+    public CommandPermissions getPermissionsForCommand(@PathVariable String prefix) {
         return null;
     }
 
     @RequestMapping(method = RequestMethod.PUT, name = "/{prefix}")
-    public void setPermissionsForCommand(@PathVariable String prefix, @RequestBody CPermission permissions) {
+    public void setPermissionsForCommand(@PathVariable String prefix, @RequestBody CommandPermissions permissions) {
 
     }
 

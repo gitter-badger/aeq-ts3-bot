@@ -1,15 +1,13 @@
-package de.esports.aeq.ts3bot.command;
+package de.esports.aeq.ts3bot.command.commands;
 
 import com.beust.jcommander.Parameter;
-import de.esports.aeq.ts3bot.command.api.CExecutionContext;
+import de.esports.aeq.ts3bot.command.CommandExecutionContext;
 import de.esports.aeq.ts3bot.command.api.Command;
-import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
-import de.esports.aeq.ts3bot.command.permission.CPermission;
+import de.esports.aeq.ts3bot.command.exception.CHandleException;
 import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 import de.esports.aeq.ts3bot.core.api.User;
-import de.esports.aeq.ts3bot.core.api.UserGroups;
-import de.esports.aeq.ts3bot.messages.MessageType;
-import de.esports.aeq.ts3bot.messages.Messages;
+import de.esports.aeq.ts3bot.message.MessageType;
+import de.esports.aeq.ts3bot.message.Messages;
 import de.esports.aeq.ts3bot.service.ServiceFactory;
 import de.esports.aeq.ts3bot.service.UserService;
 import de.esports.aeq.ts3bot.service.api.ApplicationService;
@@ -34,16 +32,15 @@ public class CAccept implements Command {
     }
 
     @Override
-    public void execute(CExecutionContext context) throws CHandleException {
+    public void execute(CommandExecutionContext context) throws CHandleException {
         String id = "";
         final User user = UserService.getUserWithTS3Id(id);
-
         sendStartTaskMessage(context.getBotInstance(), id);
         ApplicationService service = ServiceFactory.getServiceFactory(ServiceFactory.MYSQL).getApplicationService();
         service.acceptApplication(ts3id).subscribe(
                 value -> sendSuccessMessage(context.getBotInstance(), user, id),
                 error -> sendErrorMessage(context.getBotInstance(), user, id)
-        ).dispose();
+        );
     }
 
     public @NotNull String getTs3id() {

@@ -3,9 +3,11 @@ package de.esports.aeq.ts3bot.command;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import de.esports.aeq.ts3bot.command.api.Command;
-import de.esports.aeq.ts3bot.command.exceptions.CommandParsingException;
-import de.esports.aeq.ts3bot.command.exceptions.InvalidPrefixException;
-import de.esports.aeq.ts3bot.command.exceptions.UnregisteredCommandException;
+import de.esports.aeq.ts3bot.command.api.CommandParser;
+import de.esports.aeq.ts3bot.command.commands.CAccept;
+import de.esports.aeq.ts3bot.command.exception.CommandParsingException;
+import de.esports.aeq.ts3bot.command.exception.InvalidPrefixException;
+import de.esports.aeq.ts3bot.command.exception.UnregisteredCommandException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Lukas on 25.07.2017.
  */
-public class CommandParser {
+public class DefaultCommandParser implements CommandParser {
 
     private static HashMap<String, Class<? extends Command>> commands = new HashMap<>();
 
@@ -28,13 +30,8 @@ public class CommandParser {
         commands.put(CAccept.PREFIX, CAccept.class);
     }
 
-    private String message;
-
-    public CommandParser(String message) {
-        this.message = message;
-    }
-
-    public @NotNull Command parse() throws CommandParsingException {
+    @Override
+    public @NotNull Command parse(@NotNull String message) throws CommandParsingException {
         String[] args = argsFromString(message);
         String prefix = args.length != 0 ? args[0] : null;
         if (prefix == null) {
@@ -44,29 +41,18 @@ public class CommandParser {
         if (clazz == null) {
             throw new UnregisteredCommandException(prefix);
         }
-        Command command = null;
+        Command command;
         try {
             command = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             throw new CommandParsingException(e);
         }
-
         try {
             new JCommander.Builder().addObject(command).build().parse(args);
         } catch (ParameterException e) {
             throw new CommandParsingException(e);
         }
-        command.setPrefix(prefix);
         return command;
-    }
-
-    /**
-     * Assigns the given permissions to the specified command.
-     *
-     * @param command
-     */
-    private void assignPermissions(Command command) {
-
     }
 
     private String[] argsFromString(String string) {

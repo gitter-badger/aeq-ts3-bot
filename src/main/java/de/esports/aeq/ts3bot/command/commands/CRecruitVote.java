@@ -1,7 +1,7 @@
-package de.esports.aeq.ts3bot.command;
+package de.esports.aeq.ts3bot.command.commands;
 
 import de.esports.aeq.ts3bot.command.api.Command;
-import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
+import de.esports.aeq.ts3bot.command.exception.CHandleException;
 import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 
 import java.util.HashMap;

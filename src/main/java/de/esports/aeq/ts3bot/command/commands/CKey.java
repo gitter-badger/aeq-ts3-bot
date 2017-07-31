@@ -1,8 +1,8 @@
-package de.esports.aeq.ts3bot.command;
+package de.esports.aeq.ts3bot.command.commands;
 
-import de.esports.aeq.ts3bot.command.api.CExecutionContext;
+import de.esports.aeq.ts3bot.command.CommandExecutionContext;
 import de.esports.aeq.ts3bot.command.api.Command;
-import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
+import de.esports.aeq.ts3bot.command.exception.CHandleException;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,7 +20,7 @@ public class CKey implements Command {
     }
 
     @Override
-    public void execute(@NotNull CExecutionContext context) throws CHandleException {
+    public void execute(@NotNull CommandExecutionContext context) throws CHandleException {
         // TODO(glains)
     }
 }
