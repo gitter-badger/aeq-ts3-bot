@@ -1,5 +1,6 @@
 package de.esports.aeq.ts3bot.command.api;
 
+import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
 import de.esports.aeq.ts3bot.command.permission.CPermission;
 
 /**
@@ -11,7 +12,7 @@ import de.esports.aeq.ts3bot.command.permission.CPermission;
  * @version 0.1
  * @since 25.07.2017.
  */
-public abstract class Command implements CommandHandler {
+public abstract class Command {
 
     private String prefix;
     private CPermission permissions;
@@ -24,6 +25,8 @@ public abstract class Command implements CommandHandler {
         this.prefix = prefix;
         this.permissions = permissions;
     }
+
+    public abstract void execute(CExecutionContext context) throws CHandleException;
 
     /**
      * @return the prefix that identifies this command

@@ -12,14 +12,18 @@ import java.util.ResourceBundle;
  */
 public class Messages {
 
+    public static final String UNKNOWN_COMMAND = "unknown_command";
+
     public static final String BUNDLE_GENERAL_MESSAGES = "GeneralMessages";
     public static final String ERROR_INVALID_PERMISSIONS = "error_invalid_permissions";
+    public static final String ERROR_COMMAND_EXCEPTION = "error_command_exception";
     public static final String ACCEPT_APPLICATION_ON_ERROR = "accept_application_on_error";
     public static final String ACCEPT_APPLICATION_ON_SUCCESS = "accept_application_on_error";
     public static final String WAITING_01 = "waiting_01";
     public static final String WAITING_02 = "waiting_01";
     public static final String WAITING_03 = "waiting_01";
     private static final String[] waitingMessages = {WAITING_01, WAITING_02, WAITING_03};
+
     public static Locale locale = Locale.ENGLISH;
 
     /**

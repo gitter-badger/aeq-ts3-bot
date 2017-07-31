@@ -1,10 +1,12 @@
 package de.esports.aeq.ts3bot.core;
 
+import de.esports.aeq.ts3bot.command.AsyncCommandHandler;
 import de.esports.aeq.ts3bot.command.CommandParser;
+import de.esports.aeq.ts3bot.command.api.CExecutionContext;
 import de.esports.aeq.ts3bot.command.api.Command;
-import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
 import de.esports.aeq.ts3bot.command.exceptions.CommandParsingException;
-import de.esports.aeq.ts3bot.command.permission.CPermissionValidator;
+import de.esports.aeq.ts3bot.command.exceptions.UnregisteredCommandException;
+import de.esports.aeq.ts3bot.messages.Messages;
 import de.stefan1200.jts3servermod.interfaces.HandleBotEvents;
 import de.stefan1200.jts3servermod.interfaces.HandleTS3Events;
 import de.stefan1200.jts3servermod.interfaces.JTS3ServerMod_Interface;
@@ -21,10 +23,11 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
     private JTS3ServerQuery jts3ServerQuery;
     private String prefix;
 
-    private HashMap<String, CPermissionValidator> commandPermissions = new HashMap<>();
+    private AsyncCommandHandler asyncCommandHandler = new AsyncCommandHandler();
 
     @Override
-    public void initClass(JTS3ServerMod_Interface jts3ServerMod_interface, JTS3ServerQuery jts3ServerQuery, String s) {
+    public void initClass(JTS3ServerMod_Interface jts3ServerMod_interface, JTS3ServerQuery jts3ServerQuery, String
+            prefix) {
         this.jts3ServerMod = jts3ServerMod_interface;
         this.jts3ServerQuery = jts3ServerQuery;
         this.prefix = prefix;
@@ -86,21 +89,16 @@ public class AeQESportsTS3Bot implements HandleBotEvents, HandleTS3Events {
         Command command = null;
         try {
             command = new CommandParser(message).parse();
+        } catch (UnregisteredCommandException e) {
+            String errorMessage = Messages.getTranslatedString(Messages.UNKNOWN_COMMAND);
+            jts3ServerMod.sendMessageToClient(prefix, "chat", 0001, errorMessage);
         } catch (CommandParsingException e) {
-            e.printStackTrace(); // TODO(glains): send error message to user, catch detailed exceptions
+            e.printStackTrace();
             return false;
         }
-        // TODO(glains): handling should probably be done in a new thread
-        boolean hasPermission = new CPermissionValidator(command.getPermissions()).match(eventInfo, isFullAdmin, isAdmin);
-        if (!hasPermission) {
-            // TODO(glains): send invalid permissions error message to user
-            return true;
-        }
-        try {
-            command.handle(this, eventInfo, isFullAdmin, isAdmin);
-        } catch (CHandleException e) {
-            // TODO(glains): send error message to user
-        }
+        // handle each command in a new thread if it is valid
+        CExecutionContext context = new CExecutionContext(this, eventInfo, isFullAdmin, isAdmin);
+        asyncCommandHandler.handle(command, context);
         return true;
     }
 
