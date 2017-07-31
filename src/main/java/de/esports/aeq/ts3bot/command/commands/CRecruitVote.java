@@ -1,24 +1,26 @@
 package de.esports.aeq.ts3bot.command.commands;
 
+import de.esports.aeq.ts3bot.command.CommandExecutionContext;
 import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.exception.CHandleException;
-import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
-
-import java.util.HashMap;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Lukas on 27.07.2017.
  */
-public class CRecruitVote extends Command {
+public class CRecruitVote implements Command {
 
     public static final String PREFIX = "vote";
 
-    public CRecruitVote(String prefix) {
-        super(PREFIX);
+    public CRecruitVote(String prefix) { }
+
+    @Override
+    public @NotNull String getPrefix() {
+        return PREFIX;
     }
 
     @Override
-    public void handle(AeQESportsTS3Bot botInstance, HashMap eventInfo, boolean isFullAdmin, boolean isAdmin) throws CHandleException {
+    public void execute(@NotNull CommandExecutionContext context) throws CHandleException {
         // TODO(glains)
     }
 }
