@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="aeq-esports-ts3-bot" />
         <module name="ts3bot" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="aeq-esports-ts3-bot" target="1.7" />
       <module name="ts3bot" target="1.6" />
     </bytecodeTargetLevel>
   </component>

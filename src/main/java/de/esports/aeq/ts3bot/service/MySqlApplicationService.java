@@ -1,7 +1,10 @@
 package de.esports.aeq.ts3bot.service;
 
+import de.esports.aeq.ts3bot.core.api.Application;
 import de.esports.aeq.ts3bot.service.api.ApplicationService;
 import io.reactivex.Observable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by Lukas on 19.07.2017.
@@ -9,13 +12,20 @@ import io.reactivex.Observable;
 public class MySqlApplicationService implements ApplicationService {
 
     @Override
-    public Observable<Boolean> acceptApplication(String ts3id) {
-        return null;
+    public @NotNull Observable<Application> acceptApplication(@Nullable String ts3id) {
+        return Observable.create(observer -> {
+            // TODO(glains): implement api call
+            observer.onNext(null);
+            observer.onComplete();
+        });
     }
 
     @Override
-    public Observable<Boolean> rejectApplication(String ts3id) {
-        return null;
+    public @NotNull Observable<Application> rejectApplication(@Nullable String ts3id) {
+        return Observable.create(observer -> {
+            // TODO(glains): implement api call
+            observer.onNext(null);
+            observer.onComplete();
+        });
     }
-
 }

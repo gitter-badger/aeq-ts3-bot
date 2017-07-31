@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.service;
+package de.esports.aeq.ts3bot.core.api;
 
 import de.esports.aeq.ts3bot.service.api.RecruitService;
 
@@ -8,13 +8,13 @@ import de.esports.aeq.ts3bot.service.api.RecruitService;
  * @author Lukas Kannenberg
  * @since 22.07.2017.
  */
-public class VoteCountResult {
+public class VoteCount {
 
     public int positiveVotes;
 
     public int negativeVotes;
 
-    public VoteCountResult(int positiveVotes, int negativeVotes) {
+    public VoteCount(int positiveVotes, int negativeVotes) {
         this.positiveVotes = positiveVotes;
         this.negativeVotes = negativeVotes;
     }

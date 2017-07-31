@@ -1,6 +1,8 @@
 package de.esports.aeq.ts3bot.service.api;
 
 import io.reactivex.Observable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a general interface for account service calls.
@@ -11,20 +13,22 @@ import io.reactivex.Observable;
 public interface AccountService {
 
     /**
-     * Returns the access-key for a specific ts3id if present.
+     * Returns the access-key for a specific teamspeak id if present.
      * <p>
      *
-     * @param ts3Id the teamspeak3 id of the user
-     * @return an {@link Observable<String>} that resolves when the action finished or rejects when an error occurred
-     * during the process. The resolved String may be null if no access-key if present for that.
+     * @param ts3Id the teamspeak id of the user
+     * @return an {@link Observable} that resolves when the action finished or rejects when an error occurred
+     * during the process. The resolved String may be null if no access-key if present for that id.
      */
-    public Observable<String> getAccessKey(String ts3Id);
+    @NotNull
+    public Observable<String> getAccessKey(@Nullable String ts3Id);
 
     /**
-     * @param ts3Id
-     * @param key
+     * @param ts3Id the teamspeak id of the user
+     * @param key the access-key of the user
      * @return
      */
-    public Observable<Boolean> linkAccessKey(String ts3Id, String key);
+    @NotNull
+    public Observable<Boolean> linkAccessKey(@Nullable String ts3Id, @Nullable String key);
 
 }

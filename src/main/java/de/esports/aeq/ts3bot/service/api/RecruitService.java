@@ -1,7 +1,9 @@
 package de.esports.aeq.ts3bot.service.api;
 
-import de.esports.aeq.ts3bot.service.VoteCountResult;
+import de.esports.aeq.ts3bot.core.api.VoteCount;
 import io.reactivex.Observable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a general interface for recruit service calls.
@@ -11,14 +13,19 @@ import io.reactivex.Observable;
  */
 public interface RecruitService {
 
-    public Observable<Boolean> addPositiveVote(String ts3id);
+    @NotNull
+    public Observable<Boolean> addPositiveVote(@Nullable String ts3id);
 
-    public Observable<Boolean> addPositiveVotes(String ts3id, int positiveVotes);
+    @NotNull
+    public Observable<Boolean> addPositiveVotes(@Nullable String ts3id, int positiveVotes);
 
-    public Observable<Boolean> addNegativeVote(String ts3id);
+    @NotNull
+    public Observable<Boolean> addNegativeVote(@Nullable String ts3id);
 
-    public Observable<Boolean> addNegativeVotes(String ts3id, int negativeVotes);
+    @NotNull
+    public Observable<Boolean> addNegativeVotes(@Nullable String ts3id, int negativeVotes);
 
-    public Observable<VoteCountResult> getVoteCount(String ts3id);
+    @NotNull
+    public Observable<VoteCount> getVoteCount(@Nullable String ts3id);
 
 }

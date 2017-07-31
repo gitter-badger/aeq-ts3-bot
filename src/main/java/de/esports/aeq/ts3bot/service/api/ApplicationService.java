@@ -1,6 +1,9 @@
 package de.esports.aeq.ts3bot.service.api;
 
+import de.esports.aeq.ts3bot.core.api.Application;
 import io.reactivex.Observable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a general interface for application service calls.
@@ -17,7 +20,8 @@ public interface ApplicationService {
      * @return an {@link Observable<Boolean>} that resolves to true if the applicant got accepted, to false if the
      * action could not be performed or gets rejected if any network error occurs.
      */
-    public Observable<Boolean> acceptApplication(String ts3id);
+    @NotNull
+    public Observable<Application> acceptApplication(@Nullable String ts3id);
 
     /**
      * Rejects an application from a user.
@@ -25,6 +29,7 @@ public interface ApplicationService {
      * @param ts3id the teamspeak3 id of the user
      * @return
      */
-    public Observable<Boolean> rejectApplication(String ts3id);
+    @NotNull
+    public Observable<Application> rejectApplication(@Nullable String ts3id);
 
 }
