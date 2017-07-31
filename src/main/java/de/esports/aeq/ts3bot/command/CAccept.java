@@ -4,8 +4,10 @@ import com.beust.jcommander.Parameter;
 import de.esports.aeq.ts3bot.command.api.CExecutionContext;
 import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.exceptions.CHandleException;
+import de.esports.aeq.ts3bot.command.permission.CPermission;
 import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
 import de.esports.aeq.ts3bot.core.api.User;
+import de.esports.aeq.ts3bot.core.api.UserGroups;
 import de.esports.aeq.ts3bot.messages.MessageType;
 import de.esports.aeq.ts3bot.messages.Messages;
 import de.esports.aeq.ts3bot.service.ServiceFactory;
@@ -39,6 +41,12 @@ public class CAccept extends Command {
                 value -> sendSuccessMessage(context.getBotInstance(), user, id),
                 error -> sendErrorMessage(context.getBotInstance(), user, id)
         ).dispose();
+    }
+
+    @Override
+    public CPermission getPermissions() {
+        String[] allowedUserGroups = {UserGroups.MEMBER_RECRUITER};
+        return new CPermission(true, allowedUserGroups);
     }
 
     public @NotNull String getTs3id() {

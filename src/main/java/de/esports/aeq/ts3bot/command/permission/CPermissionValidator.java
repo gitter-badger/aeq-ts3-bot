@@ -1,5 +1,7 @@
 package de.esports.aeq.ts3bot.command.permission;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 
 /**
@@ -9,7 +11,7 @@ public class CPermissionValidator {
 
     private CPermission permissions;
 
-    public CPermissionValidator(CPermission permissions) {
+    public CPermissionValidator(@Nullable CPermission permissions) {
         this.permissions = permissions;
     }
 
