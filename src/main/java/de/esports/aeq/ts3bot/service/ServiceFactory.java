@@ -1,9 +1,6 @@
 package de.esports.aeq.ts3bot.service;
 
-import de.esports.aeq.ts3bot.service.api.AccountService;
-import de.esports.aeq.ts3bot.service.api.ApplicationService;
-import de.esports.aeq.ts3bot.service.api.PermissionService;
-import de.esports.aeq.ts3bot.service.api.RecruitService;
+import de.esports.aeq.ts3bot.service.api.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,6 +10,15 @@ import org.jetbrains.annotations.Nullable;
 public abstract class ServiceFactory {
 
     public static final int MYSQL = 1;
+
+    /**
+     * Returns the default factory type.
+     *
+     * @return the default factory type.
+     */
+    public static int getDefaultFactoryType() {
+        return MYSQL;
+    }
 
     /**
      * Returns an appropriate {@link ServiceFactory}, depending on the specified database type.
@@ -41,4 +47,7 @@ public abstract class ServiceFactory {
 
     @NotNull
     public abstract RecruitService getRecruitService();
+
+    @NotNull
+    public abstract ConfigurationService getConfigurationService();
 }

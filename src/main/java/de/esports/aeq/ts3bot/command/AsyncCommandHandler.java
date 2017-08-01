@@ -3,6 +3,8 @@ package de.esports.aeq.ts3bot.command;
 import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.api.CommandHandler;
 import de.esports.aeq.ts3bot.command.exception.CHandleException;
+import de.esports.aeq.ts3bot.command.permission.CommandPermissionValidator;
+import de.esports.aeq.ts3bot.command.permission.UnrestrictedPermissionValidator;
 import de.esports.aeq.ts3bot.message.Messages;
 
 import java.util.concurrent.ExecutorService;
@@ -12,6 +14,8 @@ public class AsyncCommandHandler implements CommandHandler {
 
     private ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+    private CommandPermissionValidator validator = new UnrestrictedPermissionValidator();
+
     public AsyncCommandHandler() {
 
     }
@@ -19,7 +23,8 @@ public class AsyncCommandHandler implements CommandHandler {
     @Override
     public void handle(Command command, CommandExecutionContext context) {
         executor.execute(() -> {
-            if (!CommandHelpers.hasPermission(command, context)) {
+
+            if (!validator.match(command, context)) {
                 String errorMessage = Messages.getTranslatedString(Messages.ERROR_INVALID_PERMISSIONS);
                 // TODO(glains): send message to client
                 return;

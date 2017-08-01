@@ -1,29 +1,22 @@
 package de.esports.aeq.ts3bot.command.permission;
 
-import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
+import de.esports.aeq.ts3bot.command.CommandExecutionContext;
+import de.esports.aeq.ts3bot.command.api.Command;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * Created by Lukas on 25.07.2017.
+ * @author Lukas Kannenberg
+ * @since 25.07.2017.
  */
-public class CommandPermissionValidator {
+@FunctionalInterface
+public interface CommandPermissionValidator {
 
-    private CommandPermissions permissions;
-
-    public CommandPermissionValidator(@Nullable CommandPermissions permissions) {
-        this.permissions = permissions;
-    }
-
-    public boolean match(HashMap eventInfo, boolean isFullAdmin, boolean isAdmin) {
-        return true;
-    }
-
-    public CommandPermissions getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(CommandPermissions permissions) {
-        this.permissions = permissions;
-    }
+    /**
+     * Validates if the specified {@link CommandExecutionContext} allows the execution of the command.
+     *
+     * @param command the {@link Command}
+     * @param context the {@link CommandExecutionContext}
+     * @return true if the command may be executed, otherwise false
+     */
+    boolean match(@NotNull Command command, @NotNull CommandExecutionContext context);
 }

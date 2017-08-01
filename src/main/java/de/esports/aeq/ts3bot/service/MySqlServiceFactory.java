@@ -1,9 +1,6 @@
 package de.esports.aeq.ts3bot.service;
 
-import de.esports.aeq.ts3bot.service.api.AccountService;
-import de.esports.aeq.ts3bot.service.api.ApplicationService;
-import de.esports.aeq.ts3bot.service.api.PermissionService;
-import de.esports.aeq.ts3bot.service.api.RecruitService;
+import de.esports.aeq.ts3bot.service.api.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,5 +26,10 @@ public class MySqlServiceFactory extends ServiceFactory {
     @Override
     public @NotNull RecruitService getRecruitService() {
         return new MySqlRecruitService();
+    }
+
+    @Override
+    public @NotNull ConfigurationService getConfigurationService() {
+        return null;
     }
 }

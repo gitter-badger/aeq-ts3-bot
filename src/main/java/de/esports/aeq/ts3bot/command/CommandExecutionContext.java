@@ -1,52 +1,42 @@
 package de.esports.aeq.ts3bot.command;
 
-import de.esports.aeq.ts3bot.core.AeQESportsTS3Bot;
-
-import java.util.HashMap;
+import com.github.theholywaffle.teamspeak3.TS3Api;
+import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
+import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 
 public class CommandExecutionContext {
 
-    private AeQESportsTS3Bot botInstance;
-    private HashMap<String, String> eventInfo;
-    private boolean isFullAdmin;
-    private boolean isAdmin;
+    private TS3Api api;
+    private TS3ApiAsync apiAsync;
+    private TextMessageEvent messageEvent;
 
-    public CommandExecutionContext(AeQESportsTS3Bot botInstance, HashMap<String, String> eventInfo, boolean isFullAdmin, boolean isAdmin) {
-        this.botInstance = botInstance;
-        this.eventInfo = eventInfo;
-        this.isFullAdmin = isFullAdmin;
-        this.isAdmin = isAdmin;
+    public CommandExecutionContext(TS3Api api, TS3ApiAsync apiAsync, TextMessageEvent messageEvent) {
+        this.api = api;
+        this.apiAsync = apiAsync;
+        this.messageEvent = messageEvent;
     }
 
-    public AeQESportsTS3Bot getBotInstance() {
-        return botInstance;
+    public TS3Api getApi() {
+        return api;
     }
 
-    public void setBotInstance(AeQESportsTS3Bot botInstance) {
-        this.botInstance = botInstance;
+    public void setApi(TS3Api api) {
+        this.api = api;
     }
 
-    public HashMap<String, String> getEventInfo() {
-        return eventInfo;
+    public TS3ApiAsync getApiAsync() {
+        return apiAsync;
     }
 
-    public void setEventInfo(HashMap<String, String> eventInfo) {
-        this.eventInfo = eventInfo;
+    public void setApiAsync(TS3ApiAsync apiAsync) {
+        this.apiAsync = apiAsync;
     }
 
-    public boolean isFullAdmin() {
-        return isFullAdmin;
+    public TextMessageEvent getMessageEvent() {
+        return messageEvent;
     }
 
-    public void setFullAdmin(boolean fullAdmin) {
-        isFullAdmin = fullAdmin;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setMessageEvent(TextMessageEvent messageEvent) {
+        this.messageEvent = messageEvent;
     }
 }
