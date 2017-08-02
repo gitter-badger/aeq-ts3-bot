@@ -1,5 +1,6 @@
 package de.esports.aeq.ts3bot.event;
 
+import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3bot.event.api.TextMessageHandler;
@@ -7,14 +8,14 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EchoTextMessageHandler implements TextMessageHandler {
+public class EchoTextMessageHandler extends TextMessageHandler {
 
     private static final Logger log = LoggerFactory.getLogger(EchoTextMessageHandler.class);
 
     private TS3ApiAsync apiAsync;
 
-    public EchoTextMessageHandler(TS3ApiAsync apiAsync) {
-        this.apiAsync = apiAsync;
+    public EchoTextMessageHandler(TS3Api api, TS3ApiAsync apiAsync) {
+        super(api, apiAsync);
     }
 
     @Override

@@ -13,17 +13,13 @@ import de.esports.aeq.ts3bot.command.exception.UnregisteredCommandException;
 import de.esports.aeq.ts3bot.event.api.TextMessageHandler;
 import de.esports.aeq.ts3bot.message.Messages;
 
-public class DefaultTextMessageHandler implements TextMessageHandler {
-
-    private TS3Api api;
-    private TS3ApiAsync apiAsync;
+public class DefaultTextMessageHandler extends TextMessageHandler {
 
     private CommandParser commandParser = new DefaultCommandParser();
     private AsyncCommandHandler asyncCommandHandler = new AsyncCommandHandler();
 
     public DefaultTextMessageHandler(TS3Api api, TS3ApiAsync apiAsync) {
-        this.api = api;
-        this.apiAsync = apiAsync;
+        super(api, apiAsync);
     }
 
     @Override
