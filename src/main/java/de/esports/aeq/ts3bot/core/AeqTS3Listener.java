@@ -3,13 +3,15 @@ package de.esports.aeq.ts3bot.core;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.api.event.*;
-import de.esports.aeq.ts3bot.event.api.TextMessageHandler;
 import de.esports.aeq.ts3bot.event.EchoTextMessageHandler;
+import de.esports.aeq.ts3bot.event.GuestsClientJoinHandler;
+import de.esports.aeq.ts3bot.event.api.TextMessageHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class AeqTS3Listener implements TS3Listener {
 
     private TextMessageHandler messageHandler;
+    private GuestsClientJoinHandler guestsClientJoinHandler;
 
     private TS3Api api;
     private TS3ApiAsync apiAsync;
@@ -18,7 +20,9 @@ public class AeqTS3Listener implements TS3Listener {
         this.api = api;
         this.apiAsync = apiAsync;
         // for now we will just use an echo reply handler
-        messageHandler = new EchoTextMessageHandler(apiAsync);
+        messageHandler = new EchoTextMessageHandler(api, apiAsync);
+        // TODO(glains): initialise the configuration from api (rather than using the default one)
+        guestsClientJoinHandler = new GuestsClientJoinHandler(api, apiAsync);
     }
 
     @Override
@@ -28,7 +32,7 @@ public class AeqTS3Listener implements TS3Listener {
 
     @Override
     public void onClientJoin(ClientJoinEvent clientJoinEvent) {
-
+        guestsClientJoinHandler.handle(clientJoinEvent);
     }
 
     @Override
