@@ -30,6 +30,11 @@ public class MySqlServiceFactory extends ServiceFactory {
 
     @Override
     public @NotNull ConfigurationService getConfigurationService() {
-        return null;
+        return new MySqlConfigurationService();
+    }
+
+    @Override
+    public @NotNull AuthenticationService getAuthenticationService() {
+        return new MySqlAuthenticationService();
     }
 }
