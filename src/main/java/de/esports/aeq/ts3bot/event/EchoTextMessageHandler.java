@@ -1,8 +1,8 @@
-package de.esports.aeq.ts3bot.message;
+package de.esports.aeq.ts3bot.event;
 
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import de.esports.aeq.ts3bot.event.TextMessageHandler;
+import de.esports.aeq.ts3bot.event.api.TextMessageHandler;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class EchoTextMessageHandler implements TextMessageHandler {
     }
 
     @Override
-    public void handleTextMessage(@NotNull TextMessageEvent messageEvent) {
+    public void handle(@NotNull TextMessageEvent messageEvent) {
         int invokerId = messageEvent.getInvokerId();
         apiAsync.sendPrivateMessage(invokerId, messageEvent.getMessage()).onFailure(e -> {
             log.error("Could not echo reply message: {}", messageEvent.toString());

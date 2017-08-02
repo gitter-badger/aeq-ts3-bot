@@ -3,8 +3,8 @@ package de.esports.aeq.ts3bot.core;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.api.event.*;
-import de.esports.aeq.ts3bot.event.TextMessageHandler;
-import de.esports.aeq.ts3bot.message.EchoTextMessageHandler;
+import de.esports.aeq.ts3bot.event.api.TextMessageHandler;
+import de.esports.aeq.ts3bot.event.EchoTextMessageHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class AeqTS3Listener implements TS3Listener {

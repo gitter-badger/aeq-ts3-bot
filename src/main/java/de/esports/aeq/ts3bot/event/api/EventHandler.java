@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.event;
+package de.esports.aeq.ts3bot.event.api;
 
 /**
  * An event handler is responsible to handle a given event.

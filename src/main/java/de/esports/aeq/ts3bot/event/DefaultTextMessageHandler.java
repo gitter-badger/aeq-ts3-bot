@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.message;
+package de.esports.aeq.ts3bot.event;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
@@ -10,7 +10,8 @@ import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.api.CommandParser;
 import de.esports.aeq.ts3bot.command.exception.CommandParsingException;
 import de.esports.aeq.ts3bot.command.exception.UnregisteredCommandException;
-import de.esports.aeq.ts3bot.event.TextMessageHandler;
+import de.esports.aeq.ts3bot.event.api.TextMessageHandler;
+import de.esports.aeq.ts3bot.message.Messages;
 
 public class DefaultTextMessageHandler implements TextMessageHandler {
 
