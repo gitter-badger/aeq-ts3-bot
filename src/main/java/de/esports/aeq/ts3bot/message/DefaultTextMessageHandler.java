@@ -11,7 +11,6 @@ import de.esports.aeq.ts3bot.command.api.CommandParser;
 import de.esports.aeq.ts3bot.command.exception.CommandParsingException;
 import de.esports.aeq.ts3bot.command.exception.UnregisteredCommandException;
 import de.esports.aeq.ts3bot.event.TextMessageHandler;
-import org.jetbrains.annotations.NotNull;
 
 public class DefaultTextMessageHandler implements TextMessageHandler {
 
@@ -27,10 +26,10 @@ public class DefaultTextMessageHandler implements TextMessageHandler {
     }
 
     @Override
-    public void handleTextMessage(@NotNull TextMessageEvent messageEvent) {
+    public void handle(TextMessageEvent event) {
         Command command = null;
         try {
-            commandParser.parse(messageEvent.getMessage());
+            command = commandParser.parse(event.getMessage());
         } catch (UnregisteredCommandException e) {
             String errorMessage = Messages.getTranslatedString(Messages.UNKNOWN_COMMAND);
             // TODO(glains): send message to client
@@ -38,7 +37,7 @@ public class DefaultTextMessageHandler implements TextMessageHandler {
             e.printStackTrace();
         }
         // handle each command in a new thread
-        CommandExecutionContext context = new CommandExecutionContext(api, apiAsync, messageEvent);
+        CommandExecutionContext context = new CommandExecutionContext(api, apiAsync, event);
         asyncCommandHandler.handle(command, context);
     }
 
@@ -57,4 +56,6 @@ public class DefaultTextMessageHandler implements TextMessageHandler {
     public void setApiAsync(TS3ApiAsync apiAsync) {
         this.apiAsync = apiAsync;
     }
+
+
 }

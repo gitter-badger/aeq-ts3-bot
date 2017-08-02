@@ -23,7 +23,7 @@ public class AeqTS3Listener implements TS3Listener {
 
     @Override
     public void onTextMessage(TextMessageEvent textMessageEvent) {
-        messageHandler.handleTextMessage(textMessageEvent);
+        messageHandler.handle(textMessageEvent);
     }
 
     @Override
