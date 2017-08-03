@@ -16,4 +16,6 @@ This project is currently under active development.
 
 Before contributing, please have a look at the [contribution guidelines]().
 
-Bugs, feature requests or proposals can be submitted through [a new issue](https://github.com/glains/aeq-esports-ts3-bot/issues/new) or pull-request.
+Bugs, feature requests or proposals can be submitted through [a new issue](https://github.com/glains/aeq-esports-ts3-bot/issues/new) or [pull-request](https://github.com/glains/aeq-esports-ts3-bot/compare).
+
+Pull requests can only be merged from a new branch to master if they have been reviewed. 

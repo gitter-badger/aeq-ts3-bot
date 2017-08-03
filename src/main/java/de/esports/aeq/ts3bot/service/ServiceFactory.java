@@ -50,4 +50,7 @@ public abstract class ServiceFactory {
 
     @NotNull
     public abstract ConfigurationService getConfigurationService();
+
+    @NotNull
+    public abstract AuthenticationService getAuthenticationService();
 }
