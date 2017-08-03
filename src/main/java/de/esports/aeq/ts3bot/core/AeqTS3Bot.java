@@ -19,6 +19,7 @@ public class AeqTS3Bot {
 
     public static final Logger log = LoggerFactory.getLogger(AeqTS3Bot.class);
 
+
     public static void main(String[] args) {
         new AeqTS3Bot().startBot();
     }
@@ -49,14 +50,13 @@ public class AeqTS3Bot {
     }
 
     private BotConfiguration loadConfiguration() {
-        Credentials credentials = null;
+        Credentials credentials;
         try {
-            CredentialsUtil.readFromCommandLine();
+            credentials = CredentialsUtil.readFromCommandLine();
         } catch (Exception e) {
             log.error("Cannot read credentials from command line.");
             return null;
         }
-        if (credentials == null) return null;
         return new StaticConfigurationLoader(credentials.getUsername(), credentials.getPassword())
                 .getBotConfiguration();
     }
