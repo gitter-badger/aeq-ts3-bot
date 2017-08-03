@@ -26,5 +26,4 @@ public class PermissionController {
     public void setPermissionsForCommand(@PathVariable String prefix, @RequestBody CommandPermissions permissions) {
 
     }
-
 }
