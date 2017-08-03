@@ -21,9 +21,10 @@ public class EchoTextMessageHandler extends TextMessageHandler {
     @Override
     public void handle(@NotNull TextMessageEvent messageEvent) {
         int invokerId = messageEvent.getInvokerId();
-        apiAsync.sendPrivateMessage(invokerId, messageEvent.getMessage()).onFailure(e -> {
+        log.debug(messageEvent.getMessage());
+        if (!api.sendPrivateMessage(invokerId, messageEvent.getMessage())) {
             log.error("Could not echo reply message: {}", messageEvent.toString());
-        });
+        }
     }
 
     public TS3ApiAsync getApiAsync() {

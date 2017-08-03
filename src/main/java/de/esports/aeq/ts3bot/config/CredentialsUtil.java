@@ -25,9 +25,14 @@ public class CredentialsUtil {
             }
             username = scanner.next();
         }
-        Console console = System.console();
         System.out.print("Password: ");
-        String password = String.valueOf(console.readPassword());
+        String password = null;
+        while (password == null || password.isEmpty()) {
+            if (password != null) {
+                System.out.println("Password cannot be empty.");
+            }
+            password = scanner.next();
+        }
         return new Credentials(username, password);
     }
 

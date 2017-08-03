@@ -5,13 +5,15 @@ import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.api.event.*;
 import de.esports.aeq.ts3bot.event.EchoTextMessageHandler;
 import de.esports.aeq.ts3bot.event.GuestsClientJoinHandler;
+import de.esports.aeq.ts3bot.event.api.PermissionWrapperHandler;
+import de.esports.aeq.ts3bot.event.api.TS3EventHandler;
 import de.esports.aeq.ts3bot.event.api.TextMessageHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class AeqTS3Listener implements TS3Listener {
 
-    private TextMessageHandler messageHandler;
-    private GuestsClientJoinHandler guestsClientJoinHandler;
+    private TS3EventHandler<TextMessageEvent> messageHandler;
+    private TS3EventHandler<ClientJoinEvent> guestsClientJoinHandler;
 
     private TS3Api api;
     private TS3ApiAsync apiAsync;
@@ -20,9 +22,9 @@ public class AeqTS3Listener implements TS3Listener {
         this.api = api;
         this.apiAsync = apiAsync;
         // for now we will just use an echo reply handler
-        messageHandler = new EchoTextMessageHandler(api, apiAsync);
+        messageHandler = new PermissionWrapperHandler<>(new EchoTextMessageHandler(api, apiAsync));
         // TODO(glains): initialise the configuration from api (rather than using the default one)
-        guestsClientJoinHandler = new GuestsClientJoinHandler(api, apiAsync);
+        guestsClientJoinHandler = new PermissionWrapperHandler<>(new GuestsClientJoinHandler(api, apiAsync));
     }
 
     @Override

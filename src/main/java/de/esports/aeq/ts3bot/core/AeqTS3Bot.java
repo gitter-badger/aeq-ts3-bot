@@ -12,7 +12,6 @@ import de.esports.aeq.ts3bot.core.api.BotConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,14 +22,15 @@ public class AeqTS3Bot {
 
     public static final Logger log = LoggerFactory.getLogger(AeqTS3Bot.class);
 
-    private final ApplicationContext context;
     private final ConfigurationBuilder configurationBuilder;
 
     private BotConfiguration configuration;
 
+    private TS3Api api;
+    private TS3ApiAsync apiAsync;
+
     @Autowired
-    public AeqTS3Bot(ApplicationContext context, ConfigurationBuilder configurationBuilder) {
-        this.context = context;
+    public AeqTS3Bot(ConfigurationBuilder configurationBuilder) {
         this.configurationBuilder = configurationBuilder;
     }
 
@@ -47,10 +47,8 @@ public class AeqTS3Bot {
         query.connect();
 
         // Register external beans
-        final TS3Api api = query.getApi();
-        context.getAutowireCapableBeanFactory().autowireBean(api);
-        final TS3ApiAsync apiAsync = query.getAsyncApi();
-        context.getAutowireCapableBeanFactory().autowireBean(apiAsync);
+        api = query.getApi();
+        apiAsync = query.getAsyncApi();
 
         api.selectVirtualServerByPort(configuration.getVirtualServerPort());
 
@@ -59,6 +57,7 @@ public class AeqTS3Bot {
         api.setNickname(configuration.getName());
         TS3Listener ts3Listener = new AeqTS3Listener(api, apiAsync);
         api.addTS3Listeners(ts3Listener);
+        api.registerAllEvents();
     }
 
     public void buildConfiguration() {
@@ -72,7 +71,6 @@ public class AeqTS3Bot {
     }
 
     public void login() throws AeqBotException {
-        TS3Api api = context.getBean(TS3Api.class);
         log.info("attempting to login as {}", configuration.getUsername());
         if (api.login(configuration.getUsername(), configuration.getPassword())) {
             ChannelInfo info = api.getChannelInfo(api.whoAmI().getChannelId());
@@ -80,5 +78,21 @@ public class AeqTS3Bot {
         } else {
             throw new AeqBotException("unable to login as " + api.whoAmI().getNickname());
         }
+    }
+
+    public TS3Api getApi() {
+        return api;
+    }
+
+    public void setApi(TS3Api api) {
+        this.api = api;
+    }
+
+    public TS3ApiAsync getApiAsync() {
+        return apiAsync;
+    }
+
+    public void setApiAsync(TS3ApiAsync apiAsync) {
+        this.apiAsync = apiAsync;
     }
 }

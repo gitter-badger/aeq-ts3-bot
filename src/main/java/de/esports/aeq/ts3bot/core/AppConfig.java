@@ -7,11 +7,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = "de.esports.aeq.ts3bot")
+@ComponentScan(basePackages = "de.esports.aeq.ts3bot.core")
 public class AppConfig {
 
     @Bean
     public ConfigurationBuilder configurationBuilder() {
         return new StaticConfigurationBuilder();
     }
+
 }

@@ -1,5 +1,7 @@
 package de.esports.aeq.ts3bot.event.api;
 
+import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+
 /**
  * An event handler is responsible to handle a given event.
  * <p>
@@ -10,7 +12,7 @@ package de.esports.aeq.ts3bot.event.api;
  * @since 02.08.2017
  */
 @FunctionalInterface
-public interface EventHandler<T> {
+public interface EventHandler<T extends BaseEvent> {
 
     /**
      * Handles the given event.

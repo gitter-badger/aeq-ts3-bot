@@ -2,8 +2,9 @@ package de.esports.aeq.ts3bot.event.api;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
+import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
 
-public abstract class TS3EventHandler<T> implements EventHandler<T> {
+public abstract class TS3EventHandler<T extends BaseEvent> implements EventHandler<T> {
 
     protected TS3Api api;
     protected TS3ApiAsync apiAsync;
