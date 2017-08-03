@@ -5,10 +5,10 @@ import de.esports.aeq.ts3bot.core.api.BotConfiguration;
 import de.esports.aeq.ts3bot.service.ServiceFactory;
 import org.jetbrains.annotations.Nullable;
 
-public class ServiceConfigurationLoader implements ConfigurationLoader {
+public class ServiceConfigurationLoader implements ConfigurationBuilder {
 
     @Override
-    public @Nullable BotConfiguration getBotConfiguration() {
+    public @Nullable BotConfiguration build() {
         ServiceFactory serviceFactory = ServiceFactory.getServiceFactory(ServiceFactory.getDefaultFactoryType());
         if (serviceFactory == null) {
             throw new AeqBotException("Cannot find service factory.");
