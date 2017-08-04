@@ -1,6 +1,6 @@
 package de.esports.aeq.ts3bot.command.permission;
 
-import de.esports.aeq.ts3bot.command.CommandExecutionContext;
+import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3bot.command.api.Command;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,11 +12,11 @@ import org.jetbrains.annotations.NotNull;
 public interface CommandPermissionValidator {
 
     /**
-     * Validates if the specified {@link CommandExecutionContext} allows the execution of the command.
+     * Validates if the specified {@link TextMessageEvent} allows the execution of the command.
      *
      * @param command the {@link Command}
-     * @param context the {@link CommandExecutionContext}
+     * @param event the {@link TextMessageEvent}
      * @return true if the command may be executed, otherwise false
      */
-    boolean match(@NotNull Command command, @NotNull CommandExecutionContext context);
+    boolean match(@NotNull Command command, @NotNull TextMessageEvent event);
 }

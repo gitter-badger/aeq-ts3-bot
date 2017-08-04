@@ -1,8 +1,9 @@
 package de.esports.aeq.ts3bot.command.commands;
 
-import de.esports.aeq.ts3bot.command.CommandExecutionContext;
+import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.exception.CHandleException;
+import de.esports.aeq.ts3bot.core.AeqTS3Bot;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -12,7 +13,11 @@ public class CVotes implements Command {
 
     public static final String PREFIX = "votes";
 
-    public CVotes() { }
+    private AeqTS3Bot ts3Bot;
+
+    public CVotes(AeqTS3Bot ts3Bot) {
+        this.ts3Bot = ts3Bot;
+    }
 
     @Override
     public @NotNull String getPrefix() {
@@ -20,7 +25,7 @@ public class CVotes implements Command {
     }
 
     @Override
-    public void execute(@NotNull CommandExecutionContext context) throws CHandleException {
+    public void execute(TextMessageEvent e) throws CHandleException {
         // TODO(glains)
     }
 }

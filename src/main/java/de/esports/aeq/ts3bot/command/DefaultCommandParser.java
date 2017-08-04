@@ -4,7 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import de.esports.aeq.ts3bot.command.api.Command;
 import de.esports.aeq.ts3bot.command.api.CommandParser;
-import de.esports.aeq.ts3bot.command.commands.CAccept;
+import de.esports.aeq.ts3bot.command.commands.*;
 import de.esports.aeq.ts3bot.command.exception.CommandParsingException;
 import de.esports.aeq.ts3bot.command.exception.InvalidPrefixException;
 import de.esports.aeq.ts3bot.command.exception.UnregisteredCommandException;
@@ -28,6 +28,11 @@ public class DefaultCommandParser implements CommandParser {
      */
     static {
         commands.put(CAccept.PREFIX, CAccept.class);
+        commands.put(CKey.PREFIX, CKey.class);
+        commands.put(CLink.PREFIX, CLink.class);
+        commands.put(CRecruitVote.PREFIX, CRecruitVote.class);
+        commands.put(CReject.PREFIX, CReject.class);
+        commands.put(CVotes.PREFIX, CVotes.class);
     }
 
     @Override

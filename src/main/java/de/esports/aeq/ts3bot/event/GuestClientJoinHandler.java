@@ -1,52 +1,57 @@
 package de.esports.aeq.ts3bot.event;
 
-import com.github.theholywaffle.teamspeak3.TS3Api;
-import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
-import com.github.theholywaffle.teamspeak3.api.CommandFuture;
 import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
+import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
+import de.esports.aeq.ts3bot.core.AeqTS3Bot;
 import de.esports.aeq.ts3bot.core.ClientHelpers;
 import de.esports.aeq.ts3bot.core.ServerGroups;
-import de.esports.aeq.ts3bot.event.api.ClientJoinHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class GuestsClientJoinHandler extends ClientJoinHandler {
+/**
+ * Handles a given message that was send by a client.
+ *
+ * @author Lukas Kannenberg
+ * @since 01.08.2017
+ */
+@Component
+public class GuestClientJoinHandler extends TS3EventAdapter {
 
-    private static final Logger log = LoggerFactory.getLogger(GuestsClientJoinHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(GuestClientJoinHandler.class);
 
+    private AeqTS3Bot ts3Bot;
     private GuestsClientJoinHandlerConfiguration configuration;
 
-    public GuestsClientJoinHandler(TS3Api api, TS3ApiAsync apiAsync) {
-        super(api, apiAsync);
-    }
-
-    public GuestsClientJoinHandler(TS3Api api, TS3ApiAsync apiAsync, GuestsClientJoinHandlerConfiguration
-            configuration) {
-        super(api, apiAsync);
-        this.configuration = configuration;
+    @Autowired
+    public GuestClientJoinHandler(AeqTS3Bot ts3Bot) {
+        this.ts3Bot = ts3Bot;
     }
 
     @Override
-    public void handle(ClientJoinEvent event) {
+    public void onClientJoin(ClientJoinEvent e) {
+        super.onClientJoin(e);
         // Check if the user is a guest
-        ClientInfo client = api.getClientByUId(event.getInvokerUniqueId());
+        ClientInfo client = ts3Bot.getApi().getClientByUId(e.getInvokerUniqueId());
         if (ClientHelpers.clientContainsServerGroup(client, ServerGroups.GUEST)) {
             if (configuration == null)
                 configuration = new GuestsClientJoinHandlerConfiguration();
-            if (!shouldSendMessage(event)) return;
+            if (!shouldSendMessage(e)) return;
             String message = ""; // TODO(glains): get the actual message
-            CommandFuture<Boolean> result = apiAsync.sendPrivateMessage(event.getClientId(), message);
-            result.onSuccess(e -> log.debug("Send message to client: {}, {}", client.getId(), message));
-            result.onFailure(e -> log.warn("Could not send message to client: {}", client.getId()));
+            if (!ts3Bot.getApi().sendPrivateMessage(e.getClientId(), message)) {
+                log.debug("Send message to client: {}, {}", client.getId(), message);
+            }
+            log.warn("Could not send message to client: {}", client.getId());
         }
     }
 
     private boolean shouldSendMessage(ClientJoinEvent event) {
-        ClientInfo client = api.getClientByUId(event.getInvokerUniqueId());
+        ClientInfo client = ts3Bot.getApi().getClientByUId(event.getInvokerUniqueId());
         int repeatAmount = configuration.getRepeatAmount();
         if (repeatAmount > 0) {
             // TODO(glains): get the actual value from the database
@@ -57,8 +62,6 @@ public class GuestsClientJoinHandler extends ClientJoinHandler {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(client.getLastConnectedDate());
         calendar.add(Calendar.SECOND, configuration.getRepeatTimeout());
-        if (!now.after(calendar.getTime()))
-            return false;
-        return true;
+        return now.after(calendar.getTime());
     }
 }

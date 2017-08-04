@@ -9,19 +9,27 @@ import com.github.theholywaffle.teamspeak3.api.wrapper.ChannelInfo;
 import de.esports.aeq.ts3bot.config.ConfigurationBuildException;
 import de.esports.aeq.ts3bot.config.ConfigurationBuilder;
 import de.esports.aeq.ts3bot.core.api.BotConfiguration;
+import de.esports.aeq.ts3bot.event.EchoTextMessageHandler;
+import de.esports.aeq.ts3bot.event.GuestClientJoinHandler;
+import de.esports.aeq.ts3bot.event.PrivilegedMessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lukas on 23.07.2017.
  */
-@Component
+@Component()
 public class AeqTS3Bot {
 
     public static final Logger log = LoggerFactory.getLogger(AeqTS3Bot.class);
 
+    private final AnnotationConfigApplicationContext context;
     private final ConfigurationBuilder configurationBuilder;
 
     private BotConfiguration configuration;
@@ -30,7 +38,8 @@ public class AeqTS3Bot {
     private TS3ApiAsync apiAsync;
 
     @Autowired
-    public AeqTS3Bot(ConfigurationBuilder configurationBuilder) {
+    public AeqTS3Bot(AnnotationConfigApplicationContext context, ConfigurationBuilder configurationBuilder) {
+        this.context = context;
         this.configurationBuilder = configurationBuilder;
     }
 
@@ -55,12 +64,22 @@ public class AeqTS3Bot {
         login();
 
         api.setNickname(configuration.getName());
-        TS3Listener ts3Listener = new AeqTS3Listener(api, apiAsync);
-        api.addTS3Listeners(ts3Listener);
+        initEventHandlers();
         api.registerAllEvents();
     }
 
-    public void buildConfiguration() {
+    private void initEventHandlers() {
+        List<TS3Listener> listeners = new ArrayList<>();
+
+        listeners.add(context.getBean(EchoTextMessageHandler.class));
+        listeners.add(context.getBean(GuestClientJoinHandler.class));
+        for (TS3Listener listener : listeners) {
+            // We wrap a privileged handler around for testing purposes
+            api.addTS3Listeners(new PrivilegedMessageHandler(listener));
+        }
+    }
+
+    private void buildConfiguration() {
         log.info("building bot configuration");
         try {
             this.configuration = configurationBuilder.build();
@@ -70,7 +89,7 @@ public class AeqTS3Bot {
         log.info("bot configuration successfully build with {}", configurationBuilder.getClass().getName());
     }
 
-    public void login() throws AeqBotException {
+    private void login() throws AeqBotException {
         log.info("attempting to login as {}", configuration.getUsername());
         if (api.login(configuration.getUsername(), configuration.getPassword())) {
             ChannelInfo info = api.getChannelInfo(api.whoAmI().getChannelId());
@@ -84,15 +103,7 @@ public class AeqTS3Bot {
         return api;
     }
 
-    public void setApi(TS3Api api) {
-        this.api = api;
-    }
-
     public TS3ApiAsync getApiAsync() {
         return apiAsync;
-    }
-
-    public void setApiAsync(TS3ApiAsync apiAsync) {
-        this.apiAsync = apiAsync;
     }
 }

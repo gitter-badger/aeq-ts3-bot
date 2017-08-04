@@ -1,6 +1,6 @@
 package de.esports.aeq.ts3bot.command.api;
 
-import de.esports.aeq.ts3bot.command.CommandExecutionContext;
+import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3bot.command.exception.CHandleException;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,10 +21,10 @@ public interface Command {
     String getPrefix();
 
     /**
-     * Executes this command with the given {@link CommandExecutionContext}.
+     * Executes this command.
      *
-     * @param context the execution context of this command, not null
+     * @param e the {@link TextMessageEvent} of this command, not null
      * @throws CHandleException if an error occurs during the execution process
      */
-    void execute(@NotNull CommandExecutionContext context) throws CHandleException;
+    void execute(TextMessageEvent e) throws CHandleException;
 }
