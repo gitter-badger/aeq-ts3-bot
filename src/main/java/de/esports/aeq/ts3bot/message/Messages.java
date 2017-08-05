@@ -1,6 +1,7 @@
 package de.esports.aeq.ts3bot.message;
 
 import de.esports.aeq.ts3bot.util.MathUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import java.util.ResourceBundle;
  */
 public class Messages {
 
-    public static final String BUNDLE_GENERAL_MESSAGES = "res.general";
+    public static final String BUNDLE_GENERAL_MESSAGES = "general";
 
     public static final String UNKNOWN_COMMAND = "unknown_command";
     public static final String ERROR_NOT_IMPLEMENTED = "error_not_implemented";
@@ -29,7 +30,7 @@ public class Messages {
     private static final String[] waitingMessages = {WAITING_01, WAITING_02, WAITING_03};
     private static final Logger log = LoggerFactory.getLogger(Messages.class);
 
-    public static Locale locale = Locale.ENGLISH;
+    public static Locale locale = Locale.GERMAN;
 
     /**
      * Returns a translated string of the BUNDLE_GENERAL_MESSAGES according to the selected {@link Locale}
@@ -38,22 +39,29 @@ public class Messages {
      * @param args    any additional arguments
      * @return the translated string
      */
-    public static @Nullable String getTranslatedString(String message, Object... args) {
+    public static @NotNull String getTranslatedString(String message, Object... args) {
         ResourceBundle bundle = null;
         try {
             bundle = ResourceBundle.getBundle(BUNDLE_GENERAL_MESSAGES, locale);
-        } catch (MissingResourceException e) {
-            log.debug("could not find message bundle", e);
-        }
-        if (bundle == null) {
-            log.debug("attempting to load default message bundle");
-            try {
-                bundle = ResourceBundle.getBundle(BUNDLE_GENERAL_MESSAGES);
-            } catch (MissingResourceException e) {
-                log.warn("no default resource bundle present", e);
-                return "";
+            if (bundle.containsKey(message)) {
+                return formatString(bundle, message, args);
+            } else {
+                log.debug("default message bundle does not contain key {}", message);
             }
+        } catch (MissingResourceException e) {
+            log.warn("could not find localized message bundle: {}", e);
         }
+        log.debug("attempting to load default message bundle");
+        try {
+            bundle = ResourceBundle.getBundle(BUNDLE_GENERAL_MESSAGES);
+            return formatString(bundle, message, args);
+        } catch (MissingResourceException e) {
+            log.error("could not load default message bundle", e);
+            return "";
+        }
+    }
+
+    private static @NotNull String formatString(ResourceBundle bundle, String message, Object... args) {
         if (args != null) {
             return MessageFormat.format(bundle.getString(message), args);
         }
