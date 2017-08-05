@@ -9,7 +9,7 @@ import com.github.theholywaffle.teamspeak3.api.wrapper.ChannelInfo;
 import de.esports.aeq.ts3bot.config.ConfigurationBuildException;
 import de.esports.aeq.ts3bot.config.ConfigurationBuilder;
 import de.esports.aeq.ts3bot.core.api.BotConfiguration;
-import de.esports.aeq.ts3bot.event.EchoTextMessageHandler;
+import de.esports.aeq.ts3bot.event.DefaultTextMessageHandler;
 import de.esports.aeq.ts3bot.event.GuestClientJoinHandler;
 import de.esports.aeq.ts3bot.event.PrivilegedMessageHandler;
 import org.slf4j.Logger;
@@ -70,8 +70,7 @@ public class AeqTS3Bot {
 
     private void initEventHandlers() {
         List<TS3Listener> listeners = new ArrayList<>();
-
-        listeners.add(context.getBean(EchoTextMessageHandler.class));
+        listeners.add(context.getBean(DefaultTextMessageHandler.class));
         listeners.add(context.getBean(GuestClientJoinHandler.class));
         for (TS3Listener listener : listeners) {
             // We wrap a privileged handler around for testing purposes

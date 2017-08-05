@@ -7,15 +7,20 @@ import de.esports.aeq.ts3bot.command.exception.CHandleException;
 import de.esports.aeq.ts3bot.core.AeqTS3Bot;
 import de.esports.aeq.ts3bot.message.MessageType;
 import de.esports.aeq.ts3bot.message.Messages;
-import de.esports.aeq.ts3bot.service.ServiceFactory;
-import de.esports.aeq.ts3bot.service.api.ApplicationService;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Lukas on 27.07.2017.
  */
+@Component
+@Scope("prototype")
 public class CAccept implements Command {
 
+    private static final Logger log = LoggerFactory.getLogger(CAccept.class);
     public static final String PREFIX = "accept";
 
     private AeqTS3Bot ts3Bot;
@@ -35,12 +40,17 @@ public class CAccept implements Command {
 
     @Override
     public void execute(TextMessageEvent e) throws CHandleException {
+        log.debug("executing command {}", CAccept.class.getSimpleName());
+        String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
+        ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
+        /*
         sendStartTaskMessage(e);
         ApplicationService service = ServiceFactory.getServiceFactory(ServiceFactory.MYSQL).getApplicationService();
         service.acceptApplication(ts3id).subscribe(
                 value -> sendSuccessMessage(e),
                 error -> sendErrorMessage(e)
         );
+        */
     }
 
     private void sendStartTaskMessage(TextMessageEvent e) {

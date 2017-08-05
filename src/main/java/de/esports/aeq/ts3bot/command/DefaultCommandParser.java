@@ -9,8 +9,14 @@ import de.esports.aeq.ts3bot.command.exception.CommandParsingException;
 import de.esports.aeq.ts3bot.command.exception.InvalidPrefixException;
 import de.esports.aeq.ts3bot.command.exception.UnregisteredCommandException;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,8 +25,11 @@ import java.util.regex.Pattern;
 /**
  * Created by Lukas on 25.07.2017.
  */
+@Component
 public class DefaultCommandParser implements CommandParser {
 
+    public static final String COMMAND_PREFIX = "!";
+    private static final Logger log = LoggerFactory.getLogger(DefaultCommandParser.class);
     private static HashMap<String, Class<? extends Command>> commands = new HashMap<>();
 
     /**
@@ -35,23 +44,30 @@ public class DefaultCommandParser implements CommandParser {
         commands.put(CVotes.PREFIX, CVotes.class);
     }
 
+    private ApplicationContext context;
+
+    @Autowired
+    public DefaultCommandParser(ApplicationContext context) {
+        this.context = context;
+    }
+
     @Override
     public @NotNull Command parse(@NotNull String message) throws CommandParsingException {
-        String[] args = argsFromString(message);
-        String prefix = args.length != 0 ? args[0] : null;
-        if (prefix == null) {
+        if (!message.startsWith(COMMAND_PREFIX)) {
             throw new InvalidPrefixException();
         }
-        Class<? extends Command> clazz = commands.get(prefix);
+        if (message.length() < 2) {
+            throw new CommandParsingException();
+        }
+        message = message.substring(1);
+        String[] args = argsFromString(message);
+        String name = args.length != 0 ? args[0] : null;
+        Class<? extends Command> clazz = commands.get(name);
         if (clazz == null) {
-            throw new UnregisteredCommandException(prefix);
+            throw new UnregisteredCommandException(name);
         }
-        Command command;
-        try {
-            command = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new CommandParsingException(e);
-        }
+        args = Arrays.copyOfRange(args, 1, args.length);
+        Command command = context.getBean(clazz);
         try {
             new JCommander.Builder().addObject(command).build().parse(args);
         } catch (ParameterException e) {
