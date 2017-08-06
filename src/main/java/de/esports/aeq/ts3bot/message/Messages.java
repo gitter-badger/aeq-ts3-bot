@@ -16,6 +16,9 @@ import java.util.ResourceBundle;
  */
 public class Messages {
 
+    public static final String WAITING_02 = "waiting_02";
+    public static final String WAITING_03 = "waiting_03";
+
     public static final String BUNDLE_GENERAL_MESSAGES = "general";
 
     public static final String UNKNOWN_COMMAND = "unknown_command";
@@ -24,11 +27,17 @@ public class Messages {
     public static final String ERROR_COMMAND_EXCEPTION = "error_command_exception";
     public static final String ACCEPT_APPLICATION_ON_ERROR = "accept_application_on_error";
     public static final String ACCEPT_APPLICATION_ON_SUCCESS = "accept_application_on_error";
+
     public static final String WAITING_01 = "waiting_01";
-    public static final String WAITING_02 = "waiting_01";
-    public static final String WAITING_03 = "waiting_01";
+    public static final String WELCOME_01 = "welcome_01";
+    public static final String WELCOME_02 = "welcome_02";
     private static final String[] waitingMessages = {WAITING_01, WAITING_02, WAITING_03};
+    public static final String WELCOME_03 = "welcome_03";
+    public static final String WELCOME_NEW_01 = "welcome_new_01";
+    public static final String WELCOME_NEW_02 = "welcome_new_02";
+    public static final String WELCOME_NEW_03 = "welcome_new_03";
     private static final Logger log = LoggerFactory.getLogger(Messages.class);
+    private static final String DELIMITER = "\\$\\$";
 
     public static Locale locale = Locale.GERMAN;
 
@@ -39,8 +48,8 @@ public class Messages {
      * @param args    any additional arguments
      * @return the translated string
      */
-    public static @NotNull String getTranslatedString(String message, Object... args) {
-        ResourceBundle bundle = null;
+    public static @NotNull String[] getTranslatedString(String message, Object... args) {
+        ResourceBundle bundle;
         try {
             bundle = ResourceBundle.getBundle(BUNDLE_GENERAL_MESSAGES, locale);
             if (bundle.containsKey(message)) {
@@ -57,25 +66,26 @@ public class Messages {
             return formatString(bundle, message, args);
         } catch (MissingResourceException e) {
             log.error("could not load default message bundle", e);
-            return "";
+            return new String[0];
         }
     }
 
-    private static @NotNull String formatString(ResourceBundle bundle, String message, Object... args) {
+    private static @NotNull String[] formatString(ResourceBundle bundle, String message, Object[] args) {
         if (args != null) {
-            return MessageFormat.format(bundle.getString(message), args);
+            String temp = MessageFormat.format(bundle.getString(message), args);
+            return temp.split(DELIMITER);
         }
-        return bundle.getString(message);
+        return bundle.getString(message).split(DELIMITER);
     }
 
-    public static @Nullable String getRandomTranslatedMessageOfType(MessageType type, Object... args) {
+    public static @Nullable String[] getRandomTranslatedMessageOfType(MessageType type, Object... args) {
         switch (type) {
             case WAITING:
                 if (waitingMessages.length == 0) return null;
                 String message = waitingMessages[MathUtil.getRandomIntBetween(0, waitingMessages.length - 1)];
                 return getTranslatedString(message, args);
         }
-        return "";
+        return new String[0];
     }
 
 }

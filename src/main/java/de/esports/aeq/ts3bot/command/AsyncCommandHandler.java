@@ -7,7 +7,6 @@ import de.esports.aeq.ts3bot.command.api.CommandHandler;
 import de.esports.aeq.ts3bot.command.exception.CHandleException;
 import de.esports.aeq.ts3bot.command.permission.CommandPermissionValidator;
 import de.esports.aeq.ts3bot.command.permission.UnrestrictedPermissionValidator;
-import de.esports.aeq.ts3bot.message.Messages;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
@@ -32,14 +31,14 @@ public class AsyncCommandHandler extends TS3EventAdapter implements CommandHandl
     public void handle(@NotNull Command command, TextMessageEvent context) {
         executor.execute(() -> {
             if (!validator.match(command, context)) {
-                String errorMessage = Messages.getTranslatedString(Messages.ERROR_INVALID_PERMISSIONS);
+                //String errorMessage = Messages.getTranslatedString(Messages.ERROR_INVALID_PERMISSIONS);
                 // TODO(glains): send message to client
                 return;
             }
             try {
                 command.execute(context);
             } catch (CHandleException e) {
-                String errorMessage = Messages.getTranslatedString(Messages.ERROR_COMMAND_EXCEPTION);
+                //String errorMessage = Messages.getTranslatedString(Messages.ERROR_COMMAND_EXCEPTION);
                 // TODO(glains): send message to client
             }
         });

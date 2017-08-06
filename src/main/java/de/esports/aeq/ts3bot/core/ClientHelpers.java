@@ -10,4 +10,10 @@ public class ClientHelpers {
         return false;
     }
 
+    public static void sendMessage(AeqTS3Bot ts3Bot, int clientId, String[] messages) {
+        for (String s : messages) {
+            ts3Bot.getApi().sendPrivateMessage(clientId, s);
+        }
+    }
+
 }

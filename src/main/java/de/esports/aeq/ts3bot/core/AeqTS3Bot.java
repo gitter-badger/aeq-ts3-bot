@@ -10,8 +10,8 @@ import de.esports.aeq.ts3bot.config.ConfigurationBuildException;
 import de.esports.aeq.ts3bot.config.ConfigurationBuilder;
 import de.esports.aeq.ts3bot.core.api.BotConfiguration;
 import de.esports.aeq.ts3bot.event.DefaultTextMessageHandler;
-import de.esports.aeq.ts3bot.event.GuestClientJoinHandler;
-import de.esports.aeq.ts3bot.event.PrivilegedMessageHandler;
+import de.esports.aeq.ts3bot.event.PrivilegedHandler;
+import de.esports.aeq.ts3bot.event.WelcomeClientJoinHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +71,10 @@ public class AeqTS3Bot {
     private void initEventHandlers() {
         List<TS3Listener> listeners = new ArrayList<>();
         listeners.add(context.getBean(DefaultTextMessageHandler.class));
-        listeners.add(context.getBean(GuestClientJoinHandler.class));
+        listeners.add(context.getBean(WelcomeClientJoinHandler.class));
         for (TS3Listener listener : listeners) {
             // We wrap a privileged handler around for testing purposes
-            api.addTS3Listeners(new PrivilegedMessageHandler(listener));
+            api.addTS3Listeners(new PrivilegedHandler(listener));
         }
     }
 

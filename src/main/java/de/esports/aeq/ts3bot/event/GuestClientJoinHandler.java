@@ -9,6 +9,7 @@ import de.esports.aeq.ts3bot.core.ServerGroups;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
@@ -21,6 +22,7 @@ import java.util.Date;
  * @since 01.08.2017
  */
 @Component
+@Scope("prototype")
 public class GuestClientJoinHandler extends TS3EventAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(GuestClientJoinHandler.class);

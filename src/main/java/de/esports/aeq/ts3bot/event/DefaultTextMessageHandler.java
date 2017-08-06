@@ -9,14 +9,15 @@ import de.esports.aeq.ts3bot.command.api.CommandParser;
 import de.esports.aeq.ts3bot.command.exception.CommandParsingException;
 import de.esports.aeq.ts3bot.command.exception.UnregisteredCommandException;
 import de.esports.aeq.ts3bot.core.AeqTS3Bot;
-import de.esports.aeq.ts3bot.message.Messages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class DefaultTextMessageHandler extends TS3EventAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultTextMessageHandler.class);
@@ -59,8 +60,8 @@ public class DefaultTextMessageHandler extends TS3EventAdapter {
             // handle each command in a new thread
             asyncCommandHandler.handle(command, e);
         } catch (UnregisteredCommandException ex) {
-            String error = Messages.getTranslatedString(Messages.UNKNOWN_COMMAND);
-            ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), error);
+            //String error = Messages.getTranslatedString(Messages.UNKNOWN_COMMAND);
+            //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), error);
         } catch (CommandParsingException ex) {
             log.warn("error while parsing command", ex);
         }

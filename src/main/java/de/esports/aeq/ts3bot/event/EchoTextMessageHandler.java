@@ -7,9 +7,11 @@ import de.esports.aeq.ts3bot.core.AeqTS3Bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class EchoTextMessageHandler extends TS3EventAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(EchoTextMessageHandler.class);
