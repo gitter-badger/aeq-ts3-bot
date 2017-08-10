@@ -1,3 +1,15 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2017 Lukas Kannenberg
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package de.esports.aeq.ts3bot.message;
 
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
@@ -14,11 +26,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The default {@link MessageFormatter} applies the following formatting rules:
- * <ul>
- * <li><b>"#"</b> is used for a new line (this will effectively split the message into multiple messages)</li>
- * <li><b>"${key}"</b> is used to access the message dependent event info</li>
- * </ul>
+ * The default {@link MessageFormatter} applies the following formatting rules: <ul> <li><b>"#"</b> is used for a new
+ * line (this will effectively split the message into multiple messages)</li> <li><b>"${key}"</b> is used to access the
+ * message dependent event info</li> </ul>
  *
  * @author Lukas Kannenberg
  * @see MessageFormatter
@@ -101,7 +111,8 @@ public class EventMessageFormatter implements MessageFormatter {
      */
     private String extractKey(String group) {
         // should never happen due to the regex, but we still cover IndexOutOfBoundsException
-        if (group.length() < 3) return group;
+        if (group.length() < 3)
+            return group;
         return group.substring(2, group.length() - 1);
     }
 
