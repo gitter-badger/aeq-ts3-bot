@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * The default {@link MessageFormatter} applies the following formatting rules:
  * <ul>
  * <li><b>"#"</b> is used for a new line (this will effectively split the message into multiple messages)</li>
- * <li><b>"${key}"</b> is used to access a the message dependent event info</li>
+ * <li><b>"${key}"</b> is used to access the message dependent event info</li>
  * </ul>
  *
  * @author Lukas Kannenberg
@@ -102,7 +102,7 @@ public class EventMessageFormatter implements MessageFormatter {
     private String extractKey(String group) {
         // should never happen due to the regex, but we still cover IndexOutOfBoundsException
         if (group.length() < 3) return group;
-        return group.substring(2, group.length() - 2);
+        return group.substring(2, group.length() - 1);
     }
 
     /**
