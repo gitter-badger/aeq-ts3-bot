@@ -70,6 +70,10 @@ public class Messages {
         }
     }
 
+    /**
+     * @deprecated use {@link MessageFormatter} instead
+     */
+    @Deprecated
     private static @NotNull String[] formatString(ResourceBundle bundle, String message, Object[] args) {
         if (args != null) {
             String temp = MessageFormat.format(bundle.getString(message), args);
