@@ -9,7 +9,7 @@ public interface ConfigurationBuilder {
     /**
      * Builds the target {@link BotConfiguration}.
      * <p>
-     * The exact method of loading the configuration (e.g. using a service or file-based system) is used is up to the
+     * The exact method of loading the configuration (e.g. using a repository or file-based system) is used is up to the
      * implementation.
      *
      * @return the build {@link BotConfiguration}, never null

@@ -43,8 +43,8 @@ public class CAccept implements Command {
         //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
         /*
         sendStartTaskMessage(e);
-        ApplicationService service = ServiceFactory.getServiceFactory(ServiceFactory.MYSQL).getApplicationService();
-        service.acceptApplication(ts3id).subscribe(
+        ApplicationService repository = ServiceFactory.getServiceFactory(ServiceFactory.MYSQL).getApplicationService();
+        repository.acceptApplication(ts3id).subscribe(
                 value -> sendSuccessMessage(e),
                 error -> sendErrorMessage(e)
         );

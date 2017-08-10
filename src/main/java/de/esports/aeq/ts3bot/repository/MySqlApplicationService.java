@@ -1,7 +1,7 @@
-package de.esports.aeq.ts3bot.service;
+package de.esports.aeq.ts3bot.repository;
 
 import de.esports.aeq.ts3bot.core.api.Application;
-import de.esports.aeq.ts3bot.service.api.ApplicationService;
+import de.esports.aeq.ts3bot.repository.api.ApplicationService;
 import io.reactivex.Observable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

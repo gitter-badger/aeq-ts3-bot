@@ -1,6 +1,6 @@
-package de.esports.aeq.ts3bot.service;
+package de.esports.aeq.ts3bot.repository;
 
-import de.esports.aeq.ts3bot.service.api.*;
+import de.esports.aeq.ts3bot.repository.api.*;
 import org.jetbrains.annotations.NotNull;
 
 /**

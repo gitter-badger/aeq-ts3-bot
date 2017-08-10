@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.service.api;
+package de.esports.aeq.ts3bot.repository.api;
 
 import de.esports.aeq.ts3bot.core.api.Credentials;
 

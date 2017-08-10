@@ -1,7 +1,7 @@
-package de.esports.aeq.ts3bot.service;
+package de.esports.aeq.ts3bot.repository;
 
 /**
- * Exception thrown for any errors that occurred while communicating with any aeq-service or the database.
+ * Exception thrown for any errors that occurred while communicating with any aeq-repository or the database.
  *
  * @author Lukas Kannenberg
  * @since 22.07.2017.

@@ -1,7 +1,7 @@
-package de.esports.aeq.ts3bot.service;
+package de.esports.aeq.ts3bot.repository;
 
 import de.esports.aeq.ts3bot.core.api.Credentials;
-import de.esports.aeq.ts3bot.service.api.AuthenticationService;
+import de.esports.aeq.ts3bot.repository.api.AuthenticationService;
 
 public class MySqlAuthenticationService implements AuthenticationService {
 

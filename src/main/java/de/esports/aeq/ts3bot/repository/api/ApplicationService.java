@@ -1,4 +1,4 @@
-package de.esports.aeq.ts3bot.service.api;
+package de.esports.aeq.ts3bot.repository.api;
 
 import de.esports.aeq.ts3bot.core.api.Application;
 import io.reactivex.Observable;
@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a general interface for application service calls.
+ * Represents a general interface for application repository calls.
  *
  * @author Lukas Kannenberg
  * @since 22.07.2017.

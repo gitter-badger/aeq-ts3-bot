@@ -1,6 +1,6 @@
 package de.esports.aeq.ts3bot.core.api;
 
-import de.esports.aeq.ts3bot.service.api.RecruitService;
+import de.esports.aeq.ts3bot.repository.api.RecruitService;
 
 /**
  * Represents the result of a {@link RecruitService#getVoteCount}.

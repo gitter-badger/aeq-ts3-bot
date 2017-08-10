@@ -1,11 +1,11 @@
-package de.esports.aeq.ts3bot.service.api;
+package de.esports.aeq.ts3bot.repository.api;
 
 import io.reactivex.Observable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a general interface for account service calls.
+ * Represents a general interface for account repository calls.
  *
  * @author Lukas Kannenberg
  * @since 19.07.2017.
