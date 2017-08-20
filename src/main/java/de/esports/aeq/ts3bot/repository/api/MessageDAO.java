@@ -24,5 +24,5 @@ public interface MessageDAO {
 
     void deleteMessage(int messageId);
 
-    List<Message> getMessages(String context, String id, String locale);
+    List<Message> getMessages(String id, String locale);
 }

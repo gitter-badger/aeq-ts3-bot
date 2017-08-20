@@ -102,14 +102,10 @@ public class JdbcMessageDAO implements MessageDAO {
 
     @Override
     @NotImplemented
-    public List<Message> getMessages(String context, String id, String locale) {
+    public List<Message> getMessages(String id, String locale) {
         // TODO(glains)
         String query = "SELECT * FROM messages WHERE 1=1";
         HashMap<String, String> params = new HashMap<>();
-        if (context != null) {
-            query += " AND query = ?";
-            params.put("context", context);
-        }
         if (id != null) {
             query += " AND id = ?";
             params.put("id", id);

@@ -49,4 +49,5 @@ public class MySqlServiceFactory extends ServiceFactory {
     public @NotNull AuthenticationService getAuthenticationService() {
         return new MySqlAuthenticationService();
     }
+
 }

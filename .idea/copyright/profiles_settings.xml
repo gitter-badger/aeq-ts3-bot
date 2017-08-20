@@ -1,3 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="LKA Copyright Profile" />
+  <settings default="LKA Copyright Profile">
+    <module2copyright>
+      <element module="All" copyright="LKA Copyright Profile" />
+    </module2copyright>
+  </settings>
 </component>

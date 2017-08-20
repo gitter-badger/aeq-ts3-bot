@@ -20,48 +20,33 @@
 
 package de.esports.aeq.ts3bot.message;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
+
 /**
- * Represents a message.
+ * Provides messages the are used in this application.
+ * <p>
+ * Messages are usually stored within a database instead of a resource bundle to make them easily changeable with a
+ * service.
  *
  * @author Lukas Kannenberg
  * @version 0.1
  * @since 20.08.2017
  */
-public class Message {
+public interface MessageProvider {
 
-    private String id;
-
-    private String locale;
-
-    private String message;
-
-    public Message(String id, String locale, String message) {
-        this.id = id;
-        this.locale = locale;
-        this.message = message;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    /**
+     * Retrieves a message that matches the given id and locale.
+     * <p>
+     * If multiple matches are found, a only one of the messages will be returned, selection progress is up to the
+     * implementation.
+     *
+     * @param id     the message id
+     * @param locale the locale of the message
+     * @return the message or null if no match has been found
+     */
+    @Nullable
+    String getMessage(@NotNull String id, @NotNull Locale locale);
 }

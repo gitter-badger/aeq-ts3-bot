@@ -20,48 +20,38 @@
 
 package de.esports.aeq.ts3bot.message;
 
+import de.esports.aeq.ts3bot.repository.JdbcMessageDAO;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
- * Represents a message.
- *
  * @author Lukas Kannenberg
- * @version 0.1
- * @since 20.08.2017
  */
-public class Message {
+@Component
+public class DefaultMessageProvider implements MessageProvider {
 
-    private String id;
+    private ApplicationContext context;
 
-    private String locale;
-
-    private String message;
-
-    public Message(String id, String locale, String message) {
-        this.id = id;
-        this.locale = locale;
-        this.message = message;
+    @Autowired
+    public DefaultMessageProvider(ApplicationContext context) {
+        this.context = context;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    @Override
+    public @Nullable String getMessage(@NotNull String id, @NotNull Locale locale) {
+        JdbcMessageDAO dao = context.getBean(JdbcMessageDAO.class);
+        List<Message> messages = dao.getMessages(id, locale.getLanguage());
+        if (messages != null) {
+            int rnd = ThreadLocalRandom.current().nextInt(0, messages.size() + 1);
+            Message message = messages.get(rnd);
+        }
+        return null;
     }
 }

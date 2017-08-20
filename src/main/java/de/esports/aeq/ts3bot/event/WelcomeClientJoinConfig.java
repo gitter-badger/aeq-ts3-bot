@@ -18,50 +18,44 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3bot.message;
+package de.esports.aeq.ts3bot.event;
 
 /**
- * Represents a message.
- *
  * @author Lukas Kannenberg
- * @version 0.1
- * @since 20.08.2017
  */
-public class Message {
+public class WelcomeClientJoinConfig {
 
-    private String id;
-
-    private String locale;
-
-    private String message;
-
-    public Message(String id, String locale, String message) {
-        this.id = id;
-        this.locale = locale;
-        this.message = message;
+    public static boolean isWithinRange(WelcomeClientJoinConfig config, int connectionAmount) {
+        if (config.minJoins != -1) {
+            if (connectionAmount < config.minJoins) return false;
+        }
+        if (config.maxJoins != -1) {
+            if (connectionAmount > config.maxJoins) return false;
+        }
+        return true;
     }
 
-    public String getId() {
-        return id;
+    private int minJoins = -1;
+    private int maxJoins = -1;
+
+    public WelcomeClientJoinConfig(int minJoins, int maxJoins) {
+        this.minJoins = minJoins;
+        this.maxJoins = maxJoins;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public int getMinJoins() {
+        return minJoins;
     }
 
-    public String getLocale() {
-        return locale;
+    public void setMinJoins(int minJoins) {
+        this.minJoins = minJoins;
     }
 
-    public void setLocale(String locale) {
-        this.locale = locale;
+    public int getMaxJoins() {
+        return maxJoins;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMaxJoins(int maxJoins) {
+        this.maxJoins = maxJoins;
     }
 }
