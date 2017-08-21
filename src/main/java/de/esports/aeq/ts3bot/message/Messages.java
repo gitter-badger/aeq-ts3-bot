@@ -71,9 +71,6 @@ public class Messages {
 
     public static Locale locale = Locale.GERMAN;
 
-    @Autowired
-    private static ApplicationContext context;
-
     /**
      * Returns a translated string of the BUNDLE_GENERAL_MESSAGES according to the selected {@link Locale}
      *
