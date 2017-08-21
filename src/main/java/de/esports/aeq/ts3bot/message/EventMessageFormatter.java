@@ -15,6 +15,7 @@ package de.esports.aeq.ts3bot.message;
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import de.esports.aeq.ts3bot.core.AeqTS3Bot;
+import de.esports.aeq.ts3bot.message.api.MessageFormatter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

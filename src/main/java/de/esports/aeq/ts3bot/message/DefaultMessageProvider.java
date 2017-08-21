@@ -20,6 +20,7 @@
 
 package de.esports.aeq.ts3bot.message;
 
+import de.esports.aeq.ts3bot.message.api.MessageProvider;
 import de.esports.aeq.ts3bot.repository.JdbcMessageDAO;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +51,7 @@ public class DefaultMessageProvider implements MessageProvider {
         List<Message> messages = dao.getMessages(id, locale.getLanguage());
         if (messages != null) {
             int rnd = ThreadLocalRandom.current().nextInt(0, messages.size() + 1);
-            Message message = messages.get(rnd);
+            return messages.get(rnd).getMessage();
         }
         return null;
     }

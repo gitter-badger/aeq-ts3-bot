@@ -20,13 +20,12 @@
 
 package de.esports.aeq.ts3bot.message;
 
+import de.esports.aeq.ts3bot.message.api.MessageFormatter;
 import de.esports.aeq.ts3bot.util.MathUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 
 import java.text.MessageFormat;
 import java.util.Locale;

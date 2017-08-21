@@ -28,7 +28,7 @@ import de.esports.aeq.ts3bot.core.AeqTS3Bot;
 import de.esports.aeq.ts3bot.core.ClientHelpers;
 import de.esports.aeq.ts3bot.message.DefaultMessageProvider;
 import de.esports.aeq.ts3bot.message.EventMessageFormatter;
-import de.esports.aeq.ts3bot.message.MessageProvider;
+import de.esports.aeq.ts3bot.message.api.MessageProvider;
 import de.esports.aeq.ts3bot.message.Messages;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
