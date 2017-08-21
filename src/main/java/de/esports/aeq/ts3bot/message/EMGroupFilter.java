@@ -87,4 +87,32 @@ public class EMGroupFilter implements EventMessageFilter {
         ClientInfo info = ts3Bot.getApi().getClientInfo(event.getInvokerId());
         return isValidServerGroup(info.getServerGroups(), whitelist, blacklist);
     }
+
+    /**
+     * @return the whitelist for this filter
+     */
+    public int[] getWhitelist() {
+        return whitelist;
+    }
+
+    /**
+     * @param whitelist the whitelist for this filter
+     */
+    public void setWhitelist(int[] whitelist) {
+        this.whitelist = whitelist;
+    }
+
+    /**
+     * @return the blacklist for this filter
+     */
+    public int[] getBlacklist() {
+        return blacklist;
+    }
+
+    /**
+     * @param blacklist the blacklist for this filter
+     */
+    public void setBlacklist(int[] blacklist) {
+        this.blacklist = blacklist;
+    }
 }
