@@ -25,6 +25,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -128,7 +129,7 @@ public class JdbcMessageDAO implements MessageDAO {
                 DbUtils.closeQuietly(conn);
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
 }
