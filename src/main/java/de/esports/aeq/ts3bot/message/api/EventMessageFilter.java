@@ -36,9 +36,22 @@ public interface EventMessageFilter extends MessageFilter {
      * @return the filtered {@link List} of messages
      */
     static List<Message> filter(EventMessageFilter filter, List<Message> messages, BaseEvent event) {
-        List<Message> result = messages;
-        result.removeIf(i -> filter.apply(i, event));
-        return result;
+        messages.removeIf(i -> filter.apply(i, event));
+        return messages;
+    }
+
+    /**
+     * Applies the given filters to a single message.
+     *
+     * @param filters the filters to be applied
+     * @param message the {@link Message}
+     * @param event   the event context
+     * @return true if the message matches all the filters, otherwise false
+     */
+    static boolean filter(List<EventMessageFilter> filters, Message message, BaseEvent event) {
+        for (EventMessageFilter filter : filters)
+            if (filter.apply(message, event)) return false;
+        return true;
     }
 
     /**

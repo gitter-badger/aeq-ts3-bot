@@ -20,6 +20,10 @@
 
 package de.esports.aeq.ts3bot.message;
 
+import de.esports.aeq.ts3bot.message.api.EventMessageFilter;
+
+import java.util.List;
+
 /**
  * Represents a message.
  *
@@ -35,10 +39,13 @@ public class Message {
 
     private String message;
 
-    public Message(String id, String locale, String message) {
+    private List<EventMessageFilter> filters;
+
+    public Message(String id, String locale, String message, List<EventMessageFilter> filters) {
         this.id = id;
         this.locale = locale;
         this.message = message;
+        this.filters = filters;
     }
 
     public String getId() {
@@ -63,5 +70,13 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public List<EventMessageFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<EventMessageFilter> filters) {
+        this.filters = filters;
     }
 }

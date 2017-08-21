@@ -23,23 +23,19 @@ package de.esports.aeq.ts3bot.event;
 import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
-import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import de.esports.aeq.ts3bot.core.AeqTS3Bot;
 import de.esports.aeq.ts3bot.core.ClientHelpers;
-import de.esports.aeq.ts3bot.message.DefaultMessageProvider;
+import de.esports.aeq.ts3bot.message.DefaultEventMessageProvider;
 import de.esports.aeq.ts3bot.message.EventMessageFormatter;
-import de.esports.aeq.ts3bot.message.api.MessageProvider;
+import de.esports.aeq.ts3bot.message.Message;
 import de.esports.aeq.ts3bot.message.Messages;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import de.esports.aeq.ts3bot.message.api.EventMessageProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * Class description.
@@ -69,13 +65,10 @@ public class WelcomeClientJoinHandler extends TS3EventAdapter {
     public void onClientJoin(ClientJoinEvent e) {
         super.onClientJoin(e);
         Client client = ts3Bot.getApi().getClientByUId(e.getUniqueClientIdentifier());
-        int amountConnected = 0; // TODO(glains): get connection amount from database
-        WelcomeClientJoinConfig config = null; // TODO(glains): get config from database
-        if (!WelcomeClientJoinConfig.isWithinRange(config, amountConnected)) {
-            return;
-        }
         // TODO: check if client did not mute the bot
-        ClientHelpers.sendMessage(ts3Bot, client.getId(), getWelcomeMessage(e, amountConnected));
+        String[] message = getWelcomeMessage(e);
+        if (message != null)
+            ClientHelpers.sendMessage(ts3Bot.getApi(), client.getId(), message);
     }
 
     /**
@@ -85,23 +78,14 @@ public class WelcomeClientJoinHandler extends TS3EventAdapter {
      * @param event
      * @return
      */
-    private String[] getWelcomeMessage(ClientJoinEvent event, int amountConnected) {
-        Date lastOnline = getLastTimeOnline(event);
-        MessageProvider provider = context.getBean(DefaultMessageProvider.class);
+    private String[] getWelcomeMessage(ClientJoinEvent event) {
+        EventMessageProvider provider = context.getBean(DefaultEventMessageProvider.class);
         // TODO: we need a way to store the config with a message
-        String message = provider.getMessage(Messages.WELCOME, Messages.locale);
-        return formatter.format(message, event);
+        Message message = provider.getMessage(Messages.WELCOME, Messages.locale, event);
+        if (message != null)
+            return formatter.format(message.getMessage(), event);
+        return new String[0];
     }
 
-    /**
-     * @param e
-     * @return
-     */
-    private @Nullable Date getLastTimeOnline(@NotNull ClientJoinEvent e) {
-        ClientInfo info = ts3Bot.getApi().getClientByUId(e.getUniqueClientIdentifier());
-        if (info != null) {
-            return info.getLastConnectedDate();
-        }
-        return null;
-    }
+
 }

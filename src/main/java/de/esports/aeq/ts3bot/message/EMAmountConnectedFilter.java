@@ -18,29 +18,36 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3bot.event;
+package de.esports.aeq.ts3bot.message;
 
-/**
- * @author Lukas Kannenberg
- */
-public class WelcomeClientJoinConfig {
+import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+import de.esports.aeq.ts3bot.core.AeqTS3Bot;
+import de.esports.aeq.ts3bot.message.api.EventMessageFilter;
 
-    public static boolean isWithinRange(WelcomeClientJoinConfig config, int connectionAmount) {
-        if (config.minJoins != -1) {
-            if (connectionAmount < config.minJoins) return false;
-        }
-        if (config.maxJoins != -1) {
-            if (connectionAmount > config.maxJoins) return false;
-        }
-        return true;
-    }
+public class EMAmountConnectedFilter implements EventMessageFilter {
 
+    private AeqTS3Bot ts3Bot;
     private int minJoins = -1;
     private int maxJoins = -1;
 
-    public WelcomeClientJoinConfig(int minJoins, int maxJoins) {
+    public EMAmountConnectedFilter(AeqTS3Bot ts3Bot, int minJoins, int maxJoins) {
+        this.ts3Bot = ts3Bot;
         this.minJoins = minJoins;
         this.maxJoins = maxJoins;
+    }
+
+    @Override
+    public boolean apply(Message message, BaseEvent event) {
+        return isWithinRange(getAmountConnected(event.getInvokerId()));
+    }
+
+    private int getAmountConnected(int clientId) {
+        // TODO: make a database call here
+        return 0;
+    }
+
+    private boolean isWithinRange(int connectionAmount) {
+        return (minJoins == -1 || connectionAmount >= minJoins) && (maxJoins == -1 || connectionAmount <= maxJoins);
     }
 
     public int getMinJoins() {

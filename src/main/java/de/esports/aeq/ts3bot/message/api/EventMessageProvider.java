@@ -20,6 +20,8 @@
 
 package de.esports.aeq.ts3bot.message.api;
 
+import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+import de.esports.aeq.ts3bot.message.Message;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,21 +34,22 @@ import java.util.Locale;
  * service.
  *
  * @author Lukas Kannenberg
- * @version 0.1
+ * @version 0.2
  * @since 20.08.2017
  */
-public interface MessageProvider {
+public interface EventMessageProvider {
 
     /**
-     * Retrieves a message that matches the given id and locale.
+     * Retrieves a {@link Message} that matches the given id and locale.
      * <p>
      * If multiple matches are found, only one of the messages will be returned while the selection progress is up to
      * the implementation.
      *
      * @param id     the message id
      * @param locale the locale of the message
-     * @return the message or null if no match has been found
+     * @param event  the related event
+     * @return the {@link Message} or null if no match has been found
      */
     @Nullable
-    String getMessage(@NotNull String id, @NotNull Locale locale);
+    Message getMessage(@NotNull String id, @NotNull Locale locale, @NotNull BaseEvent event);
 }
