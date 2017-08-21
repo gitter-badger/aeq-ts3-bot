@@ -40,8 +40,8 @@ public interface MessageProvider {
     /**
      * Retrieves a message that matches the given id and locale.
      * <p>
-     * If multiple matches are found, a only one of the messages will be returned, selection progress is up to the
-     * implementation.
+     * If multiple matches are found, only one of the messages will be returned while the selection progress is up to
+     * the implementation.
      *
      * @param id     the message id
      * @param locale the locale of the message
