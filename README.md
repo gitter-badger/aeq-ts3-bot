@@ -1,5 +1,7 @@
 # AeQ eSports TS3 Bot
 
+![](https://travis-ci.org/glains/aeq-ts3-bot.svg?branch=master)
+
 <img src="https://aeq-esports.de/news/images/news/7d7519f8ab78cb658a827ff1d08ad2cd3d90803f.png" alt="AeQ eSports Logo" width="200" height="200">
 
 Teamspeak 3 Bot for AeQ eSports.
