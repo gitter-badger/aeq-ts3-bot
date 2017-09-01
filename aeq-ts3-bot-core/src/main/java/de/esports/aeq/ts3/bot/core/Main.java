@@ -33,6 +33,9 @@ public class Main {
         context.register(AppConfig.class);
         context.refresh();
         TS3Bot ts3Bot = context.getBean(TS3Bot.class);
+        if (args.length > 0) {
+            ts3Bot.buildConfiguration(args[0]);
+        }
         ts3Bot.start();
     }
 

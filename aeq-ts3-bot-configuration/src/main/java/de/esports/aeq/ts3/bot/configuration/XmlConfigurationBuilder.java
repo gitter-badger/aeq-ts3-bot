@@ -22,40 +22,45 @@ package de.esports.aeq.ts3.bot.configuration;
 
 import de.esports.aeq.ts3.bot.configuration.api.ConfigurationBuilder;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
 
 /**
- * Serves a static {@link BotConfiguration}.
- * <p>
- * Remember that for security reasons the username and password still needs to be entered manually. Preferably you
- * can use {@link CredentialsUtil#readFromCommandLine()}.
+ * Used to build a {@link BotConfiguration} from an XML file.
  *
  * @author Lukas Kannenberg
- * @since 01.07.2017
+ * @version 1.0
+ * @since 01.09.2017
  */
-public class StaticConfigurationBuilder implements ConfigurationBuilder {
+public class XmlConfigurationBuilder implements ConfigurationBuilder {
 
-    private static final Logger log = LoggerFactory.getLogger(StaticConfigurationBuilder.class);
+    /**
+     * The pathname of the XML configuration file.
+     */
+    private String pathname;
 
-    private static final String HOSTNAME = "137.74.223.0";
-    private static final int QUERY_PORT = 10011;
-    private static final int VIRTUAL_SERVER_PORT = 9889;
-    private static final String NAME = "Merlin";
-
-    public StaticConfigurationBuilder() {
-
+    /**
+     * Constructs a new {@link XmlConfigurationBuilder}.
+     *
+     * @param pathname the pathname of the XML configuration file
+     */
+    public XmlConfigurationBuilder(String pathname) {
+        this.pathname = pathname;
     }
 
     @Override
     public @NotNull BotConfiguration build() throws ConfigurationBuildException {
-        Credentials credentials;
+        File file = new File(pathname);
         try {
-            credentials = CredentialsUtil.readFromCommandLine();
-        } catch (Exception e) {
-            throw new ConfigurationBuildException("cannot read credentials", e);
+            JAXBContext jaxbContext = JAXBContext.newInstance(BotConfiguration.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            return (BotConfiguration) unmarshaller.unmarshal(file);
+        } catch (JAXBException e) {
+            throw new ConfigurationBuildException("unable to create configuration", e);
         }
-        return new BotConfiguration(HOSTNAME, QUERY_PORT, VIRTUAL_SERVER_PORT, credentials.getUsername(), credentials
-                .getPassword(), NAME);
     }
+
 }

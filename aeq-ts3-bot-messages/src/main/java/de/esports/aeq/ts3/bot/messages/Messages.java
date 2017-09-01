@@ -18,7 +18,7 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.messages;
+package de.esports.aeq.ts3.bot.messages;
 
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;

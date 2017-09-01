@@ -18,12 +18,12 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.messages;
+package de.esports.aeq.ts3.bot.messages;
 
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
-import de.aeq.esports.ts3.bot.messages.api.EventMessageFilter;
-import de.aeq.esports.ts3.bot.messages.api.MessageFilter;
+import de.esports.aeq.ts3.bot.messages.api.EventMessageFilter;
+import de.esports.aeq.ts3.bot.messages.api.MessageFilter;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 
 import java.util.stream.IntStream;

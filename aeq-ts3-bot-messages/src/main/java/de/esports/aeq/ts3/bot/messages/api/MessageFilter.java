@@ -18,27 +18,17 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.messages.api;
-
-import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+package de.esports.aeq.ts3.bot.messages.api;
 
 /**
- * This interface is intended to be implemented for any class that defines the behaviour of how a message should be
- * formatted. Each formatter can apply additional formatting rules.
+ * Represents a filter for messages.
+ * <p>
+ * This interface is intended to be extended by interfaces which specify the context of the message to be filtered.
  *
  * @author Lukas Kannenberg
- * @since 0.1
+ * @version 0.1
+ * @since 21.08.2017
  */
-public interface MessageFormatter {
+public interface MessageFilter {
 
-    /**
-     * Formats the given message.
-     * <p>
-     * The exact formatting rules are specified in the implementation.
-     *
-     * @param message the message to be formatted
-     * @param event   the related event
-     * @return the formatted message
-     */
-    String[] format(String message, BaseEvent event);
 }

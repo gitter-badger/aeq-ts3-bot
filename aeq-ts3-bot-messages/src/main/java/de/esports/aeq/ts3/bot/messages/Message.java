@@ -18,17 +18,66 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.messages.api;
+package de.esports.aeq.ts3.bot.messages;
+
+
+import de.esports.aeq.ts3.bot.messages.api.EventMessageFilter;
+
+import java.util.List;
 
 /**
- * Represents a filter for messages.
- * <p>
- * This interface is intended to be extended by interfaces which specify the context of the message to be filtered.
+ * Represents a message.
  *
  * @author Lukas Kannenberg
  * @version 0.1
- * @since 21.08.2017
+ * @since 20.08.2017
  */
-public interface MessageFilter {
+public class Message {
 
+    private String id;
+
+    private String locale;
+
+    private String message;
+
+    private List<EventMessageFilter> filters;
+
+    public Message(String id, String locale, String message, List<EventMessageFilter> filters) {
+        this.id = id;
+        this.locale = locale;
+        this.message = message;
+        this.filters = filters;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<EventMessageFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<EventMessageFilter> filters) {
+        this.filters = filters;
+    }
 }

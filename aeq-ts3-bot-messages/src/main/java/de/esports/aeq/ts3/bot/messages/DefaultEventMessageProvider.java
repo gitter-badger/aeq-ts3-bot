@@ -18,11 +18,11 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.messages;
+package de.esports.aeq.ts3.bot.messages;
 
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
-import de.aeq.esports.ts3.bot.messages.api.EventMessageFilter;
-import de.aeq.esports.ts3.bot.messages.api.EventMessageProvider;
+import de.esports.aeq.ts3.bot.messages.api.EventMessageFilter;
+import de.esports.aeq.ts3.bot.messages.api.EventMessageProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;

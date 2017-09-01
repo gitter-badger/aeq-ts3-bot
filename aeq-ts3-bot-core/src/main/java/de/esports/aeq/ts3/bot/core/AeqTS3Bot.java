@@ -28,7 +28,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TS3Listener;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ChannelInfo;
 import de.esports.aeq.ts3.bot.configuration.BotConfiguration;
 import de.esports.aeq.ts3.bot.configuration.ConfigurationBuildException;
-import de.esports.aeq.ts3.bot.configuration.api.ConfigurationBuilder;
+import de.esports.aeq.ts3.bot.configuration.XmlConfigurationBuilder;
 import de.esports.aeq.ts3.bot.core.event.DefaultTextMessageHandler;
 import de.esports.aeq.ts3.bot.core.event.PrivilegedHandler;
 import de.esports.aeq.ts3.bot.core.event.WelcomeClientJoinHandler;
@@ -48,45 +48,75 @@ import java.util.List;
 @Component()
 public class AeqTS3Bot implements TS3Bot {
 
-    public static final Logger log = LoggerFactory.getLogger(TS3Bot.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TS3Bot.class);
 
     private final AnnotationConfigApplicationContext context;
-    private final ConfigurationBuilder configurationBuilder;
 
     private BotConfiguration configuration;
 
+    private TS3Query query;
     private TS3Api api;
     private TS3ApiAsync apiAsync;
 
     @Autowired
-    public AeqTS3Bot(AnnotationConfigApplicationContext context, ConfigurationBuilder configurationBuilder) {
+    public AeqTS3Bot(AnnotationConfigApplicationContext context) {
         this.context = context;
-        this.configurationBuilder = configurationBuilder;
     }
 
-    public void start() {
-        buildConfiguration();
-        final TS3Config config = new TS3Config();
-        config.setHost(configuration.getHostname());
-        if (configuration.getQueryPort() > 0) {
-            config.setQueryPort(configuration.getQueryPort());
+    @Override
+    public void buildConfiguration(String pathname) {
+        LOG.info("building bot configuration");
+        try {
+            XmlConfigurationBuilder builder = new XmlConfigurationBuilder(pathname);
+            this.configuration = builder.build();
+        } catch (ConfigurationBuildException e) {
+            throw new AeqBotException("cannot build bot configuration", e);
         }
-        config.setConnectionHandler(new AeqBotConnectionHandler());
+        LOG.info("bot configuration successfully build from {}", pathname);
+        LOG.info(configuration.toString());
+    }
 
-        final TS3Query query = new TS3Query(config);
+    @Override
+    public void start() {
+        if (configuration == null) {
+            throw new AeqBotException("bot configuration is not successfully initialized");
+        }
+        LOG.info("Starting bot.");
+        query = new TS3Query(createTS3Configuration());
         query.connect();
-
-        // Register external beans
         api = query.getApi();
         apiAsync = query.getAsyncApi();
-
-        api.selectVirtualServerByPort(configuration.getVirtualServerPort());
+        api.selectVirtualServerByPort(configuration.getServer().getVirtualServerPort());
 
         login();
 
         api.setNickname(configuration.getName());
         initEventHandlers();
         api.registerAllEvents();
+    }
+
+    @Override
+    public void stop() {
+        LOG.info("Stopping bot.");
+        // Remember to do any cleanup operations before shutting down the bot
+        query.exit();
+    }
+
+    @Override
+    public void restart() {
+        LOG.info("Restarting bot.");
+        stop();
+        start();
+    }
+
+    @Override
+    public TS3Api getTs3Api() {
+        return api;
+    }
+
+    @Override
+    public TS3ApiAsync getTs3ApiAsync() {
+        return apiAsync;
     }
 
     private void initEventHandlers() {
@@ -99,34 +129,29 @@ public class AeqTS3Bot implements TS3Bot {
         }
     }
 
-    private void buildConfiguration() {
-        log.info("building bot configuration");
-        try {
-            this.configuration = configurationBuilder.build();
-        } catch (ConfigurationBuildException e) {
-            throw new RuntimeException("cannot build bot configuration", e);
+    /**
+     * Create a {@link TS3Config} object using the initialized {@link BotConfiguration}.
+     *
+     * @return the configuration object
+     */
+    private TS3Config createTS3Configuration() {
+        if (configuration == null) {
+            throw new AeqBotException("unable to build ts3 configuration: configuration is not properly initialized");
         }
-        log.info("bot configuration successfully build with {}", configurationBuilder.getClass().getName());
+        TS3Config config = new TS3Config();
+        config.setHost(configuration.getServer().getHostname());
+        config.setQueryPort(configuration.getServer().getQueryPort());
+        return config;
     }
 
-    private void login() throws AeqBotException {
-        log.info("attempting to login as {}", configuration.getUsername());
-        if (api.login(configuration.getUsername(), configuration.getPassword())) {
+    private void login() {
+        LOG.info("attempting to login as {}", configuration.getPermissions().getUsername());
+        if (api.login(configuration.getPermissions().getUsername(), configuration.getPermissions().getPassword())) {
             ChannelInfo info = api.getChannelInfo(api.whoAmI().getChannelId());
-            log.info("login successful, joined channel {} as {}", info.getName(), api.whoAmI().getNickname());
+            LOG.info("login successful, joined channel {} as {}", info.getName(), api.whoAmI().getNickname());
         } else {
             throw new AeqBotException("unable to login as " + api.whoAmI().getNickname());
         }
-    }
-
-    @Override
-    public TS3Api getTs3Api() {
-        return api;
-    }
-
-    @Override
-    public TS3ApiAsync getTs3ApiAsync() {
-        return apiAsync;
     }
 
 }

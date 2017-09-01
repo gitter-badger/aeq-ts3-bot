@@ -28,10 +28,42 @@ import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
  */
 public interface TS3Bot {
 
+    /**
+     * Builds the configuration used by this bot using the given pathname.
+     *
+     * @param pathname the pathname of the configuration file
+     */
+    void buildConfiguration(String pathname);
+
+    /**
+     * Starts the bot if it is not already running.
+     */
+    void start();
+
+    /**
+     * Stops the bot if it is running.
+     */
+    void stop();
+
+    /**
+     * Restarts the bot.
+     * <p>
+     * This method should be equal to calling {@link #stop()} followed by {@link #start()}.
+     */
+    void restart();
+
+    /**
+     * Returns the underlying synchronous {@link TS3Api}.
+     *
+     * @return the underlying synchronous api
+     */
     TS3Api getTs3Api();
 
+    /**
+     * Returns the underlying asynchronous {@link TS3ApiAsync}.
+     *
+     * @return the underlying asynchronous api
+     */
     TS3ApiAsync getTs3ApiAsync();
-
-    void start();
 
 }

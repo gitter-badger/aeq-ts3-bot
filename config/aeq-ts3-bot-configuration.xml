@@ -19,36 +19,17 @@
   ~ IN THE SOFTWARE.
   -->
 
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>ts3bot</artifactId>
-        <groupId>de.esports.aeq</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>core</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>commands</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>messages</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>configuration</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>4.3.10.RELEASE</version>
-        </dependency>
-    </dependencies>
-
-</project>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://www.w3schools.com"
+               xsi:schemaLocation="http://www.w3schools.com aeq-ts3-bot-configuration.xsd">
+    <name>Merlin</name>
+    <server>
+        <hostname>137.74.223.0</hostname>
+        <query-port>10011</query-port>
+        <virtual-server-port>9889</virtual-server-port>
+    </server>
+    <permissions>
+        <query-user>aeq-ts3-bot</query-user>
+        <query-key>bDiaX5Az</query-key>
+    </permissions>
+</configuration>

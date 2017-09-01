@@ -18,15 +18,38 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.configuration;
+package de.esports.aeq.ts3.bot.messages.api;
 
-import de.esports.aeq.ts3.bot.configuration.api.ConfigurationBuilder;
+import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+import de.esports.aeq.ts3.bot.messages.Message;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class ServiceConfigurationLoader implements ConfigurationBuilder {
+import java.util.Locale;
 
-    @Override
-    public @NotNull BotConfiguration build() {
-        throw new UnsupportedOperationException();
-    }
+/**
+ * Provides messages the are used in this application.
+ * <p>
+ * Messages are usually stored within a database instead of a resource bundle to make them easily changeable with a
+ * service.
+ *
+ * @author Lukas Kannenberg
+ * @version 0.2
+ * @since 20.08.2017
+ */
+public interface EventMessageProvider {
+
+    /**
+     * Retrieves a {@link Message} that matches the given id and locale.
+     * <p>
+     * If multiple matches are found, only one of the messages will be returned while the selection progress is up to
+     * the implementation.
+     *
+     * @param id     the message id
+     * @param locale the locale of the message
+     * @param event  the related event
+     * @return the {@link Message} or null if no match has been found
+     */
+    @Nullable
+    Message getMessage(@NotNull String id, @NotNull Locale locale, @NotNull BaseEvent event);
 }

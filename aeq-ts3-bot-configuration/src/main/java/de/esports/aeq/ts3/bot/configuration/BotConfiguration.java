@@ -20,70 +20,110 @@
 
 package de.esports.aeq.ts3.bot.configuration;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "configuration", namespace = "http://www.w3schools.com")
 public class BotConfiguration {
 
-    private String hostname;
-    private int queryPort;
-    private int virtualServerPort = 0;
-    private String username;
-    private String password;
     private String name;
+    private Server server;
+    private Permissions permissions;
 
-    public BotConfiguration(String hostname, int queryPort, int virtualServerPort, String username, String password,
-                            String name) {
-        this.hostname = hostname;
-        this.queryPort = queryPort;
-        this.virtualServerPort = virtualServerPort;
-        this.username = username;
-        this.password = password;
-        this.name = name;
+    public BotConfiguration() {
+
     }
 
-    public String getHostname() {
-        return hostname;
-    }
-
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
-
-    public int getQueryPort() {
-        return queryPort;
-    }
-
-    public void setQueryPort(int queryPort) {
-        this.queryPort = queryPort;
-    }
-
-    public int getVirtualServerPort() {
-        return virtualServerPort;
-    }
-
-    public void setVirtualServerPort(int virtualServerPort) {
-        this.virtualServerPort = virtualServerPort;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    @XmlElement(name = "name", namespace = "http://www.w3schools.com")
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlElement(name = "server", namespace = "http://www.w3schools.com")
+    public Server getServer() {
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
+    }
+
+    @XmlElement(name = "permissions", namespace = "http://www.w3schools.com")
+    public Permissions getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Permissions permissions) {
+        this.permissions = permissions;
+    }
+
+    public static class Server {
+
+        private String hostname;
+        private int queryPort;
+        private int virtualServerPort = 0;
+
+        public Server() {
+
+        }
+
+        @XmlElement(name = "hostname", namespace = "http://www.w3schools.com")
+        public String getHostname() {
+            return hostname;
+        }
+
+        public void setHostname(String hostname) {
+            this.hostname = hostname;
+        }
+
+        @XmlElement(name = "query-port", namespace = "http://www.w3schools.com")
+        public int getQueryPort() {
+            return queryPort;
+        }
+
+        public void setQueryPort(int queryPort) {
+            this.queryPort = queryPort;
+        }
+
+        @XmlElement(name = "virtual-server-port", namespace = "http://www.w3schools.com")
+        public int getVirtualServerPort() {
+            return virtualServerPort;
+        }
+
+        public void setVirtualServerPort(int virtualServerPort) {
+            this.virtualServerPort = virtualServerPort;
+        }
+    }
+
+    public static class Permissions {
+
+        private String username;
+        private String password;
+
+        public Permissions() {
+
+        }
+
+        @XmlElement(name = "query-user", namespace = "http://www.w3schools.com")
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        @XmlElement(name = "query-key", namespace = "http://www.w3schools.com")
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
     }
 }

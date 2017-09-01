@@ -18,10 +18,10 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.messages.api;
+package de.esports.aeq.ts3.bot.messages.api;
 
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
-import de.aeq.esports.ts3.bot.messages.Message;
+import de.esports.aeq.ts3.bot.messages.Message;
 
 import java.util.List;
 

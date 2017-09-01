@@ -18,66 +18,27 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.messages;
+package de.esports.aeq.ts3.bot.messages.api;
 
-
-import de.aeq.esports.ts3.bot.messages.api.EventMessageFilter;
-
-import java.util.List;
+import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
 
 /**
- * Represents a message.
+ * This interface is intended to be implemented for any class that defines the behaviour of how a message should be
+ * formatted. Each formatter can apply additional formatting rules.
  *
  * @author Lukas Kannenberg
- * @version 0.1
- * @since 20.08.2017
+ * @since 0.1
  */
-public class Message {
+public interface MessageFormatter {
 
-    private String id;
-
-    private String locale;
-
-    private String message;
-
-    private List<EventMessageFilter> filters;
-
-    public Message(String id, String locale, String message, List<EventMessageFilter> filters) {
-        this.id = id;
-        this.locale = locale;
-        this.message = message;
-        this.filters = filters;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public List<EventMessageFilter> getFilters() {
-        return filters;
-    }
-
-    public void setFilters(List<EventMessageFilter> filters) {
-        this.filters = filters;
-    }
+    /**
+     * Formats the given message.
+     * <p>
+     * The exact formatting rules are specified in the implementation.
+     *
+     * @param message the message to be formatted
+     * @param event   the related event
+     * @return the formatted message
+     */
+    String[] format(String message, BaseEvent event);
 }

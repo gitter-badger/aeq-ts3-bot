@@ -18,7 +18,7 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.messages;
+package de.esports.aeq.ts3.bot.messages;
 
 /**
  * Created by Lukas on 24.07.2017.
