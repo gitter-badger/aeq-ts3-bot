@@ -18,13 +18,40 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.core;
+package de.esports.aeq.ts3.bot.util;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Configuration
-@ComponentScan(basePackages = "de.esports.aeq.ts3.bot")
-public class AppConfig {
+/**
+ * @author Lukas Kannenberg
+ */
+public class HibernateUtil {
 
+    private static final Logger LOG = LoggerFactory.getLogger(HibernateUtil.class);
+
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+
+    private HibernateUtil() {
+        // prevent instantiation
+    }
+
+    private static SessionFactory buildSessionFactory() {
+        try {
+            return new Configuration().configure().buildSessionFactory();
+        } catch (Exception e) {
+            LOG.error("initial SessionFactory creation failed.", e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public static void shutdown() {
+        getSessionFactory().close();
+    }
 }

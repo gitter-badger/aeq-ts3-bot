@@ -72,8 +72,11 @@ public class AeqTS3Bot implements TS3Bot {
         } catch (ConfigurationBuildException e) {
             throw new AeqBotException("cannot build bot configuration", e);
         }
+
         LOG.info("bot configuration successfully build from {}", pathname);
-        LOG.info(configuration.toString());
+        if (LOG.isInfoEnabled()) {
+            LOG.info(configuration.toString());
+        }
     }
 
     @Override

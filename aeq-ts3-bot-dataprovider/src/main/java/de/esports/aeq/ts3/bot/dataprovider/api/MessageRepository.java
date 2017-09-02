@@ -22,6 +22,7 @@ package de.esports.aeq.ts3.bot.dataprovider.api;
 
 import de.esports.aeq.ts3.bot.model.message.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +34,7 @@ import java.util.Locale;
  * @version 1.1
  * @since 25.08.2017
  */
+@Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     /**

@@ -3,6 +3,7 @@
 
 # Ignore configuration files
 aeq-ts3-bot-configuration.xml
+hibernate.cfg.xml
 
 # User-specific stuff:
 .idea/**/workspace.xml

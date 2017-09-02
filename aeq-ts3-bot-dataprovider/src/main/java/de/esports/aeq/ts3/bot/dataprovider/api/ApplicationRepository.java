@@ -22,6 +22,7 @@ package de.esports.aeq.ts3.bot.dataprovider.api;
 
 import de.esports.aeq.ts3.bot.model.Application;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ import java.util.List;
  * @version 1.0
  * @since 27.08.2017
  */
+@Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
     /**

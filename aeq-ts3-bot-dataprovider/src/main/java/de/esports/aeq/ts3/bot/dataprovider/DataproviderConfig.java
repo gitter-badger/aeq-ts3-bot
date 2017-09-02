@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  * @since 25.08.2017
  */
 @Configuration
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = "de.esports.aeq.ts3.bot.model")
 @EnableTransactionManagement
 public class DataproviderConfig {
 
@@ -59,7 +59,7 @@ public class DataproviderConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("de.aeq.esports.dataprovider");
+        factory.setPackagesToScan("de.aeq.esports.ts3.bot.dataprovider");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
 
