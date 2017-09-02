@@ -23,9 +23,9 @@ package de.esports.aeq.ts3.bot.core.event;
 import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
-import de.esports.aeq.ts3.bot.core.ClientHelpers;
 import de.esports.aeq.ts3.bot.core.ServerGroups;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
+import de.esports.aeq.ts3.bot.util.ClientHelperBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class GuestClientJoinHandler extends TS3EventAdapter {
         super.onClientJoin(e);
         // Check if the user is a guest
         ClientInfo client = ts3Bot.getTs3Api().getClientByUId(e.getInvokerUniqueId());
-        if (ClientHelpers.clientContainsServerGroup(client, ServerGroups.GUEST)) {
+        if (ClientHelperBean.clientContainsServerGroup(client, ServerGroups.GUEST)) {
             if (configuration == null)
                 configuration = new GuestsClientJoinHandlerConfiguration();
             if (!shouldSendMessage(e)) return;

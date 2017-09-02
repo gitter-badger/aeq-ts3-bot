@@ -21,8 +21,10 @@
 package de.esports.aeq.ts3.bot.messages;
 
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
-import de.esports.aeq.ts3.bot.messages.api.EventMessageFilter;
-import de.esports.aeq.ts3.bot.messages.api.EventMessageProvider;
+import de.esports.aeq.ts3.bot.dataprovider.api.MessageRepository;
+import de.esports.aeq.ts3.bot.messages.api.MessageProvider;
+import de.esports.aeq.ts3.bot.model.message.Message;
+import de.esports.aeq.ts3.bot.model.message.MessageFilter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,23 +46,23 @@ import java.util.Optional;
  * @since 20.01.2017
  */
 @Component
-public class DefaultEventMessageProvider implements EventMessageProvider {
+public class DefaultMessageProvider implements MessageProvider {
 
     private ApplicationContext context;
 
     @Autowired
-    public DefaultEventMessageProvider(ApplicationContext context) {
+    public DefaultMessageProvider(ApplicationContext context) {
         this.context = context;
     }
 
     @Override
-    public @Nullable Message getMessage(@NotNull String id, @NotNull Locale locale, @NotNull BaseEvent event) {
-        List<Message> messages = getCandidates(id, locale);
+    public @Nullable Message getMessage(@NotNull String context, @NotNull Locale locale, @NotNull BaseEvent event) {
+        List<Message> messages = getCandidates(context, locale);
         if (messages != null) {
             // Shuffle to switch between messages
             Collections.shuffle(messages);
             Optional<Message> match = messages.stream()
-                    .filter((Message m) -> EventMessageFilter.filter(m.getFilters(), m, event)).findFirst();
+                    .filter((Message m) -> MessageFilter.filter(m.getFilters(), m, event)).findFirst();
             if (match.isPresent())
                 return match.get();
         }
@@ -70,12 +72,13 @@ public class DefaultEventMessageProvider implements EventMessageProvider {
     /**
      * Returns a list of message candidates.
      *
-     * @param id     the id of the message
-     * @param locale the locale of the message
+     * @param context the id of the message
+     * @param locale  the locale of the message
      * @return a {@link List} of message candidates
      */
-    private List<Message> getCandidates(@NotNull String id, @NotNull Locale locale) {
-        throw new UnsupportedOperationException();
+    private List<Message> getCandidates(@NotNull String context, @NotNull Locale locale) {
+        MessageRepository repository = this.context.getBean(MessageRepository.class);
+        return repository.findByContextAndLocale(context, locale);
     }
 
 }

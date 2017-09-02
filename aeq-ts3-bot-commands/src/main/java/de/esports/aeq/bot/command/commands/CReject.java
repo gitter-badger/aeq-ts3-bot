@@ -18,17 +18,39 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.messages.api;
+package de.esports.aeq.bot.command.commands;
+
+import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import de.esports.aeq.bot.command.api.Command;
+import de.esports.aeq.bot.command.exception.CommandExecutionException;
+import de.esports.aeq.ts3.bot.model.TS3Bot;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Represents a filter for messages.
- * <p>
- * This interface is intended to be extended by interfaces which specify the context of the message to be filtered.
- *
- * @author Lukas Kannenberg
- * @version 0.1
- * @since 21.08.2017
+ * Created by Lukas on 27.07.2017.
  */
-public interface MessageFilter {
+public class CReject implements Command {
 
+    public static final String PREFIX = "reject";
+    private static final Logger log = LoggerFactory.getLogger(CReject.class);
+    private TS3Bot ts3Bot;
+
+    public CReject(TS3Bot ts3Bot) {
+        this.ts3Bot = ts3Bot;
+    }
+
+    @Override
+    public @NotNull String getPrefix() {
+        return PREFIX;
+    }
+
+    @Override
+    public void execute(TextMessageEvent e) throws CommandExecutionException {
+        // TODO(glains)
+        log.debug("executing command {}", CReject.class.getSimpleName());
+        //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
+        //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
+    }
 }

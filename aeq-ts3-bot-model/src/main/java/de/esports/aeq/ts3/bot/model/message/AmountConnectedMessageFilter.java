@@ -18,39 +18,46 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.core.commands;
+package de.esports.aeq.ts3.bot.model.message;
 
-import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import de.esports.aeq.bot.command.api.Command;
-import de.esports.aeq.bot.command.exception.CommandExecutionException;
+import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-/**
- * Created by Lukas on 27.07.2017.
- */
-public class CVotes implements Command {
+public class AmountConnectedMessageFilter extends MessageFilter {
 
-    public static final String PREFIX = "votes";
-    private static final Logger log = LoggerFactory.getLogger(CVotes.class);
     private TS3Bot ts3Bot;
+    private int minJoins = -1;
+    private int maxJoins = -1;
 
-    public CVotes(TS3Bot ts3Bot) {
+    public AmountConnectedMessageFilter(TS3Bot ts3Bot, int minJoins, int maxJoins) {
         this.ts3Bot = ts3Bot;
+        this.minJoins = minJoins;
+        this.maxJoins = maxJoins;
     }
 
     @Override
-    public @NotNull String getPrefix() {
-        return PREFIX;
+    public boolean apply(Message message, BaseEvent event) {
+        int amountConnected = 0; // TODO: make a database call here
+        return isWithinRange(amountConnected);
     }
 
-    @Override
-    public void execute(TextMessageEvent e) throws CommandExecutionException {
-        // TODO(glains)
-        log.debug("executing command {}", CVotes.class.getSimpleName());
-        //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
-        //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
+    private boolean isWithinRange(int connectionAmount) {
+        return (minJoins == -1 || connectionAmount >= minJoins) && (maxJoins == -1 || connectionAmount <= maxJoins);
+    }
+
+    public int getMinJoins() {
+        return minJoins;
+    }
+
+    public void setMinJoins(int minJoins) {
+        this.minJoins = minJoins;
+    }
+
+    public int getMaxJoins() {
+        return maxJoins;
+    }
+
+    public void setMaxJoins(int maxJoins) {
+        this.maxJoins = maxJoins;
     }
 }

@@ -18,38 +18,39 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.messages.api;
+package de.esports.aeq.bot.command.commands;
 
-import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
-import de.esports.aeq.ts3.bot.messages.Message;
+import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import de.esports.aeq.bot.command.api.Command;
+import de.esports.aeq.bot.command.exception.CommandExecutionException;
+import de.esports.aeq.ts3.bot.model.TS3Bot;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Locale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Provides messages the are used in this application.
- * <p>
- * Messages are usually stored within a database instead of a resource bundle to make them easily changeable with a
- * service.
- *
- * @author Lukas Kannenberg
- * @version 0.2
- * @since 20.08.2017
+ * Created by Lukas on 27.07.2017.
  */
-public interface EventMessageProvider {
+public class CVotes implements Command {
 
-    /**
-     * Retrieves a {@link Message} that matches the given id and locale.
-     * <p>
-     * If multiple matches are found, only one of the messages will be returned while the selection progress is up to
-     * the implementation.
-     *
-     * @param id     the message id
-     * @param locale the locale of the message
-     * @param event  the related event
-     * @return the {@link Message} or null if no match has been found
-     */
-    @Nullable
-    Message getMessage(@NotNull String id, @NotNull Locale locale, @NotNull BaseEvent event);
+    public static final String PREFIX = "votes";
+    private static final Logger log = LoggerFactory.getLogger(CVotes.class);
+    private TS3Bot ts3Bot;
+
+    public CVotes(TS3Bot ts3Bot) {
+        this.ts3Bot = ts3Bot;
+    }
+
+    @Override
+    public @NotNull String getPrefix() {
+        return PREFIX;
+    }
+
+    @Override
+    public void execute(TextMessageEvent e) throws CommandExecutionException {
+        // TODO(glains)
+        log.debug("executing command {}", CVotes.class.getSimpleName());
+        //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
+        //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
+    }
 }

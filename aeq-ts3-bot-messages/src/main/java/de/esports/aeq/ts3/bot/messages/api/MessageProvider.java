@@ -18,66 +18,38 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.messages;
+package de.esports.aeq.ts3.bot.messages.api;
 
+import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+import de.esports.aeq.ts3.bot.model.message.Message;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import de.esports.aeq.ts3.bot.messages.api.EventMessageFilter;
-
-import java.util.List;
+import java.util.Locale;
 
 /**
- * Represents a message.
+ * Provides messages the are used in this application.
+ * <p>
+ * Messages are usually stored within a database instead of a resource bundle to make them easily changeable with a
+ * service.
  *
  * @author Lukas Kannenberg
- * @version 0.1
+ * @version 0.2
  * @since 20.08.2017
  */
-public class Message {
+public interface MessageProvider {
 
-    private String id;
-
-    private String locale;
-
-    private String message;
-
-    private List<EventMessageFilter> filters;
-
-    public Message(String id, String locale, String message, List<EventMessageFilter> filters) {
-        this.id = id;
-        this.locale = locale;
-        this.message = message;
-        this.filters = filters;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public List<EventMessageFilter> getFilters() {
-        return filters;
-    }
-
-    public void setFilters(List<EventMessageFilter> filters) {
-        this.filters = filters;
-    }
+    /**
+     * Retrieves a {@link Message} that matches the given id and locale.
+     * <p>
+     * If multiple matches are found, only one of the messages will be returned while the selection progress is up to
+     * the implementation.
+     *
+     * @param id     the message id
+     * @param locale the locale of the message
+     * @param event  the related event
+     * @return the {@link Message} or null if no match has been found
+     */
+    @Nullable
+    Message getMessage(@NotNull String id, @NotNull Locale locale, @NotNull BaseEvent event);
 }

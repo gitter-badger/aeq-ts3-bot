@@ -18,39 +18,42 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.core.commands;
+package de.esports.aeq.ts3.bot.model;
 
-import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import de.esports.aeq.bot.command.api.Command;
-import de.esports.aeq.bot.command.exception.CommandExecutionException;
-import de.esports.aeq.ts3.bot.model.TS3Bot;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.persistence.*;
 
 /**
- * Created by Lukas on 27.07.2017.
+ * @author Lukas Kannenberg
  */
-public class CRecruitVote implements Command {
+@Entity
+@Table(name = "user_bot_configuration")
+public class UserBotConfiguration {
 
-    public static final String PREFIX = "vote";
-    private static final Logger log = LoggerFactory.getLogger(CRecruitVote.class);
-    private TS3Bot ts3Bot;
+    @Id
+    @Column(name = "user_bot_configuration_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public CRecruitVote(TS3Bot ts3Bot) {
-        this.ts3Bot = ts3Bot;
+    @Column(name = "is_bot_muted")
+    private boolean isBotMuted;
+
+    public UserBotConfiguration(boolean isBotMuted) {
+        this.isBotMuted = isBotMuted;
     }
 
-    @Override
-    public @NotNull String getPrefix() {
-        return PREFIX;
+    public long getId() {
+        return id;
     }
 
-    @Override
-    public void execute(TextMessageEvent e) throws CommandExecutionException {
-        // TODO(glains)
-        log.debug("executing command {}", CRecruitVote.class.getSimpleName());
-        //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
-        //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public boolean isBotMuted() {
+        return isBotMuted;
+    }
+
+    public void setBotMuted(boolean botMuted) {
+        isBotMuted = botMuted;
     }
 }

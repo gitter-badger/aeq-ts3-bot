@@ -18,14 +18,15 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.messages;
+package de.esports.aeq.ts3.bot.model.message;
 
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
-import de.esports.aeq.ts3.bot.messages.api.EventMessageFilter;
-import de.esports.aeq.ts3.bot.messages.api.MessageFilter;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import java.util.stream.IntStream;
 
 /**
@@ -35,7 +36,10 @@ import java.util.stream.IntStream;
  * @version 0.1
  * @since 21.08.2017
  */
-public class EMGroupFilter implements EventMessageFilter {
+@Entity
+@Table(name = "group_message_filter")
+@PrimaryKeyJoinColumn(name = "id")
+public class GroupMessageFilter extends MessageFilter {
 
     /**
      * Applies the white- and blacklists to the given server groups and returns if they passed the filter.
@@ -50,7 +54,6 @@ public class EMGroupFilter implements EventMessageFilter {
     private static boolean isValidServerGroup(int[] serverGroups, int[] whitelist, int[] blacklist) {
         if (serverGroups == null) return false;
         if (whitelist != null) {
-            boolean whitelisted = false;
             for (int i : serverGroups) {
                 boolean contains = IntStream.of(whitelist).anyMatch(p -> p == i);
                 if (!contains) return false;
@@ -69,14 +72,13 @@ public class EMGroupFilter implements EventMessageFilter {
     private int[] blacklist;
 
     /**
-     * Creates a new {@link EventMessageFilter} that is able to filter specific server groups with a white- and
-     * blacklist.
+     * Creates a new {@link MessageFilter} that is able to filter specific server groups with a white- and blacklist.
      *
      * @param ts3Bot    the {@link TS3Bot} instance
      * @param whitelist a whitelist, one of the server groups must be owned to pass the filter
      * @param blacklist a blacklist, none of the server groups must be owned to pass the filter
      */
-    public EMGroupFilter(TS3Bot ts3Bot, int[] whitelist, int[] blacklist) {
+    public GroupMessageFilter(TS3Bot ts3Bot, int[] whitelist, int[] blacklist) {
         this.ts3Bot = ts3Bot;
         this.whitelist = whitelist;
         this.blacklist = blacklist;

@@ -39,6 +39,14 @@
             <groupId>de.esports.aeq</groupId>
             <artifactId>model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.esports.aeq</groupId>
+            <artifactId>dataprovider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.esports.aeq</groupId>
+            <artifactId>util</artifactId>
+        </dependency>
     </dependencies>
 
 

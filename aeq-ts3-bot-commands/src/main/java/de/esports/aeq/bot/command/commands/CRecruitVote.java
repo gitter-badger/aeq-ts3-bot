@@ -18,7 +18,7 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.core.commands;
+package de.esports.aeq.bot.command.commands;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.bot.command.api.Command;
@@ -31,13 +31,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Lukas on 27.07.2017.
  */
-public class CReject implements Command {
+public class CRecruitVote implements Command {
 
-    public static final String PREFIX = "reject";
-    private static final Logger log = LoggerFactory.getLogger(CReject.class);
+    public static final String PREFIX = "vote";
+    private static final Logger log = LoggerFactory.getLogger(CRecruitVote.class);
     private TS3Bot ts3Bot;
 
-    public CReject(TS3Bot ts3Bot) {
+    public CRecruitVote(TS3Bot ts3Bot) {
         this.ts3Bot = ts3Bot;
     }
 
@@ -49,7 +49,7 @@ public class CReject implements Command {
     @Override
     public void execute(TextMessageEvent e) throws CommandExecutionException {
         // TODO(glains)
-        log.debug("executing command {}", CReject.class.getSimpleName());
+        log.debug("executing command {}", CRecruitVote.class.getSimpleName());
         //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
         //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
     }

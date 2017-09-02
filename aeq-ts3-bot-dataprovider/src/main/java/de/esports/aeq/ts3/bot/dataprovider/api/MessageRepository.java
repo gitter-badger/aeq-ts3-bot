@@ -18,39 +18,29 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.core.commands;
+package de.esports.aeq.ts3.bot.dataprovider.api;
 
-import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import de.esports.aeq.bot.command.api.Command;
-import de.esports.aeq.bot.command.exception.CommandExecutionException;
-import de.esports.aeq.ts3.bot.model.TS3Bot;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.esports.aeq.ts3.bot.model.message.Message;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
- * Created by Lukas on 27.07.2017.
+ * {@link JpaRepository} to manage {@link Message} objects.
+ *
+ * @author Lukas Kannenberg
+ * @version 1.1
+ * @since 25.08.2017
  */
-public class CLink implements Command {
+public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    public static final String PREFIX = "link";
-    private static final Logger log = LoggerFactory.getLogger(CLink.class);
-    private TS3Bot ts3Bot;
-
-    public CLink(TS3Bot ts3Bot) {
-        this.ts3Bot = ts3Bot;
-    }
-
-    @Override
-    public @NotNull String getPrefix() {
-        return PREFIX;
-    }
-
-    @Override
-    public void execute(TextMessageEvent e) throws CommandExecutionException {
-        // TODO(glains)
-        log.debug("executing command {}", CLink.class.getSimpleName());
-        //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
-        //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
-    }
+    /**
+     * Returns a {@link List} of {@link Message} objects that match the given context and locale.
+     *
+     * @param context the context of the message
+     * @param locale  the locale of the message, see {@link Locale#getLanguage()}
+     * @return a {@link List} of {@link Message} objects that match the context and locale
+     */
+    List<Message> findByContextAndLocale(String context, Locale locale);
 }

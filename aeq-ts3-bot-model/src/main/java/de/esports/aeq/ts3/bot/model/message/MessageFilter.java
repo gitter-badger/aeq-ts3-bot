@@ -18,14 +18,21 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.messages.api;
+package de.esports.aeq.ts3.bot.model.message;
 
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
-import de.esports.aeq.ts3.bot.messages.Message;
 
+import javax.persistence.*;
 import java.util.List;
 
-public interface EventMessageFilter extends MessageFilter {
+@Entity
+@Table(name = "message_filter")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class MessageFilter {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     /**
      * Applies the given filter to a list of messages.
@@ -35,7 +42,7 @@ public interface EventMessageFilter extends MessageFilter {
      * @param event    the event context
      * @return the filtered {@link List} of messages
      */
-    static List<Message> filter(EventMessageFilter filter, List<Message> messages, BaseEvent event) {
+    public static List<Message> filter(MessageFilter filter, List<Message> messages, BaseEvent event) {
         messages.removeIf(i -> filter.apply(i, event));
         return messages;
     }
@@ -48,8 +55,8 @@ public interface EventMessageFilter extends MessageFilter {
      * @param event   the event context
      * @return true if the message matches all the filters, otherwise false
      */
-    static boolean filter(List<EventMessageFilter> filters, Message message, BaseEvent event) {
-        for (EventMessageFilter filter : filters)
+    public static boolean filter(List<MessageFilter> filters, Message message, BaseEvent event) {
+        for (MessageFilter filter : filters)
             if (filter.apply(message, event)) return false;
         return true;
     }
@@ -61,5 +68,5 @@ public interface EventMessageFilter extends MessageFilter {
      * @param event   the event context
      * @return true if the message passed the filter, otherwise false
      */
-    boolean apply(Message message, BaseEvent event);
+    public abstract boolean apply(Message message, BaseEvent event);
 }

@@ -30,6 +30,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>util</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.theholywaffle</groupId>
+            <artifactId>teamspeak3-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.esports.aeq</groupId>
+            <artifactId>model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.esports.aeq</groupId>
+            <artifactId>dataprovider</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

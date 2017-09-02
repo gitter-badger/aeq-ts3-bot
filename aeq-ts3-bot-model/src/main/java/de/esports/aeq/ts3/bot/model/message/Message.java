@@ -18,28 +18,28 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.model;
+package de.esports.aeq.ts3.bot.model.message;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Locale;
 
 /**
- * Represents a context message.
+ * Represents a context text.
  * <p>
- * Unlike {@link java.util.ResourceBundle}, each message is not (uniquely) identified by its key, but rather with a
- * context to allow multiple messages per context. This may be used to vary between different messages within a single
- * context.
+ * Unlike {@link java.util.ResourceBundle}, each text is not (uniquely) identified by its key, but rather with a context
+ * to allow multiple messages per context. This may be used to vary between different messages within a single context.
  * <p>
- * Also, using the {@link Locale} of the message, it may be provided in different languages.
+ * Also, using the {@link Locale} of the text, it may be provided in different languages.
  *
  * @author Lukas Kannenberg
  * @version 1.0
  * @since 25.08.2017
  */
 @Entity
-@Table(name = "message")
-public class ContextMessage implements Serializable {
+@Table(name = "text")
+public class Message implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,35 +52,38 @@ public class ContextMessage implements Serializable {
     private String context;
 
     /**
-     * The locale of the message.
+     * The locale of the text.
      */
     @Column(name = "locale")
     private Locale locale;
 
     /**
-     * The actual message using the specified {@link Locale}.
+     * The actual text using the specified {@link Locale}.
      */
-    @Column(name = "message")
-    private String message;
+    @Column(name = "text")
+    private String text;
+
+    @OneToMany
+    private List<MessageFilter> filters;
 
     /**
      * Default constructor.
      */
-    public ContextMessage() {
+    public Message() {
         // no argument constructor
     }
 
     /**
-     * Constructs a new {@link ContextMessage}.
+     * Constructs a new {@link Message}.
      *
      * @param context the context
      * @param locale  the {@link Locale}
-     * @param message the actual message
+     * @param text    the actual text
      */
-    public ContextMessage(String context, Locale locale, String message) {
+    public Message(String context, Locale locale, String text) {
         this.context = context;
         this.locale = locale;
-        this.message = message;
+        this.text = text;
     }
 
     /**
@@ -126,16 +129,30 @@ public class ContextMessage implements Serializable {
     }
 
     /**
-     * @return the message of this message
+     * @return the text of this message
      */
-    public String getMessage() {
-        return message;
+    public String getText() {
+        return text;
     }
 
     /**
-     * @param message the message of this message
+     * @param text the text of this message
      */
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    /**
+     * @return the {@link MessageFilter} objects of this message
+     */
+    public List<MessageFilter> getFilters() {
+        return filters;
+    }
+
+    /**
+     * @param filters the {@link MessageFilter} objects of this message
+     */
+    public void setFilters(List<MessageFilter> filters) {
+        this.filters = filters;
     }
 }

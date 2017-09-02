@@ -18,7 +18,7 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.core.commands;
+package de.esports.aeq.bot.command.commands;
 
 import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 public class CAccept implements Command {
 
     private static final Logger log = LoggerFactory.getLogger(CAccept.class);
-    public static final String PREFIX = "accept";
+    private static final String PREFIX = "accept";
 
     private TS3Bot ts3Bot;
 
