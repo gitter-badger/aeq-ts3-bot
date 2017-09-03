@@ -38,7 +38,7 @@ import java.util.Locale;
  * @since 25.08.2017
  */
 @Entity
-@Table(name = "text")
+@Table(name = "message")
 public class Message implements Serializable {
 
     @Id
@@ -63,7 +63,7 @@ public class Message implements Serializable {
     @Column(name = "text")
     private String text;
 
-    @OneToMany
+    @Transient
     private List<MessageFilter> filters;
 
     /**

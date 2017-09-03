@@ -35,7 +35,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The default {@link MessageFormatter} applies the following formatting rules: <ul> <li><b>"#"</b> is used for a new
+ * The default {@link MessageFormatter} applies the following formatting rules: <ul> <li><b>"##"</b> is used for a new
  * line (this will effectively split the message into multiple messages)</li> <li><b>"${key}"</b> is used to access the
  * message dependent event info</li> </ul>
  *
@@ -56,7 +56,7 @@ public class EventMessageFormatter implements MessageFormatter {
     /**
      * Regex to determine when a line break should happen.
      */
-    private static final String SPLIT_REGEX = "#";
+    private static final String SPLIT_REGEX = "##";
 
     /**
      * Message to be used when a key of a key group can not be mapped to an event key.

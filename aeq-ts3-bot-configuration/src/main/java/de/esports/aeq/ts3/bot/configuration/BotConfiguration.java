@@ -31,7 +31,7 @@ public class BotConfiguration {
     private Permissions permissions;
 
     public BotConfiguration() {
-
+        // no argument constructor file xml unmarshalling
     }
 
     @XmlElement(name = "name", namespace = "http://www.w3schools.com")
@@ -68,7 +68,7 @@ public class BotConfiguration {
         private int virtualServerPort = 0;
 
         public Server() {
-
+            // no argument constructor file xml unmarshalling
         }
 
         @XmlElement(name = "hostname", namespace = "http://www.w3schools.com")
@@ -105,7 +105,7 @@ public class BotConfiguration {
         private String password;
 
         public Permissions() {
-
+            // no argument constructor file xml unmarshalling
         }
 
         @XmlElement(name = "query-user", namespace = "http://www.w3schools.com")

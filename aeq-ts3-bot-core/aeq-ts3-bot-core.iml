@@ -7,6 +7,9 @@
           <file>file://$MODULE_DIR$/../aeq-ts3-bot-messages/src/main/java/de/esports/aeq/ts3/bot/messages/MessagesConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/de/esports/aeq/ts3/bot/core/AppConfig.java</file>
         </fileset>
+        <fileset id="fileset2" name="Spring Application Context (2)" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/de/esports/aeq/ts3/bot/core/Main.java</file>
+        </fileset>
       </configuration>
     </facet>
   </component>
@@ -44,6 +47,7 @@
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.8.10" level="project" />
     <orderEntry type="library" name="Maven: org.hsqldb:hsqldb:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: javax.persistence:persistence-api:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:6.0.6" level="project" />
     <orderEntry type="module" module-name="aeq-ts3-bot-util" />
     <orderEntry type="module" module-name="aeq-ts3-bot-configuration" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:4.3.10.RELEASE" level="project" />

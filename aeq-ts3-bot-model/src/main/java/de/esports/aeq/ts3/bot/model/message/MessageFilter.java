@@ -56,6 +56,9 @@ public abstract class MessageFilter {
      * @return true if the message matches all the filters, otherwise false
      */
     public static boolean filter(List<MessageFilter> filters, Message message, BaseEvent event) {
+        if (filters == null) {
+            return true;
+        }
         for (MessageFilter filter : filters)
             if (filter.apply(message, event)) return false;
         return true;

@@ -20,21 +20,27 @@
 
 package de.esports.aeq.ts3.bot.util;
 
-import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import de.esports.aeq.ts3.bot.dataprovider.api.UserRepository;
+import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.model.User;
 import de.esports.aeq.ts3.bot.model.UserBotConfiguration;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
+@Scope("prototype")
 public class ClientHelperBean {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ClientHelperBean.class);
 
     public static boolean clientContainsServerGroup(ClientInfo client, int serverGroupId) {
         for (int i : client.getServerGroups())
@@ -43,10 +49,11 @@ public class ClientHelperBean {
     }
 
     private ApplicationContext context;
-    private TS3Api ts3Api;
+    private TS3Bot ts3Bot;
 
     @Autowired
-    public ClientHelperBean(ApplicationContext context) {
+    public ClientHelperBean(TS3Bot ts3Bot, ApplicationContext context) {
+        this.ts3Bot = ts3Bot;
         this.context = context;
     }
 
@@ -60,7 +67,7 @@ public class ClientHelperBean {
      */
     @Nullable
     private Date getLastTimeOnline(BaseEvent event) {
-        ClientInfo info = ts3Api.getClientByUId(event.getInvokerUniqueId());
+        ClientInfo info = ts3Bot.getTs3Api().getClientByUId(event.getInvokerUniqueId());
         if (info != null) {
             return info.getLastConnectedDate();
         }
@@ -76,7 +83,8 @@ public class ClientHelperBean {
 
     public void sendMessage(int clientId, String[] messages) {
         for (String s : messages) {
-            ts3Api.sendPrivateMessage(clientId, s);
+            LOG.debug("sending private message to client {}: \"{}\"", clientId, s);
+            ts3Bot.getTs3Api().sendPrivateMessage(clientId, s);
         }
     }
 }

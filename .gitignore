@@ -2,8 +2,8 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # Ignore configuration files
-aeq-ts3-bot-configuration.xml
-hibernate.cfg.xml
+aeq-ts3-bot-core/src/main/resources/aeq-ts3-bot-configuration.xml
+aeq-ts3-bot-core/src/main/resources/database.properties
 
 # User-specific stuff:
 .idea/**/workspace.xml
