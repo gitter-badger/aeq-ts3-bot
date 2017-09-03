@@ -67,6 +67,7 @@
         <module>aeq-ts3-bot-messages</module>
         <module>aeq-ts3-bot-model</module>
         <module>aeq-ts3-bot-util</module>
+        <module>aeq-ts3-bot-application</module>
     </modules>
 
     <dependencyManagement>
