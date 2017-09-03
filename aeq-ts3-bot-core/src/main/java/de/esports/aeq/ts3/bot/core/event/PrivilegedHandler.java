@@ -24,6 +24,7 @@ import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import com.github.theholywaffle.teamspeak3.api.event.TS3Listener;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import de.esports.aeq.ts3.bot.core.AeqTS3Bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,10 +42,12 @@ public class PrivilegedHandler extends TS3EventAdapter {
 
     private Logger log = LoggerFactory.getLogger(PrivilegedHandler.class);
 
+    private AeqTS3Bot ts3Bot;
     private TS3Listener ts3Listener;
     private List<String> whitelistedIds = new ArrayList<>();
 
-    public PrivilegedHandler(TS3Listener ts3Listener) {
+    public PrivilegedHandler(AeqTS3Bot ts3bot, TS3Listener ts3Listener) {
+        this.ts3Bot = ts3bot;
         this.ts3Listener = ts3Listener;
         initWhitelist();
     }
@@ -53,10 +56,13 @@ public class PrivilegedHandler extends TS3EventAdapter {
         whitelistedIds.add("1lwtSCSAMm5D1wIbViYa7G0Ho2I=");
         whitelistedIds.add("h54PGmeQlaOaGabuYVAyfqlUCWI=");
         whitelistedIds.add("ZK9L/wcXbdxJGaVCu1o6sRJ9UPs=");
+        whitelistedIds.add("uly47Z83Xdfc7uwpykQwApqDi1k=");
     }
 
     @Override
     public void onTextMessage(TextMessageEvent textMessageEvent) {
+        int id = ts3Bot.getTs3Api().whoAmI().getId();
+        if (textMessageEvent.getInvokerId() == id) return;
         log.debug("text message from {} requires permission check for handle, validating...", textMessageEvent
                 .getInvokerName
                         ());

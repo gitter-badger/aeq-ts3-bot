@@ -23,13 +23,13 @@ package de.esports.aeq.ts3.bot.model;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author Lukas Kannenberg
  */
+@Entity
+@Table(name = "recruit")
 public class Recruit {
 
     @Id

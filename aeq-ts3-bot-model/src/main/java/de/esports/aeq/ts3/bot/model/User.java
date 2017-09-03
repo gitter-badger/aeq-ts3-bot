@@ -23,6 +23,8 @@ package de.esports.aeq.ts3.bot.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "user")
 public class User {
 
     @Id

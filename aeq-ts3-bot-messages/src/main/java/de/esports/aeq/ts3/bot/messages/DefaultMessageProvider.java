@@ -27,6 +27,8 @@ import de.esports.aeq.ts3.bot.model.message.Message;
 import de.esports.aeq.ts3.bot.model.message.MessageFilter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -48,6 +50,8 @@ import java.util.Optional;
 @Component
 public class DefaultMessageProvider implements MessageProvider {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultMessageProvider.class);
+
     private ApplicationContext context;
 
     @Autowired
@@ -57,28 +61,14 @@ public class DefaultMessageProvider implements MessageProvider {
 
     @Override
     public @Nullable Message getMessage(@NotNull String context, @NotNull Locale locale, @NotNull BaseEvent event) {
-        List<Message> messages = getCandidates(context, locale);
-        if (messages != null) {
-            // Shuffle to switch between messages
-            Collections.shuffle(messages);
-            Optional<Message> match = messages.stream()
-                    .filter((Message m) -> MessageFilter.filter(m.getFilters(), m, event)).findFirst();
-            if (match.isPresent())
-                return match.get();
-        }
-        return null;
-    }
-
-    /**
-     * Returns a list of message candidates.
-     *
-     * @param context the id of the message
-     * @param locale  the locale of the message
-     * @return a {@link List} of message candidates
-     */
-    private List<Message> getCandidates(@NotNull String context, @NotNull Locale locale) {
+        LOG.info("Fetching message for context {} and locale {}", context, locale.getLanguage());
         MessageRepository repository = this.context.getBean(MessageRepository.class);
-        return repository.findByContextAndLocale(context, locale);
+        List<Message> messages = repository.findByContextAndLocale(context, locale);
+        // Shuffle to switch between messages
+        Collections.shuffle(messages);
+        Optional<Message> match = messages.stream()
+                .filter((Message m) -> MessageFilter.filter(m.getFilters(), m, event)).findFirst();
+        return match.orElse(null);
     }
 
 }

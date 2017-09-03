@@ -27,6 +27,7 @@ import de.esports.aeq.ts3.bot.model.TS3Bot;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.stream.IntStream;
 
 /**
@@ -67,6 +68,7 @@ public class GroupMessageFilter extends MessageFilter {
         return true;
     }
 
+    @Transient
     private final TS3Bot ts3Bot;
     private int[] whitelist;
     private int[] blacklist;

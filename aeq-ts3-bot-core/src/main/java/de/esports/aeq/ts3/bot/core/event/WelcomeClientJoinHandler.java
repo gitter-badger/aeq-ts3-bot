@@ -66,28 +66,16 @@ public class WelcomeClientJoinHandler extends TS3EventAdapter {
 
     @Override
     public void onClientJoin(ClientJoinEvent event) {
-        super.onClientJoin(event);
         Client client = ts3Bot.getTs3Api().getClientByUId(event.getUniqueClientIdentifier());
-
-        if (clientHelperBean.isBotMuted(event.getUniqueClientIdentifier())) return;
-        Message message = getWelcomeMessage(event);
+        MessageProvider provider = context.getBean(DefaultMessageProvider.class);
+        Message message = null;
+        message = provider.getMessage(Messages.WELCOME, Messages.locale, event);
         if (message != null) {
             String[] formattedMessage = formatter.format(message.getText(), event);
             clientHelperBean.sendMessage(client.getId(), formattedMessage);
+        } else {
+            LOG.warn("Unable to fetch a matching welcome message for {}", event.getClientNickname());
         }
     }
-
-    /**
-     * Returns the appropriate welcome message, depending on if the client is a new member or connected to the server
-     * once before.
-     *
-     * @param event the {@link ClientJoinEvent}
-     * @return the appropriate welcome message or <code>null</code> if no {@link Message} was found
-     */
-    private Message getWelcomeMessage(ClientJoinEvent event) {
-        MessageProvider provider = context.getBean(DefaultMessageProvider.class);
-        return provider.getMessage(Messages.WELCOME, Messages.locale, event);
-    }
-
 
 }

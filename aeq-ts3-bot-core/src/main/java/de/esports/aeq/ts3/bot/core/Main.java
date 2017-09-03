@@ -21,16 +21,30 @@
 package de.esports.aeq.ts3.bot.core;
 
 import de.esports.aeq.ts3.bot.model.TS3Bot;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Contains the entry point of the application.
  */
+@Configuration
+@EnableAutoConfiguration
+@ComponentScan(basePackages = {"de.esports.aeq.ts3.bot"})
+@SpringBootApplication
+@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = {"de.esports.aeq.ts3.bot.dataprovider"})
+@EntityScan("de.esports.aeq.ts3.bot.model")
 public class Main {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(AppConfig.class);
+        context.register(Main.class);
         context.refresh();
         TS3Bot ts3Bot = context.getBean(TS3Bot.class);
         if (args.length > 0) {

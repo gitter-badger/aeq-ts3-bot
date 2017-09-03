@@ -24,7 +24,6 @@ import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.TS3Config;
 import com.github.theholywaffle.teamspeak3.TS3Query;
-import com.github.theholywaffle.teamspeak3.api.event.TS3Listener;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ChannelInfo;
 import de.esports.aeq.ts3.bot.configuration.BotConfiguration;
 import de.esports.aeq.ts3.bot.configuration.ConfigurationBuildException;
@@ -38,9 +37,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Lukas on 23.07.2017.
@@ -123,13 +119,12 @@ public class AeqTS3Bot implements TS3Bot {
     }
 
     private void initEventHandlers() {
-        List<TS3Listener> listeners = new ArrayList<>();
-        listeners.add(context.getBean(DefaultTextMessageHandler.class));
-        listeners.add(context.getBean(WelcomeClientJoinHandler.class));
-        for (TS3Listener listener : listeners) {
-            // We wrap a privileged handler around for testing purposes
-            api.addTS3Listeners(new PrivilegedHandler(listener));
-        }
+        final WelcomeClientJoinHandler welcomeClientJoinHandler = context.getBean(WelcomeClientJoinHandler.class);
+        final DefaultTextMessageHandler defaultTextMessageHandler = context.getBean(DefaultTextMessageHandler.class);
+
+        // We wrap a privileged handler around for testing purposes
+        api.addTS3Listeners(new PrivilegedHandler(this, welcomeClientJoinHandler));
+        api.addTS3Listeners(new PrivilegedHandler(this, defaultTextMessageHandler));
     }
 
     /**
