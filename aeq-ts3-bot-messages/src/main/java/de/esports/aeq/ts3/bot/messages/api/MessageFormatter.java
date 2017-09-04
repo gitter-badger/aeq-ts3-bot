@@ -20,7 +20,7 @@
 
 package de.esports.aeq.ts3.bot.messages.api;
 
-import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+import java.util.Map;
 
 /**
  * This interface is intended to be implemented for any class that defines the behaviour of how a message should be
@@ -36,9 +36,9 @@ public interface MessageFormatter {
      * <p>
      * The exact formatting rules are specified in the implementation.
      *
-     * @param message the message to be formatted
-     * @param event   the related event
+     * @param message    the message to be formatted
+     * @param properties map of keys and values to be replaced by the formatter
      * @return the formatted message
      */
-    String[] format(String message, BaseEvent event);
+    String[] format(String message, Map<String, String> properties);
 }

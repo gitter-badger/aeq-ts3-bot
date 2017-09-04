@@ -20,62 +20,20 @@
 
 package de.esports.aeq.ts3.bot.messages;
 
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 /**
  * Created by Lukas on 24.07.2017.
  */
 public class Messages {
 
-    private static final Logger log = LoggerFactory.getLogger(Messages.class);
-
-    public static final Locale locale = Locale.GERMAN;
+    /**
+     * The default {@link Locale} to be used.
+     */
+    public static final Locale DEFAULT_LOCALE = Locale.GERMAN;
 
     // Messages codes used in the database
     public static final String WELCOME = "welcome";
-    public static final String WELCOME_NEW = "welcome_new";
-
-    // Messages codes used in resource bundles
-    private static final String BUNDLE_GENERAL_MESSAGES = "general";
-
-    public static final String UNKNOWN_COMMAND = "unknown_command";
-    public static final String ERROR_NOT_IMPLEMENTED = "error_not_implemented";
-    public static final String ERROR_INVALID_PERMISSIONS = "error_invalid_permissions";
-    public static final String ERROR_COMMAND_EXCEPTION = "error_command_exception";
-
-    /**
-     * Returns a translated string of the BUNDLE_GENERAL_MESSAGES according to the selected {@link Locale}
-     *
-     * @param message the message identifier
-     * @param args    any additional arguments
-     * @return the translated string
-     */
-    public static @Nullable String getTranslatedString(String message, Object... args) {
-        ResourceBundle bundle;
-        try {
-            bundle = ResourceBundle.getBundle(BUNDLE_GENERAL_MESSAGES, locale);
-            if (bundle.containsKey(message)) {
-                return bundle.getString(message);
-            } else {
-                log.debug("default message bundle does not contain key {}", message);
-            }
-        } catch (MissingResourceException e) {
-            log.warn("could not find localized message bundle: {}", e);
-        }
-        log.debug("attempting to load default message bundle");
-        try {
-            bundle = ResourceBundle.getBundle(BUNDLE_GENERAL_MESSAGES);
-            return bundle.getString(message);
-        } catch (MissingResourceException e) {
-            log.error("could not load default message bundle", e);
-            return null;
-        }
-    }
+    public static final String ADVERTISE_MEMBERSHIP = "advertise_membership";
 
 }

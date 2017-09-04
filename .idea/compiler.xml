@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="aeq-esports-ts3-bot" />
+        <module name="aeq-ts3-bot-advertiser" />
         <module name="aeq-ts3-bot-application" />
         <module name="aeq-ts3-bot-commands" />
         <module name="aeq-ts3-bot-configuration" />
@@ -20,6 +21,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="aeq-ts3-bot-advertiser" target="1.8" />
       <module name="aeq-ts3-bot-application" target="1.8" />
       <module name="aeq-ts3-bot-commands" target="1.8" />
       <module name="aeq-ts3-bot-configuration" target="1.8" />

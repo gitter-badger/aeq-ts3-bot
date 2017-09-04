@@ -68,6 +68,7 @@
         <module>aeq-ts3-bot-model</module>
         <module>aeq-ts3-bot-util</module>
         <module>aeq-ts3-bot-application</module>
+        <module>aeq-ts3-bot-advertiser</module>
     </modules>
 
     <dependencyManagement>

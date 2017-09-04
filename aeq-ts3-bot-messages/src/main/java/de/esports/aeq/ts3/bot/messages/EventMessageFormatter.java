@@ -20,16 +20,16 @@
 
 package de.esports.aeq.ts3.bot.messages;
 
-import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
-import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import de.esports.aeq.ts3.bot.messages.api.MessageFormatter;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,31 +76,28 @@ public class EventMessageFormatter implements MessageFormatter {
     }
 
     @Override
-    public String[] format(String message, BaseEvent event) {
-        String replaced = message;
-        Map<String, String> eventInfo = mergeEventInfo(event);
-        if (eventInfo != null) {
-            replaced = replaceKeys(message, eventInfo, EMPTY);
-        }
+    public String[] format(String message, Map<String, String> properties) {
+        Map<String, String> eventInfo = new HashMap<>();
+        String replaced = replaceKeys(message, eventInfo, EMPTY);
         return replaced.split(SPLIT_REGEX);
     }
 
     /**
      * Takes a given message and replaces all keys with the appropriate event info.
      *
-     * @param message   the message
-     * @param eventInfo a map which contains the event information
-     * @param empty     the replacement for a key that could not be found in the event map
+     * @param message    the message
+     * @param properties a map which contains the event information
+     * @param empty      the replacement for a key that could not be found in the event map
      * @return a formatted string
      */
-    private String replaceKeys(String message, @NotNull Map<String, String> eventInfo, String empty) {
+    private String replaceKeys(String message, @Nullable Map<String, String> properties, String empty) {
         String formatted = message;
         Pattern pattern = Pattern.compile(VALUE_REGEX);
         Matcher matcher = pattern.matcher(message);
         while (matcher.find()) {
             String key = extractKey(matcher.group());
             log.debug("match has been found: {}", key);
-            String value = eventInfo.get(key);
+            String value = properties != null ? properties.get(key) : null;
             if (value != null) {
                 formatted = formatted.replaceFirst(VALUE_REGEX, value);
                 log.debug("successfully replaced key {} with value {}", key, value);
@@ -123,19 +120,5 @@ public class EventMessageFormatter implements MessageFormatter {
         if (group.length() < 3)
             return group;
         return group.substring(2, group.length() - 1);
-    }
-
-    /**
-     * Adds additional information to the event information.
-     *
-     * @param event the related event
-     */
-    private Map<String, String> mergeEventInfo(BaseEvent event) {
-        Map<String, String> result = event.getMap();
-        ClientInfo info = ts3Bot.getTs3Api().getClientInfo(event.getInvokerId());
-        if (info != null) {
-            result.putAll(info.getMap());
-        }
-        return event.getMap();
     }
 }

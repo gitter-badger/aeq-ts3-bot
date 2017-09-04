@@ -60,11 +60,12 @@ public class DefaultMessageProvider implements MessageProvider {
     }
 
     @Override
-    public @Nullable Message getMessage(@NotNull String context, @NotNull Locale locale, @NotNull BaseEvent event) {
-        LOG.debug("Fetching message for context {} and locale {}", context, locale.getLanguage());
+    public @Nullable Message getMessage(@NotNull String context, @NotNull Locale locale, @Nullable BaseEvent event) {
+        LOG.debug("Fetching message for context {} and DEFAULT_LOCALE {}", context, locale.getLanguage());
         MessageRepository repository = this.context.getBean(MessageRepository.class);
         List<Message> messages = repository.findByContextAndLocale(context, locale);
-        LOG.debug("found {} candidates for context {} and locale {}", messages.size(), context, locale.getLanguage());
+        LOG.debug("found {} candidates for context {} and DEFAULT_LOCALE {}", messages.size(), context, locale
+                .getLanguage());
         // Shuffle to switch between messages
         Collections.shuffle(messages);
         Optional<Message> match = messages.stream().filter((Message m) -> MessageFilter.filter(m.getFilters()

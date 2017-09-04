@@ -18,61 +18,70 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.core.event;
+package de.aeq.esports.ts3.bot.advertiser;
 
-import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
-import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
-import de.esports.aeq.ts3.bot.core.AeqTS3Bot;
+import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
+import de.aeq.esports.ts3.bot.advertiser.api.Advertiser;
 import de.esports.aeq.ts3.bot.messages.DefaultMessageProvider;
 import de.esports.aeq.ts3.bot.messages.EventMessageFormatter;
 import de.esports.aeq.ts3.bot.messages.Messages;
+import de.esports.aeq.ts3.bot.messages.api.MessageFormatter;
 import de.esports.aeq.ts3.bot.messages.api.MessageProvider;
+import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.model.message.Message;
 import de.esports.aeq.ts3.bot.util.ClientHelperBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
+
 /**
- * Class description.
- *
- * @author Lukas
- * @version 0.1
- * @since 06.08.2017
+ * @author Lukas Kannenberg
  */
 @Component
-@Scope("prototype")
-public class WelcomeClientJoinHandler extends TS3EventAdapter {
+public class AdvertiserBean implements Advertiser {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WelcomeClientJoinHandler.class);
+    /**
+     * Timeout used for clients to not receive any further advertisements.
+     */
+    private static final int CLIENT_TIMEOUT_MILLIS = 60 * 30;
 
-    private AeqTS3Bot ts3Bot;
     private ApplicationContext context;
-    private EventMessageFormatter formatter;
-    private ClientHelperBean clientHelperBean;
+    private TS3Bot ts3Bot;
+
+    /**
+     * Keep track of the client ids to prevent sending multiple messages in a short time frame.
+     */
+    private HashMap<Integer, Timestamp> clientTimeouts = new HashMap<>();
 
     @Autowired
-    public WelcomeClientJoinHandler(AeqTS3Bot ts3Bot, ApplicationContext context, ClientHelperBean clientHelperBean,
-                                    EventMessageFormatter formatter) {
+    public AdvertiserBean(ApplicationContext context, TS3Bot ts3Bot) {
         this.ts3Bot = ts3Bot;
-        this.context = context;
-        this.clientHelperBean = clientHelperBean;
-        this.formatter = formatter;
     }
 
     @Override
-    public void onClientJoin(ClientJoinEvent event) {
+    public void advertiseMembership(int clientId) {
+        // don`t advertise clients who have been recently messaged
+        if (hasTimeout(clientId)) {
+            return;
+        }
         MessageProvider provider = context.getBean(DefaultMessageProvider.class);
-        Message message = provider.getMessage(Messages.WELCOME, Messages.DEFAULT_LOCALE, event);
+        Message message = provider.getMessage(Messages.ADVERTISE_MEMBERSHIP, Messages.DEFAULT_LOCALE, null);
         if (message != null) {
-            String[] formattedMessage = formatter.format(message.getText(), event);
-            clientHelperBean.sendMessage(event.getClientId(), formattedMessage);
-        } else {
-            LOG.warn("Unable to fetch a matching welcome message for {}", event.getClientNickname());
+            MessageFormatter formatter = context.getBean(EventMessageFormatter.class);
+            ClientHelperBean helper = context.getBean(ClientHelperBean.class);
+            ClientInfo clientInfo = ts3Bot.getTs3Api().getClientInfo(clientId);
+            helper.sendMessage(clientId, formatter.format(message.getText(), clientInfo.getMap()));
+            // reset timeout
+            clientTimeouts.put(clientId, new Timestamp(System.currentTimeMillis() + CLIENT_TIMEOUT_MILLIS));
         }
     }
 
+    private boolean hasTimeout(int clientId) {
+        Timestamp timestamp = clientTimeouts.get(clientId);
+        return timestamp == null || new Timestamp(System.currentTimeMillis() - CLIENT_TIMEOUT_MILLIS).compareTo
+                (timestamp) >= 0;
+    }
 }

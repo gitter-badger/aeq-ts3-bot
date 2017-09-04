@@ -21,6 +21,7 @@
 package de.esports.aeq.ts3.bot.model.message;
 
 import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -71,5 +72,5 @@ public abstract class MessageFilter {
      * @param event   the event context
      * @return true if the message passed the filter, otherwise false
      */
-    public abstract boolean apply(Message message, BaseEvent event);
+    public abstract boolean apply(Message message, @Nullable BaseEvent event);
 }

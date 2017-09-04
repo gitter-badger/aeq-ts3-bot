@@ -29,12 +29,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>application</artifactId>
+    <artifactId>advertiser</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>de.esports.aeq</groupId>
             <artifactId>model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.esports.aeq</groupId>
+            <artifactId>messages</artifactId>
         </dependency>
     </dependencies>
 
