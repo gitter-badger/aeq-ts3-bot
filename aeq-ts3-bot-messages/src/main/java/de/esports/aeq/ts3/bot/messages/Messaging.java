@@ -60,29 +60,26 @@ public interface Messaging {
     void sendMessage(int clientId, Message message, Map<String, String>... properties) throws MessagingException;
 
     /**
-     * Fetches a {@link Message} that match the given context and {@link Locale}. The target {@link Message} is then
-     * send to the specified client. Also, basic formatting is applied by the default formatter.
+     * Fetches a {@link Message} that match the given context using the clients default {@link Locale}. The target
+     * {@link Message} is then send to the specified client. Also, basic formatting is applied by the default formatter.
      *
      * @param clientId the id of the client
      * @param context  the context of the message to fetch
-     * @param locale   the {@link Locale} of the message to fetch
-     * @throws MessagingException if the message can not be send or found, or any other exception occurs during the
-     *                            process
+     * @throws MessagingException
      */
-    void fetchAndSend(int clientId, String context, Locale locale) throws MessagingException;
+    void fetchAndSendMessage(int clientId, String context) throws MessagingException;
 
     /**
-     * Fetches a {@link Message} that match the given context and {@link Locale}. The target {@link Message} is then
-     * send to the specified client. Also, basic formatting is applied by the default formatter.
+     * Fetches a {@link Message} that match the given context using the clients default {@link Locale}. The target
+     * {@link Message} is then send to the specified client. Also, basic formatting is applied by the default formatter.
      *
      * @param clientId   the id of the client
      * @param context    the context of the message to fetch
-     * @param locale     the {@link Locale} of the message to fetch
      * @param properties any additional properties to pass to the formatter that will be considered when performing
      *                   key value replacements
      * @throws MessagingException if the message can not be send or found, or any other exception occurs during the
      *                            process
      */
-    void fetchAndSend(int clientId, String context, Locale locale, Map<String, String>... properties) throws
-            MessagingException;
+    void fetchAndSendMessage(int clientId, String context, Map<String, String>... properties) throws MessagingException;
+
 }
