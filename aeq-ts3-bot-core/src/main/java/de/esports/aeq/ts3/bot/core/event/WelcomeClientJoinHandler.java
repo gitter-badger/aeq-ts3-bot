@@ -68,7 +68,7 @@ public class WelcomeClientJoinHandler extends TS3EventAdapter {
         MessageProvider provider = context.getBean(DefaultMessageProvider.class);
         Message message = provider.getMessage(Messages.WELCOME, Messages.DEFAULT_LOCALE, event);
         if (message != null) {
-            String[] formattedMessage = formatter.format(message.getText(), event);
+            String[] formattedMessage = formatter.format(message.getText(), event.getMap());
             clientHelperBean.sendMessage(event.getClientId(), formattedMessage);
         } else {
             LOG.warn("Unable to fetch a matching welcome message for {}", event.getClientNickname());
