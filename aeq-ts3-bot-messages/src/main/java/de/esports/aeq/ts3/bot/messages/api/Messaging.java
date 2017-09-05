@@ -18,8 +18,9 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.messages;
+package de.esports.aeq.ts3.bot.messages.api;
 
+import de.esports.aeq.ts3.bot.messages.MessagingException;
 import de.esports.aeq.ts3.bot.model.message.Message;
 
 import java.util.Locale;
