@@ -20,6 +20,7 @@
 
 package de.esports.aeq.ts3.bot.messages;
 
+import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import de.esports.aeq.ts3.bot.dataprovider.api.MessageRepository;
 import de.esports.aeq.ts3.bot.messages.api.MessageFormatter;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
@@ -90,7 +91,7 @@ public class MessagingBean implements Messaging {
     }
 
     @Override
-    public void sendMessage(int clientId, Message message, Map<String, String>... properties) throws
+    public final void sendMessage(int clientId, Message message, Map<String, String>... properties) throws
             MessagingException {
         Map<String, String> mergedMap = null;
         if (properties != null) {
@@ -143,14 +144,16 @@ public class MessagingBean implements Messaging {
      *
      * @param messages the {@link List} of {@link Message} objects to be filted
      * @param clientId the id of the client, used to apply {@link MessageFilter} objects
-     * @return
+     * @return the filtered {@link List} of {@link Message} objects
+     * @throws MessagingException if the client information cannot be found
      */
-    @SuppressWarnings("unused")
-    @NotImplemented
-    private List<Message> applyMessageFilters(List<Message> messages, int clientId) {
+    private List<Message> applyMessageFilters(List<Message> messages, int clientId) throws MessagingException {
+        ClientInfo info = ts3Bot.getTs3Api().getClientInfo(clientId);
+        if (info == null) {
+            throw new MessagingException("cannot apply filters as the client information is missing");
+        }
         return messages.stream().filter(message -> {
-            // TODO we need to rewrite the api to pass a client id
-            return message.getFilters().stream().allMatch(filter -> filter.apply(message, null));
+            return message.getFilters().stream().allMatch(filter -> filter.apply(message, info));
         }).collect(Collectors.toList());
     }
 

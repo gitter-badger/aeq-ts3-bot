@@ -87,8 +87,7 @@ public class GroupMessageFilter extends MessageFilter {
     }
 
     @Override
-    public boolean apply(Message message, BaseEvent event) {
-        ClientInfo info = ts3Bot.getTs3Api().getClientInfo(event.getInvokerId());
+    public boolean apply(Message message, ClientInfo info) {
         return isValidServerGroup(info.getServerGroups(), whitelist, blacklist);
     }
 

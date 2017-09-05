@@ -20,7 +20,7 @@
 
 package de.esports.aeq.ts3.bot.model.message;
 
-import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
+import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 
 public class AmountConnectedMessageFilter extends MessageFilter {
@@ -36,7 +36,7 @@ public class AmountConnectedMessageFilter extends MessageFilter {
     }
 
     @Override
-    public boolean apply(Message message, BaseEvent event) {
+    public boolean apply(Message message, ClientInfo info) {
         int amountConnected = 0; // TODO: make a database call here
         return isWithinRange(amountConnected);
     }

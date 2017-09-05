@@ -20,11 +20,9 @@
 
 package de.esports.aeq.ts3.bot.model.message;
 
-import com.github.theholywaffle.teamspeak3.api.event.BaseEvent;
-import org.jetbrains.annotations.Nullable;
+import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "message_filter")
@@ -36,41 +34,11 @@ public abstract class MessageFilter {
     private long id;
 
     /**
-     * Applies the given filter to a list of messages.
-     *
-     * @param filter   the filter to be applied
-     * @param messages the {@link List} of messages
-     * @param event    the event context
-     * @return the filtered {@link List} of messages
-     */
-    public static List<Message> filter(MessageFilter filter, List<Message> messages, BaseEvent event) {
-        messages.removeIf(i -> filter.apply(i, event));
-        return messages;
-    }
-
-    /**
-     * Applies the given filters to a single message.
-     *
-     * @param filters the filters to be applied
-     * @param message the {@link Message}
-     * @param event   the event context
-     * @return true if the message matches all the filters, otherwise false
-     */
-    public static boolean filter(List<MessageFilter> filters, Message message, BaseEvent event) {
-        if (filters == null) {
-            return true;
-        }
-        for (MessageFilter filter : filters)
-            if (filter.apply(message, event)) return false;
-        return true;
-    }
-
-    /**
      * Applies the given filter the message.
      *
      * @param message the message
-     * @param event   the event context
+     * @param info    the information about the client
      * @return true if the message passed the filter, otherwise false
      */
-    public abstract boolean apply(Message message, @Nullable BaseEvent event);
+    public abstract boolean apply(Message message, ClientInfo info);
 }
