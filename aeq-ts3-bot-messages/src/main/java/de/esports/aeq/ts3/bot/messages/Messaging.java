@@ -32,7 +32,7 @@ import java.util.Map;
  * layer while also do not have to worry about any formatting of messages.
  *
  * @author Lukas Kannenberg
- * @version 1.0
+ * @version 1.1
  * @since 05.09.2017
  */
 public interface Messaging {
