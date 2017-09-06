@@ -22,17 +22,12 @@ package de.esports.aeq.ts3.bot.core.event;
 
 import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
-import de.esports.aeq.ts3.bot.core.AeqTS3Bot;
-import de.esports.aeq.ts3.bot.messages.DefaultMessageProvider;
-import de.esports.aeq.ts3.bot.messages.EventMessageFormatter;
 import de.esports.aeq.ts3.bot.messages.Messages;
-import de.esports.aeq.ts3.bot.messages.api.MessageProvider;
-import de.esports.aeq.ts3.bot.model.message.Message;
-import de.esports.aeq.ts3.bot.util.ClientHelperBean;
+import de.esports.aeq.ts3.bot.messages.MessagingException;
+import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -49,29 +44,19 @@ public class WelcomeClientJoinHandler extends TS3EventAdapter {
 
     private static final Logger LOG = LoggerFactory.getLogger(WelcomeClientJoinHandler.class);
 
-    private AeqTS3Bot ts3Bot;
-    private ApplicationContext context;
-    private EventMessageFormatter formatter;
-    private ClientHelperBean clientHelperBean;
+    private Messaging messaging;
 
     @Autowired
-    public WelcomeClientJoinHandler(AeqTS3Bot ts3Bot, ApplicationContext context, ClientHelperBean clientHelperBean,
-                                    EventMessageFormatter formatter) {
-        this.ts3Bot = ts3Bot;
-        this.context = context;
-        this.clientHelperBean = clientHelperBean;
-        this.formatter = formatter;
+    public WelcomeClientJoinHandler(Messaging messaging) {
+        this.messaging = messaging;
     }
 
     @Override
     public void onClientJoin(ClientJoinEvent event) {
-        MessageProvider provider = context.getBean(DefaultMessageProvider.class);
-        Message message = provider.getMessage(Messages.WELCOME, Messages.DEFAULT_LOCALE, event);
-        if (message != null) {
-            String[] formattedMessage = formatter.format(message.getText(), event.getMap());
-            clientHelperBean.sendMessage(event.getClientId(), formattedMessage);
-        } else {
-            LOG.warn("Unable to fetch a matching welcome message for {}", event.getClientNickname());
+        try {
+            messaging.fetchAndSendMessage(event.getClientId(), Messages.WELCOME, event.getMap());
+        } catch (MessagingException e) {
+            LOG.error("unable to send message to client " + event.getClientId(), e);
         }
     }
 

@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -77,9 +76,11 @@ public class EventMessageFormatter implements MessageFormatter {
 
     @Override
     public String[] format(String message, Map<String, String> properties) {
-        Map<String, String> eventInfo = new HashMap<>();
-        String replaced = replaceKeys(message, eventInfo, EMPTY);
-        return replaced.split(SPLIT_REGEX);
+        String result = message;
+        if (properties != null) {
+            result = replaceKeys(message, properties, EMPTY);
+        }
+        return result.split(SPLIT_REGEX);
     }
 
     /**

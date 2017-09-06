@@ -20,18 +20,13 @@
 
 package de.aeq.esports.ts3.bot.advertiser;
 
-import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import de.aeq.esports.ts3.bot.advertiser.api.Advertiser;
-import de.esports.aeq.ts3.bot.messages.DefaultMessageProvider;
-import de.esports.aeq.ts3.bot.messages.EventMessageFormatter;
 import de.esports.aeq.ts3.bot.messages.Messages;
-import de.esports.aeq.ts3.bot.messages.api.MessageFormatter;
-import de.esports.aeq.ts3.bot.messages.api.MessageProvider;
-import de.esports.aeq.ts3.bot.model.TS3Bot;
-import de.esports.aeq.ts3.bot.model.message.Message;
-import de.esports.aeq.ts3.bot.util.ClientHelperBean;
+import de.esports.aeq.ts3.bot.messages.MessagingException;
+import de.esports.aeq.ts3.bot.messages.api.Messaging;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -43,13 +38,14 @@ import java.util.HashMap;
 @Component
 public class AdvertiserBean implements Advertiser {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AdvertiserBean.class);
+
     /**
      * Timeout used for clients to not receive any further advertisements.
      */
     private static final int CLIENT_TIMEOUT_MILLIS = 60 * 30;
 
-    private ApplicationContext context;
-    private TS3Bot ts3Bot;
+    private Messaging messaging;
 
     /**
      * Keep track of the client ids to prevent sending multiple messages in a short time frame.
@@ -57,8 +53,8 @@ public class AdvertiserBean implements Advertiser {
     private HashMap<Integer, Timestamp> clientTimeouts = new HashMap<>();
 
     @Autowired
-    public AdvertiserBean(ApplicationContext context, TS3Bot ts3Bot) {
-        this.ts3Bot = ts3Bot;
+    public AdvertiserBean(Messaging messaging) {
+        this.messaging = messaging;
     }
 
     @Override
@@ -67,15 +63,12 @@ public class AdvertiserBean implements Advertiser {
         if (hasTimeout(clientId)) {
             return;
         }
-        MessageProvider provider = context.getBean(DefaultMessageProvider.class);
-        Message message = provider.getMessage(Messages.ADVERTISE_MEMBERSHIP, Messages.DEFAULT_LOCALE, null);
-        if (message != null) {
-            MessageFormatter formatter = context.getBean(EventMessageFormatter.class);
-            ClientHelperBean helper = context.getBean(ClientHelperBean.class);
-            ClientInfo clientInfo = ts3Bot.getTs3Api().getClientInfo(clientId);
-            helper.sendMessage(clientId, formatter.format(message.getText(), clientInfo.getMap()));
-            // reset timeout
+        try {
+            messaging.fetchAndSendMessage(clientId, Messages.ADVERTISE_MEMBERSHIP, null);
+            // reset timeout if successful
             clientTimeouts.put(clientId, new Timestamp(System.currentTimeMillis() + CLIENT_TIMEOUT_MILLIS));
+        } catch (MessagingException e) {
+            LOG.error("cannot send fetch or send message to client " + clientId, e);
         }
     }
 

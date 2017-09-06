@@ -26,15 +26,16 @@ import de.esports.aeq.ts3.bot.messages.api.MessageFormatter;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.model.message.Message;
-import de.esports.aeq.ts3.bot.model.message.MessageFilter;
-import de.esports.aeq.ts3.bot.util.NotImplemented;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -44,35 +45,12 @@ import java.util.stream.Collectors;
  * This implementation uses the primary {@link MessageFormatter} for formatting.
  *
  * @author Lukas Kannenberg
- * @version 1.0
+ * @version 1.1
  * @since 05.09.2017
  */
 @Component
 @Primary
-@NotImplemented
 public class MessagingBean implements Messaging {
-
-    /**
-     * Utility method to merge an array of {@link Map} objects.
-     *
-     * @param maps an array of maps
-     * @param <K>  the key type the of the array
-     * @param <V>  the value type of the array
-     * @return the merged {@link Map} or an empty {@link Map} if the initial array is <code>null</code> or empty
-     */
-    private static <K, V> Map<K, V> mergeMaps(Map<K, V>[] maps) {
-        if (maps == null || maps.length == 0) {
-            return Collections.emptyMap();
-        } else if (maps.length == 1) {
-            return maps[0];
-        } else {
-            Map<K, V> result = maps[0];
-            for (int i = 1; i < maps.length; i++) {
-                result.putAll(maps[i]);
-            }
-            return result;
-        }
-    }
 
     private TS3Bot ts3Bot;
     private MessageRepository repository;
@@ -86,39 +64,57 @@ public class MessagingBean implements Messaging {
     }
 
     @Override
-    public void sendMessage(int clientId, Message message) throws MessagingException {
+    public @Nullable Message getMessage(@NotNull String context, @NotNull Locale locale) throws MessagingException {
+        List<Message> messages = getMessages(context, locale);
+        if (messages.isEmpty()) return null;
+        return getOne(messages);
+    }
+
+    @Override
+    public @NotNull List<Message> getMessages(@NotNull String context, @NotNull Locale locale) throws
+            MessagingException {
+        Objects.requireNonNull(context, "context must be null");
+        Objects.requireNonNull(locale, "locale must be null");
+        return repository.findByContextAndLocale(context, locale);
+    }
+
+    @Override
+    public @NotNull List<Message> filterMessages(@NotNull List<Message> messages, int clientId) throws
+            MessagingException {
+        Objects.requireNonNull(messages, "messages must be null");
+        ClientInfo info = ts3Bot.getTs3Api().getClientInfo(clientId);
+        if (info == null) {
+            throw new MessagingException("cannot apply filters as the client information is missing");
+        }
+        return messages.stream().filter(message ->
+                message.getFilters().stream().allMatch(filter -> filter.apply(message, info))
+        ).collect(Collectors.toList());
+    }
+
+    @Override
+    public void sendMessage(int clientId, @NotNull Message message) throws MessagingException {
         sendMessage(clientId, message, null);
     }
 
     @Override
-    public final void sendMessage(int clientId, Message message, Map<String, String>... properties) throws
+    public void sendMessage(int clientId, @NotNull Message message, @Nullable Map<String, String> properties) throws
             MessagingException {
-        Map<String, String> mergedMap = null;
-        if (properties != null) {
-            mergedMap = mergeMaps(properties);
-        }
-        String[] output = formatter.format(message.getText(), mergedMap);
+        Objects.requireNonNull(message, "message must not be null");
+        String[] output = formatter.format(message.getText(), properties);
         sendMessage(clientId, output);
     }
 
     @Override
-    public void fetchAndSendMessage(int clientId, String context) throws MessagingException {
+    public void fetchAndSendMessage(int clientId, @NotNull String context) throws MessagingException {
         fetchAndSendMessage(clientId, context, null);
     }
 
     @Override
-    public void fetchAndSendMessage(int clientId, String context, Map<String, String>... properties) throws
-            MessagingException {
-        List<Message> messages = repository.findByContextAndLocale(context, Messages.DEFAULT_LOCALE);
-        if (messages != null && !messages.isEmpty()) {
-            // remove messages that do not match their filters
-            messages = applyMessageFilters(messages, clientId);
-            Message message = messages.get(ThreadLocalRandom.current().nextInt(messages.size()));
-            sendMessage(clientId, message, properties);
-        } else {
-            throw new MessagingException("unable to find a matching message for context " + context + " and default " +
-                    "locale");
-        }
+    public void fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String> properties)
+            throws MessagingException {
+        List<Message> messages = getMessages(context, Messages.DEFAULT_LOCALE);
+        messages = filterMessages(messages, clientId);
+        sendMessage(clientId, getOne(messages));
     }
 
     /**
@@ -137,24 +133,13 @@ public class MessagingBean implements Messaging {
     }
 
     /**
-     * Filters a given {@link List} of {@link Message} objects.
-     * <p>
-     * The process involves applying each filter of a message to the message. This is repeated for all messages in
-     * the list.
+     * Returns exactly one randomly selected {@link Message} from a {@link List} of messages.
      *
-     * @param messages the {@link List} of {@link Message} objects to be filted
-     * @param clientId the id of the client, used to apply {@link MessageFilter} objects
-     * @return the filtered {@link List} of {@link Message} objects
-     * @throws MessagingException if the client information cannot be found
+     * @param messages the {@link List} of {@link Message} objects
+     * @return exactly one {@link Message} from the original {@link List}
      */
-    private List<Message> applyMessageFilters(List<Message> messages, int clientId) throws MessagingException {
-        ClientInfo info = ts3Bot.getTs3Api().getClientInfo(clientId);
-        if (info == null) {
-            throw new MessagingException("cannot apply filters as the client information is missing");
-        }
-        return messages.stream().filter(message -> {
-            return message.getFilters().stream().allMatch(filter -> filter.apply(message, info));
-        }).collect(Collectors.toList());
+    private Message getOne(@NotNull List<Message> messages) {
+        return messages.get(ThreadLocalRandom.current().nextInt(messages.size()));
     }
 
 }
