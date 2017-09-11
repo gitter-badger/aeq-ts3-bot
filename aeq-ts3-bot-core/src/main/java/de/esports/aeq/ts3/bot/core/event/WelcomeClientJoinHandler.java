@@ -23,7 +23,6 @@ package de.esports.aeq.ts3.bot.core.event;
 import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import de.esports.aeq.ts3.bot.messages.Messages;
-import de.esports.aeq.ts3.bot.messages.MessagingException;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,11 +52,7 @@ public class WelcomeClientJoinHandler extends TS3EventAdapter {
 
     @Override
     public void onClientJoin(ClientJoinEvent event) {
-        try {
-            messaging.fetchAndSendMessage(event.getClientId(), Messages.WELCOME, event.getMap());
-        } catch (MessagingException e) {
-            LOG.error("unable to send message to client " + event.getClientId(), e);
-        }
+        messaging.fetchAndSendMessage(event.getClientId(), Messages.WELCOME, event.getMap());
     }
 
 }

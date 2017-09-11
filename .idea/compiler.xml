@@ -8,21 +8,26 @@
         <outputRelativeToContentRoot value="true" />
         <module name="aeq-esports-ts3-bot" />
         <module name="aeq-ts3-bot-advertiser" />
-        <module name="aeq-ts3-bot-application" />
-        <module name="aeq-ts3-bot-commands" />
+        <module name="aeq-ts3-bot-channels" />
+        <module name="aeq-ts3-bot-command" />
         <module name="aeq-ts3-bot-configuration" />
         <module name="aeq-ts3-bot-core" />
         <module name="aeq-ts3-bot-dataprovider" />
         <module name="aeq-ts3-bot-dynamic-channels" />
         <module name="aeq-ts3-bot-messages" />
         <module name="aeq-ts3-bot-model" />
+        <module name="aeq-ts3-bot-privilege" />
         <module name="aeq-ts3-bot-util" />
+        <module name="aeq-ts3-bot-workflow" />
+        <module name="channels" />
         <module name="commands" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="aeq-ts3-bot-advertiser" target="1.8" />
       <module name="aeq-ts3-bot-application" target="1.8" />
+      <module name="aeq-ts3-bot-channels" target="1.8" />
+      <module name="aeq-ts3-bot-command" target="1.8" />
       <module name="aeq-ts3-bot-commands" target="1.8" />
       <module name="aeq-ts3-bot-configuration" target="1.8" />
       <module name="aeq-ts3-bot-core" target="1.8" />
@@ -30,7 +35,10 @@
       <module name="aeq-ts3-bot-dynamic-channels" target="1.8" />
       <module name="aeq-ts3-bot-messages" target="1.8" />
       <module name="aeq-ts3-bot-model" target="1.8" />
+      <module name="aeq-ts3-bot-privilege" target="1.8" />
       <module name="aeq-ts3-bot-util" target="1.8" />
+      <module name="aeq-ts3-bot-workflow" target="1.8" />
+      <module name="channels" target="1.8" />
       <module name="commands" target="1.8" />
       <module name="ts3bot" target="1.8" />
     </bytecodeTargetLevel>

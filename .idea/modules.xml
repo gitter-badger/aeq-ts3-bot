@@ -2,16 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-advertiser/aeq-ts3-bot-advertiser.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-advertiser/aeq-ts3-bot-advertiser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-application/aeq-ts3-bot-application.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-application/aeq-ts3-bot-application.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-commands/aeq-ts3-bot-commands.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-commands/aeq-ts3-bot-commands.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-commands/src/main/aeq-st3-bot-commands.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-commands/src/main/aeq-st3-bot-commands.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-channels/aeq-ts3-bot-channels.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-channels/aeq-ts3-bot-channels.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-channels/aeq-ts3-bot-channels.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-channels/aeq-ts3-bot-channels.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-command/aeq-ts3-bot-command.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-command/aeq-ts3-bot-command.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-configuration/aeq-ts3-bot-configuration.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-configuration/aeq-ts3-bot-configuration.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-core/aeq-ts3-bot-core.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-core/aeq-ts3-bot-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-dataprovider/aeq-ts3-bot-dataprovider.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-dataprovider/aeq-ts3-bot-dataprovider.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-dynamic-channels/aeq-ts3-bot-dynamic-channels.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-dynamic-channels/aeq-ts3-bot-dynamic-channels.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-messages/aeq-ts3-bot-messages.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-messages/aeq-ts3-bot-messages.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-model/aeq-ts3-bot-model.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-model/aeq-ts3-bot-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-privilege/aeq-ts3-bot-privilege.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-privilege/aeq-ts3-bot-privilege.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-util/aeq-ts3-bot-util.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-util/aeq-ts3-bot-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-workflow/aeq-ts3-bot-workflow.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-workflow/aeq-ts3-bot-workflow.iml" />
       <module fileurl="file://$PROJECT_DIR$/ts3bot.iml" filepath="$PROJECT_DIR$/ts3bot.iml" />
     </modules>
   </component>

@@ -36,4 +36,29 @@ public class Messages {
     public static final String WELCOME = "welcome";
     public static final String ADVERTISE_MEMBERSHIP = "advertise_membership";
 
+    public static final String PROMOTE_TO_MEMBER_INVALID_USER_GROUP = "";
+
+    public static final String COMMAND_INVALID_PERMISSIONS = "command_invalid_permissions";
+    public static final String COMMAND_INVALID_APPLY_TYPE = "command_invalid_apply_type";
+    public static final String PROMOTE_APPLICANT_SUCCESS = "command_invalid_user_group";
+    public static final String COMMAND_INVALID_USER_GROUP = "command_invalid_user_group";
+
+
+    public static final String C_TEAM_T_CREATE_INVALID_USER_GROUP = "c_team_t_create_invalid_user_group";
+    public static final String C_TEAM_T_CREATE_INVALID_TEAM_NAME = "c_team_t_create_invalid_team_name";
+
+
+    public static final String C_TEAM_T_CREATE_DUPLICATE_TEAM_NAME = "c_team_t_create_duplicate_team_name";
+    public static final String C_TEAM_T_CREATE_EXCEPTION = "c_team_create_exception";
+    public static final String C_TEAM_T_CREATE_SUCCESS = "c_team_create_success";
+
+    public static final String C_APPLY_NOT_LINKED = "c_apply_not_linked";
+    public static final String C_APPLY_LINKED = "c_apply_linked";
+
+    public static final String C_APPLY_ALREADY_MEMBER = "c_apply_already_member";
+    public static final String C_APPLY_AFTER_MOVE = "c_apply_after_move";
+
+    public static final String C_LINK_ALREADY_LINKED = "c_link_already_linked";
+    public static final String C_LINK_SUCCESSFUL = "c_link_successful";
+    public static final String C_LINK_AFTER_APPLICANT_MOVE = "c_link_after_applicant_move";
 }

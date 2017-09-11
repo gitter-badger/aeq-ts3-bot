@@ -28,6 +28,8 @@ import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.model.message.Message;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -51,6 +53,8 @@ import java.util.stream.Collectors;
 @Component
 @Primary
 public class MessagingBean implements Messaging {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MessagingBean.class);
 
     private TS3Bot ts3Bot;
     private MessageRepository repository;
@@ -105,16 +109,20 @@ public class MessagingBean implements Messaging {
     }
 
     @Override
-    public void fetchAndSendMessage(int clientId, @NotNull String context) throws MessagingException {
+    public void fetchAndSendMessage(int clientId, @NotNull String context) {
         fetchAndSendMessage(clientId, context, null);
     }
 
     @Override
-    public void fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String> properties)
-            throws MessagingException {
-        List<Message> messages = getMessages(context, Messages.DEFAULT_LOCALE);
-        messages = filterMessages(messages, clientId);
-        sendMessage(clientId, getOne(messages));
+    public void fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String> properties) {
+        List<Message> messages = null;
+        try {
+            messages = getMessages(context, Messages.DEFAULT_LOCALE);
+            messages = filterMessages(messages, clientId);
+            sendMessage(clientId, getOne(messages));
+        } catch (MessagingException e) {
+            LOG.error("cannot send message to client " + clientId, e);
+        }
     }
 
     /**

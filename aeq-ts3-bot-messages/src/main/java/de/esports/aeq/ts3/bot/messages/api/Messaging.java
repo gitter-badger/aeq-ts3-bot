@@ -112,10 +112,8 @@ public interface Messaging {
      *
      * @param clientId the id of the client
      * @param context  the context of the message to fetch
-     * @throws MessagingException if the message can not be send or found, or any other exception occurs during the
-     *                            process
      */
-    void fetchAndSendMessage(int clientId, @NotNull String context) throws MessagingException;
+    void fetchAndSendMessage(int clientId, @NotNull String context);
 
     /**
      * Fetches a {@link Message} that match the given context using the clients default {@link Locale}. The target
@@ -126,10 +124,7 @@ public interface Messaging {
      * @param context    the context of the message to fetch
      * @param properties any additional properties to pass to the formatter that will be considered when performing key
      *                   value replacements
-     * @throws MessagingException if the message can not be send or found, or any other exception occurs during the
-     *                            process
      */
-    void fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String> properties) throws
-            MessagingException;
+    void fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String> properties);
 
 }
