@@ -23,6 +23,8 @@ package de.esports.aeq.ts3.bot.command.commands;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.aeq.esports.ts3.bot.worflow.api.AdmittanceNotifications;
 import de.aeq.esports.ts3.bot.worflow.api.AdmittanceWorkflow;
+import de.esports.aeq.ts3.bot.channels.Channel;
+import de.esports.aeq.ts3.bot.channels.api.ChannelManagement;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
@@ -56,14 +58,16 @@ public class CApply implements Command {
     private Messaging messaging;
     private AdmittanceWorkflow workflow;
     private AdmittanceNotifications notifications;
+    private ChannelManagement channelManagement;
 
     @Autowired
     public CApply(Privilege privilege, Messaging messaging, AdmittanceWorkflow workflow, AdmittanceNotifications
-            notifications) {
+            notifications, ChannelManagement channelManagement) {
         this.privilege = privilege;
         this.messaging = messaging;
         this.workflow = workflow;
         this.notifications = notifications;
+        this.channelManagement = channelManagement;
     }
 
     @Override
@@ -82,7 +86,7 @@ public class CApply implements Command {
         if (!workflow.isAccountLinked(event.getInvokerUniqueId())) {
             messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_APPLY_NOT_LINKED, event.getMap());
         } else {
-            workflow.moveToApplicantsChannel(event.getInvokerUniqueId());
+            channelManagement.moveClientToChannel(event.getInvokerId(), Channel.APPLICATION_CHANNEL);
             notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
         }
     }

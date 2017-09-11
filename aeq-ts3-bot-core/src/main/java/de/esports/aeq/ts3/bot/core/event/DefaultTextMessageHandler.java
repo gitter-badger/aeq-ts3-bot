@@ -22,12 +22,12 @@ package de.esports.aeq.ts3.bot.core.event;
 
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import de.esports.aeq.bot.command.AsyncCommandHandler;
-import de.esports.aeq.bot.command.DefaultCommandParser;
-import de.esports.aeq.bot.command.api.Command;
-import de.esports.aeq.bot.command.api.CommandParser;
-import de.esports.aeq.bot.command.exception.CommandParsingException;
-import de.esports.aeq.bot.command.exception.UnregisteredCommandException;
+import de.esports.aeq.ts3.bot.command.AsyncCommandHandler;
+import de.esports.aeq.ts3.bot.command.DefaultCommandParser;
+import de.esports.aeq.ts3.bot.command.api.Command;
+import de.esports.aeq.ts3.bot.command.api.CommandParser;
+import de.esports.aeq.ts3.bot.command.exception.CommandParsingException;
+import de.esports.aeq.ts3.bot.command.exception.UnregisteredCommandException;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
