@@ -22,6 +22,7 @@ package de.esports.aeq.ts3.bot.command.commands;
 
 import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import de.aeq.esports.ts3.bot.worflow.api.AdmittanceNotifications;
 import de.aeq.esports.ts3.bot.worflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.channels.Channel;
 import de.esports.aeq.ts3.bot.channels.api.ChannelManagement;
@@ -51,6 +52,7 @@ public class CLink implements Command {
     private Messaging messaging;
     private AdmittanceWorkflow workflow;
     private ChannelManagement channelManagement;
+    private AdmittanceNotifications notifications;
 
     /**
      * The access key that is used by the member.
@@ -76,6 +78,7 @@ public class CLink implements Command {
         if (privilege.hasRole(Role.APPLICANT)) {
             channelManagement.moveClientToChannel(event.getInvokerId(), Channel.APPLICATION_CHANNEL);
             messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_AFTER_APPLICANT_MOVE);
+            notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
         }
     }
 }

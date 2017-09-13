@@ -67,7 +67,6 @@ public class CAccept implements Command {
 
     @Override
     public void execute(@NotNull TextMessageEvent event) throws CommandExecutionException {
-        LOG.debug("executing command {}", CAccept.class.getSimpleName());
         try {
             if (force) {
                 workflow.promoteToMember(ts3id, true);
@@ -75,8 +74,8 @@ public class CAccept implements Command {
                 workflow.promoteToMember(ts3id, false);
             }
         } catch (InvalidUserGroupException e) {
-            String message = Messages.PROMOTE_TO_MEMBER_INVALID_USER_GROUP;
-            messaging.fetchAndSendMessage(event.getInvokerId(), message, event.getMap());
+            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.PROMOTE_TO_MEMBER_INVALID_USER_GROUP, event
+                    .getMap());
         }
     }
 

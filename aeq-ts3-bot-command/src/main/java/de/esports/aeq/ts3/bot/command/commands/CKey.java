@@ -20,26 +20,37 @@
 
 package de.esports.aeq.ts3.bot.command.commands;
 
+import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import de.aeq.esports.ts3.bot.worflow.api.UserManagement;
+import de.aeq.esports.ts3.bot.worflow.exception.InsufficientPermissionException;
+import de.aeq.esports.ts3.bot.worflow.exception.UserNotFoundException;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
-import de.esports.aeq.ts3.bot.model.TS3Bot;
+import de.esports.aeq.ts3.bot.messages.Messages;
+import de.esports.aeq.ts3.bot.messages.api.Messaging;
+import de.esports.aeq.ts3.bot.privilege.Role;
+import de.esports.aeq.ts3.bot.privilege.api.Privilege;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
  * Created by Lukas on 27.07.2017.
  */
 public class CKey implements Command {
 
-    public static final String PREFIX = "key";
-    private static final Logger log = LoggerFactory.getLogger(CKey.class);
-    private TS3Bot ts3Bot;
+    private static final String PREFIX = "ts3Id";
+    private static final Logger LOG = LoggerFactory.getLogger(CKey.class);
 
-    public CKey(TS3Bot ts3Bot) {
-        this.ts3Bot = ts3Bot;
-    }
+    private UserManagement userManagement;
+    private Messaging messaging;
+    private Privilege privilege;
+
+    @Parameter(names = {"--ts3Id", "-id"})
+    private String ts3Id;
 
     @Override
     public @NotNull String getPrefix() {
@@ -47,10 +58,27 @@ public class CKey implements Command {
     }
 
     @Override
-    public void execute(TextMessageEvent e) throws CommandExecutionException {
-        log.debug("executing command {}", CKey.class.getSimpleName());
-        //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
-        //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
-        // TODO(glains)
+    public void execute(TextMessageEvent event) throws CommandExecutionException {
+        String id = null;
+        if (ts3Id != null && !ts3Id.isEmpty()) {
+            if (!privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Role.CAO)) {
+                messaging.fetchAndSendMessage(event.getInvokerId(), Messages.COMMAND_INVALID_PERMISSIONS, event
+                        .getMap());
+                return;
+            }
+            id = ts3Id;
+        } else {
+            id = event.getInvokerUniqueId();
+        }
+        try {
+            String key = userManagement.getAccessKey(id);
+            Map<String, String> properties = event.getMap();
+            properties.put("access_key", key);
+            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_KEY_ACCESS_KEY, properties);
+        } catch (UserNotFoundException e) {
+            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_KEY_USER_NOT_FOUND);
+        } catch (InsufficientPermissionException e) {
+            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_KEY_INVALID_PERMISSIONS);
+        }
     }
 }
