@@ -109,20 +109,33 @@ public class MessagingBean implements Messaging {
     }
 
     @Override
-    public void fetchAndSendMessage(int clientId, @NotNull String context) {
-        fetchAndSendMessage(clientId, context, null);
+    public boolean fetchAndSendMessage(int clientId, @NotNull String context) {
+        return fetchAndSendMessage(clientId, context, null);
     }
 
     @Override
-    public void fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String> properties) {
+    public boolean fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String>
+            properties) {
         List<Message> messages = null;
         try {
             messages = getMessages(context, Messages.DEFAULT_LOCALE);
             messages = filterMessages(messages, clientId);
             sendMessage(clientId, getOne(messages));
+            return true;
         } catch (MessagingException e) {
             LOG.error("cannot send message to client " + clientId, e);
         }
+        return false;
+    }
+
+    @Override
+    public boolean fetchAndSendFirstMessage(int clientId, @Nullable String[] contexts, @Nullable Map<String, String>
+            properties) {
+        if (contexts == null) return false;
+        for (String context : contexts) {
+            if (context != null && !fetchAndSendMessage(clientId, context, properties)) return true;
+        }
+        return false;
     }
 
     /**

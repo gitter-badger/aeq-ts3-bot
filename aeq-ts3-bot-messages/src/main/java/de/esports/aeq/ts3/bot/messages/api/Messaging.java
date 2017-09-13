@@ -112,8 +112,9 @@ public interface Messaging {
      *
      * @param clientId the id of the client
      * @param context  the context of the message to fetch
+     * @return true if the message was send successfully, otherwise false
      */
-    void fetchAndSendMessage(int clientId, @NotNull String context);
+    boolean fetchAndSendMessage(int clientId, @NotNull String context);
 
     /**
      * Fetches a {@link Message} that match the given context using the clients default {@link Locale}. The target
@@ -124,7 +125,22 @@ public interface Messaging {
      * @param context    the context of the message to fetch
      * @param properties any additional properties to pass to the formatter that will be considered when performing key
      *                   value replacements
+     * @return true if the message was send successfully, otherwise false
      */
-    void fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String> properties);
+    boolean fetchAndSendMessage(int clientId, @NotNull String context, @Nullable Map<String, String> properties);
+
+    /**
+     * Iterates through the provided array of contexts and fetches the related {@link Message} using the default {@link
+     * Locale}. The first {@link Message} found is then send to the specified client. Also, basic formatting is applied
+     * by the default formatter.
+     *
+     * @param clientId   the id of the client
+     * @param contexts   the contexts of the messages to fetch
+     * @param properties any additional properties to pass to the formatter that will be considered when performing key
+     *                   value replacements
+     * @return true if at least one message was send successfully, otherwise false
+     */
+    boolean fetchAndSendFirstMessage(int clientId, @Nullable String[] contexts, @Nullable Map<String, String>
+            properties);
 
 }
