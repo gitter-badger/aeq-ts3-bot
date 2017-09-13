@@ -23,7 +23,9 @@ package de.esports.aeq.ts3.bot.command.commands;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
+import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
+import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +49,9 @@ public class CRecruitVote implements Command {
     }
 
     @Override
-    public void execute(TextMessageEvent e) throws CommandExecutionException {
-        // TODO(glains)
+    public void execute(TextMessageEvent event) throws CommandExecutionException {
+        // TODO(Reaper)
+
         log.debug("executing command {}", CRecruitVote.class.getSimpleName());
         //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
         //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);

@@ -20,22 +20,49 @@
 
 package de.esports.aeq.ts3.bot.command.commands;
 
+import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
+import de.esports.aeq.ts3.bot.messages.Messages;
+import de.esports.aeq.ts3.bot.messages.api.Messaging;
+import de.esports.aeq.ts3.bot.model.RecruitVote;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
+import de.esports.aeq.ts3.bot.model.message.Message;
+import de.esports.aeq.ts3.bot.privilege.Role;
+import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
+import de.esports.aeq.ts3.bot.workflow.api.UserManagement;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Map;
 
 /**
- * Created by Lukas on 27.07.2017.
+ * Command to be used by Recruits and Supporter.
+ *
+ * <p>
+ * Recruits can use this commands to get their current amount of votes. This does not include negative Votes.
+ * </p>
+ * <p>
+ * Supporters can use this Function to get a full view of any Recruits Votes. This requires the unique Identifier of the Recruit.
+ * </p>
+ * @author Lukas Peer
+ * @version 1.0
+ * @since 13.09.2017
  */
 public class CVotes implements Command {
 
     public static final String PREFIX = "votes";
     private static final Logger log = LoggerFactory.getLogger(CVotes.class);
     private TS3Bot ts3Bot;
+
+    private Messaging messaging;
+    private Privilege privilege;
+    private AdmittanceWorkflow workflow;
+
+    @Parameter
+    private String ts3Id;
 
     public CVotes(TS3Bot ts3Bot) {
         this.ts3Bot = ts3Bot;
@@ -47,10 +74,24 @@ public class CVotes implements Command {
     }
 
     @Override
-    public void execute(TextMessageEvent e) throws CommandExecutionException {
-        // TODO(glains)
-        log.debug("executing command {}", CVotes.class.getSimpleName());
-        //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
-        //ts3Bot.getApi().sendPrivateMessage(e.getInvokerId(), message);
+    public void execute(TextMessageEvent event) throws CommandExecutionException {
+        if (privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Role.SUPPORTER) && ts3Id != null && !ts3Id.isEmpty()) {
+            Map<String, String> properties = event.getMap();
+            properties.put("client_uid", ts3Id);
+            RecruitVote clientVotes = workflow.getVotes(ts3Id);
+
+            properties.put("votes_positive", String.valueOf(clientVotes.getCurrentPositiveVotes()));
+            properties.put("votes_negative", String.valueOf(clientVotes.getCurrentPositiveVotes()));
+            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_VOTES_SUPPORT_REPLY, properties);
+            return;
+        }
+
+        if (privilege.hasRole(event.getInvokerUniqueId(), Role.RECRUIT)) {
+            Map<String, String> properties = event.getMap();
+            RecruitVote clientVotes = workflow.getVotes(event.getInvokerUniqueId());
+            properties.put("votes_positive", String.valueOf(clientVotes.getCurrentPositiveVotes()));
+            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_VOTES_RECRUIT_REPLY, properties);
+            return;
+        }
     }
 }
