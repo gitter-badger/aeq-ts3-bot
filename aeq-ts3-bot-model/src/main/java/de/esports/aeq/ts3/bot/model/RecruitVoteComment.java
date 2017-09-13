@@ -18,10 +18,11 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.workflow.api;
+package de.esports.aeq.ts3.bot.model;
 
 /**
  * @author Lukas Kannenberg
  */
-public class Votes {
+public class RecruitVoteComment {
+
 }
