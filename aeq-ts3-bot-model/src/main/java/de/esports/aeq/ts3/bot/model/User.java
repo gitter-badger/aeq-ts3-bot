@@ -48,6 +48,9 @@ public class User {
     @Column(name = "ts3_id")
     private String ts3Id;
 
+    @Column(name = "access_key")
+    private String accessKey;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_bot_configuration_id")
     private UserBotConfiguration configuration;
@@ -108,6 +111,14 @@ public class User {
 
     public void setTs3Id(String ts3Id) {
         this.ts3Id = ts3Id;
+    }
+
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public void setAccessKey(String accessKey) {
+        this.accessKey = accessKey;
     }
 
     public UserBotConfiguration getConfiguration() {
