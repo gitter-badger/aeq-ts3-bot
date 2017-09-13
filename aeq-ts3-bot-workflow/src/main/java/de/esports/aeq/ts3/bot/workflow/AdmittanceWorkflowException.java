@@ -18,30 +18,30 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.exception;
+package de.esports.aeq.ts3.bot.workflow;
 
 /**
  * @author Lukas Kannenberg
  */
-public class UnresolvedTeamException extends WorkflowException {
+public class AdmittanceWorkflowException extends Exception {
 
-    public UnresolvedTeamException() {
+    public AdmittanceWorkflowException() {
         super();
     }
 
-    public UnresolvedTeamException(String message) {
+    public AdmittanceWorkflowException(String message) {
         super(message);
     }
 
-    public UnresolvedTeamException(String message, Throwable cause) {
+    public AdmittanceWorkflowException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public UnresolvedTeamException(Throwable cause) {
+    public AdmittanceWorkflowException(Throwable cause) {
         super(cause);
     }
 
-    protected UnresolvedTeamException(String message, Throwable cause, boolean enableSuppression, boolean
+    protected AdmittanceWorkflowException(String message, Throwable cause, boolean enableSuppression, boolean
             writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }

@@ -21,8 +21,6 @@
 package de.esports.aeq.ts3.bot.command.commands;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import de.aeq.esports.ts3.bot.worflow.api.AdmittanceNotifications;
-import de.aeq.esports.ts3.bot.worflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.channels.Channel;
 import de.esports.aeq.ts3.bot.channels.api.ChannelManagement;
 import de.esports.aeq.ts3.bot.command.api.Command;
@@ -31,6 +29,8 @@ import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Role;
 import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
+import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

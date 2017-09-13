@@ -18,10 +18,10 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.api;
+package de.esports.aeq.ts3.bot.workflow.api;
 
-import de.aeq.esports.ts3.bot.worflow.InvalidUserGroupException;
 import de.esports.aeq.ts3.bot.model.User;
+import de.esports.aeq.ts3.bot.workflow.InvalidUserGroupException;
 
 /**
  * Defines the workflow for new users to become members.

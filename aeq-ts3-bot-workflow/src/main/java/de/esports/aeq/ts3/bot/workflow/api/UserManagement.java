@@ -18,10 +18,15 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.exception;
+package de.esports.aeq.ts3.bot.workflow.api;
+
+import de.esports.aeq.ts3.bot.workflow.exception.InsufficientPermissionException;
+import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
 
 /**
  * @author Lukas Kannenberg
  */
-public class DuplicateTeamNameException extends WorkflowException {
+public interface UserManagement {
+
+    String getAccessKey(String clientUniqueId) throws UserNotFoundException, InsufficientPermissionException;
 }

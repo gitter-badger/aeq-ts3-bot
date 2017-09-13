@@ -18,11 +18,11 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow;
+package de.esports.aeq.ts3.bot.workflow;
 
-import de.aeq.esports.ts3.bot.worflow.api.AdmittanceWorkflow;
-import de.aeq.esports.ts3.bot.worflow.api.Votes;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
+import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
+import de.esports.aeq.ts3.bot.workflow.api.Votes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

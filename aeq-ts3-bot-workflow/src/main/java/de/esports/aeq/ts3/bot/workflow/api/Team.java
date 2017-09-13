@@ -18,31 +18,10 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.exception;
+package de.esports.aeq.ts3.bot.workflow.api;
 
 /**
  * @author Lukas Kannenberg
  */
-public class UserNotFoundException extends WorkflowException {
-
-    public UserNotFoundException() {
-        super();
-    }
-
-    public UserNotFoundException(String message) {
-        super(message);
-    }
-
-    public UserNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public UserNotFoundException(Throwable cause) {
-        super(cause);
-    }
-
-    protected UserNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean
-            writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
+public class Team {
 }

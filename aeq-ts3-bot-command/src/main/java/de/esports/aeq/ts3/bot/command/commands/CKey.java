@@ -22,15 +22,15 @@ package de.esports.aeq.ts3.bot.command.commands;
 
 import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import de.aeq.esports.ts3.bot.worflow.api.UserManagement;
-import de.aeq.esports.ts3.bot.worflow.exception.InsufficientPermissionException;
-import de.aeq.esports.ts3.bot.worflow.exception.UserNotFoundException;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Role;
 import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.workflow.api.UserManagement;
+import de.esports.aeq.ts3.bot.workflow.exception.InsufficientPermissionException;
+import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

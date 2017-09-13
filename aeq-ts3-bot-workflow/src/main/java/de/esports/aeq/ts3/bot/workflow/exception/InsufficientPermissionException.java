@@ -18,30 +18,30 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.exception;
+package de.esports.aeq.ts3.bot.workflow.exception;
 
 /**
  * @author Lukas Kannenberg
  */
-public class UnresolvedGameTypeException extends WorkflowException {
+public class InsufficientPermissionException extends WorkflowException {
 
-    public UnresolvedGameTypeException() {
+    public InsufficientPermissionException() {
         super();
     }
 
-    public UnresolvedGameTypeException(String message) {
+    public InsufficientPermissionException(String message) {
         super(message);
     }
 
-    public UnresolvedGameTypeException(String message, Throwable cause) {
+    public InsufficientPermissionException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public UnresolvedGameTypeException(Throwable cause) {
+    public InsufficientPermissionException(Throwable cause) {
         super(cause);
     }
 
-    protected UnresolvedGameTypeException(String message, Throwable cause, boolean enableSuppression, boolean
+    protected InsufficientPermissionException(String message, Throwable cause, boolean enableSuppression, boolean
             writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }

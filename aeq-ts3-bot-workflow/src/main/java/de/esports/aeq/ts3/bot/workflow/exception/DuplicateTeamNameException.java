@@ -18,11 +18,10 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.exception;
+package de.esports.aeq.ts3.bot.workflow.exception;
 
 /**
  * @author Lukas Kannenberg
  */
-public class InvalidTeamNameException extends WorkflowException {
-
+public class DuplicateTeamNameException extends WorkflowException {
 }

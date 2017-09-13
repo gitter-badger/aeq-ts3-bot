@@ -18,15 +18,31 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.api;
-
-import de.aeq.esports.ts3.bot.worflow.exception.InsufficientPermissionException;
-import de.aeq.esports.ts3.bot.worflow.exception.UserNotFoundException;
+package de.esports.aeq.ts3.bot.workflow.exception;
 
 /**
  * @author Lukas Kannenberg
  */
-public interface UserManagement {
+public class WorkflowException extends Exception {
 
-    String getAccessKey(String clientUniqueId) throws UserNotFoundException, InsufficientPermissionException;
+    public WorkflowException() {
+        super();
+    }
+
+    public WorkflowException(String message) {
+        super(message);
+    }
+
+    public WorkflowException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public WorkflowException(Throwable cause) {
+        super(cause);
+    }
+
+    protected WorkflowException(String message, Throwable cause, boolean enableSuppression, boolean
+            writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }

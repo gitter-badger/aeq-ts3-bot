@@ -18,31 +18,10 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.exception;
+package de.esports.aeq.ts3.bot.workflow.api;
 
 /**
  * @author Lukas Kannenberg
  */
-public class WorkflowException extends Exception {
-
-    public WorkflowException() {
-        super();
-    }
-
-    public WorkflowException(String message) {
-        super(message);
-    }
-
-    public WorkflowException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public WorkflowException(Throwable cause) {
-        super(cause);
-    }
-
-    protected WorkflowException(String message, Throwable cause, boolean enableSuppression, boolean
-            writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
+public class Votes {
 }

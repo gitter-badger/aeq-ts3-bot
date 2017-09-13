@@ -18,30 +18,30 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.exception;
+package de.esports.aeq.ts3.bot.workflow.exception;
 
 /**
  * @author Lukas Kannenberg
  */
-public class InsufficientPermissionException extends WorkflowException {
+public class UserNotFoundException extends WorkflowException {
 
-    public InsufficientPermissionException() {
+    public UserNotFoundException() {
         super();
     }
 
-    public InsufficientPermissionException(String message) {
+    public UserNotFoundException(String message) {
         super(message);
     }
 
-    public InsufficientPermissionException(String message, Throwable cause) {
+    public UserNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public InsufficientPermissionException(Throwable cause) {
+    public UserNotFoundException(Throwable cause) {
         super(cause);
     }
 
-    protected InsufficientPermissionException(String message, Throwable cause, boolean enableSuppression, boolean
+    protected UserNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean
             writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }

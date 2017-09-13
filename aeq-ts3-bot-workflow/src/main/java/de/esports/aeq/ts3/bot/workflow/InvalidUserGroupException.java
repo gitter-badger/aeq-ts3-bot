@@ -18,10 +18,31 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.api;
+package de.esports.aeq.ts3.bot.workflow;
 
 /**
  * @author Lukas Kannenberg
  */
-public class Votes {
+public class InvalidUserGroupException extends AdmittanceWorkflowException {
+
+    public InvalidUserGroupException() {
+        super();
+    }
+
+    public InvalidUserGroupException(String message) {
+        super(message);
+    }
+
+    public InvalidUserGroupException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public InvalidUserGroupException(Throwable cause) {
+        super(cause);
+    }
+
+    protected InvalidUserGroupException(String message, Throwable cause, boolean enableSuppression, boolean
+            writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }

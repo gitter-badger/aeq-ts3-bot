@@ -18,13 +18,13 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.api;
+package de.esports.aeq.ts3.bot.workflow.api;
 
-import de.aeq.esports.ts3.bot.worflow.exception.InsufficientPermissionException;
-import de.aeq.esports.ts3.bot.worflow.exception.InvalidTeamNameException;
-import de.aeq.esports.ts3.bot.worflow.exception.UnresolvedGameTypeException;
-import de.aeq.esports.ts3.bot.worflow.exception.UserNotFoundException;
 import de.esports.aeq.ts3.bot.model.Game;
+import de.esports.aeq.ts3.bot.workflow.exception.InsufficientPermissionException;
+import de.esports.aeq.ts3.bot.workflow.exception.InvalidTeamNameException;
+import de.esports.aeq.ts3.bot.workflow.exception.UnresolvedGameTypeException;
+import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

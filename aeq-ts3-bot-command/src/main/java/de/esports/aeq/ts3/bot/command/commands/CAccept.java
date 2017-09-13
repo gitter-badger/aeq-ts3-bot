@@ -22,12 +22,12 @@ package de.esports.aeq.ts3.bot.command.commands;
 
 import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import de.aeq.esports.ts3.bot.worflow.InvalidUserGroupException;
-import de.aeq.esports.ts3.bot.worflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
+import de.esports.aeq.ts3.bot.workflow.InvalidUserGroupException;
+import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

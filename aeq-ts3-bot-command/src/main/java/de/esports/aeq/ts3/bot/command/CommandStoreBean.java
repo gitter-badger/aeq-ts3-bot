@@ -55,7 +55,7 @@ public class CommandStoreBean {
         commandHashMap = (HashMap<String, Command>) context.getBeansOfType(Command.class);
         if (LOG.isDebugEnabled()) {
             for (Map.Entry<String, Command> command : commandHashMap.entrySet()) {
-                LOG.debug("Registered command {} with maper class {}", command.getKey(), command.getValue().getClass
+                LOG.debug("Registered command {} with mapper class {}", command.getKey(), command.getValue().getClass
                         ().getName());
             }
         }

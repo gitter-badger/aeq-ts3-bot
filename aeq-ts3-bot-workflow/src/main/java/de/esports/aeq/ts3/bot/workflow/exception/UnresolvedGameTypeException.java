@@ -18,34 +18,31 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow.api;
+package de.esports.aeq.ts3.bot.workflow.exception;
 
 /**
  * @author Lukas Kannenberg
  */
-public interface AdmittanceNotifications {
+public class UnresolvedGameTypeException extends WorkflowException {
 
-    /**
-     * Send a message to the target client to advertise membership.
-     * <p>
-     * Details are up to the implementation.
-     *
-     * @param clientId the id of the client to send to message to
-     */
-    void advertiseMembership(int clientId);
+    public UnresolvedGameTypeException() {
+        super();
+    }
 
-    /**
-     * Notifies all clients that match the member recruiter server group about a new applicant.
-     *
-     * @param clientUniqueId the unique id of the applicant
-     */
-    void notifyMemberRecruitersAboutApplicant(String clientUniqueId);
+    public UnresolvedGameTypeException(String message) {
+        super(message);
+    }
 
-    /**
-     * Sends a notification to all member recruiters about the current status of all recruits.
-     * <p>
-     * This involves information about recruits that would shortly exceed their trial period.
-     */
-    void notifyMemberRecruitersAboutRecruitsStatus();
+    public UnresolvedGameTypeException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
+    public UnresolvedGameTypeException(Throwable cause) {
+        super(cause);
+    }
+
+    protected UnresolvedGameTypeException(String message, Throwable cause, boolean enableSuppression, boolean
+            writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }

@@ -18,11 +18,11 @@
  * IN THE SOFTWARE.
  */
 
-package de.aeq.esports.ts3.bot.worflow;
+package de.esports.aeq.ts3.bot.workflow;
 
-import de.aeq.esports.ts3.bot.worflow.api.AdmittanceNotifications;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
+import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
