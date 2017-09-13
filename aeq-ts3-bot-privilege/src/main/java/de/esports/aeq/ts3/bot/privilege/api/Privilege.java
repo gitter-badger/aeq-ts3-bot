@@ -27,7 +27,7 @@ import de.esports.aeq.ts3.bot.privilege.Role;
  */
 public interface Privilege {
 
-    boolean hasRole(Role role);
+    boolean hasRole(String uniqueClientId, Role role);
 
     boolean hasRequiredPrivileges(String clientUniqueId, Role requiredRole);
 
