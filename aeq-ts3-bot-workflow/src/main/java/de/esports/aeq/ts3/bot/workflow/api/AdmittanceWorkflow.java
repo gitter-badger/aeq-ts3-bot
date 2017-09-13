@@ -20,6 +20,7 @@
 
 package de.esports.aeq.ts3.bot.workflow.api;
 
+import de.esports.aeq.ts3.bot.model.RecruitVote;
 import de.esports.aeq.ts3.bot.model.User;
 import de.esports.aeq.ts3.bot.workflow.InvalidUserGroupException;
 
@@ -55,9 +56,9 @@ public interface AdmittanceWorkflow {
 
     void addNegativeVote(String clientUniqueId);
 
-    Votes getVotes(String clientUniqueId);
+    RecruitVote getVotes(String clientUniqueId);
 
-    void setVotes(String clientUniqueId, Votes votes);
+    void setVotes(String clientUniqueId, RecruitVote votes);
 
     boolean hasRecruitExceededTrialPeriod(String clientUniqueId);
 

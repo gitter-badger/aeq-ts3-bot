@@ -20,9 +20,9 @@
 
 package de.esports.aeq.ts3.bot.workflow;
 
+import de.esports.aeq.ts3.bot.model.RecruitVote;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
-import de.esports.aeq.ts3.bot.workflow.api.Votes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -82,7 +82,7 @@ public class AdmittanceWorkflowBean implements AdmittanceWorkflow {
     }
 
     @Override
-    public Votes getVotes(String clientUniqueId) {
+    public RecruitVote getVotes(String clientUniqueId) {
         // check if the client has the server group recruit
 
         // return the amount of votes
@@ -90,7 +90,7 @@ public class AdmittanceWorkflowBean implements AdmittanceWorkflow {
     }
 
     @Override
-    public void setVotes(String clientUniqueId, Votes votes) {
+    public void setVotes(String clientUniqueId, RecruitVote votes) {
         // check if the client has the server group recruit
 
         // set the amount of votes

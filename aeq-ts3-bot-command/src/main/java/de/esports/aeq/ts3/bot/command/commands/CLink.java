@@ -75,7 +75,7 @@ public class CLink implements Command {
         privilege.updateServerGroups(event.getInvokerUniqueId());
         messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_SUCCESSFUL, event.getMap());
 
-        if (privilege.hasRole(Role.APPLICANT)) {
+        if (privilege.hasRole(event.getInvokerUniqueId(), Role.APPLICANT)) {
             channelManagement.moveClientToChannel(event.getInvokerId(), Channel.APPLICATION_CHANNEL);
             messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_AFTER_APPLICANT_MOVE);
             notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());

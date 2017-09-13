@@ -46,7 +46,7 @@ public class PrivilegeBean implements Privilege {
     }
 
     @Override
-    public boolean hasRole(Role role) {
+    public boolean hasRole(String uniqueClientId, Role role) {
         return false;
     }
 
