@@ -28,10 +28,11 @@ import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
-import de.esports.aeq.ts3.bot.privilege.Role;
+import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.Privilege;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
+import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,10 +76,14 @@ public class CLink implements Command {
         privilege.updateServerGroups(event.getInvokerUniqueId());
         messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_SUCCESSFUL, event.getMap());
 
-        if (privilege.hasRole(event.getInvokerUniqueId(), Role.APPLICANT)) {
-            channelManagement.moveClientToChannel(event.getInvokerId(), Channel.APPLICATION_CHANNEL);
-            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_AFTER_APPLICANT_MOVE);
-            notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
+        try {
+            if (privilege.isMemberOfRole(event.getInvokerUniqueId(), Roles.APPLICANT)) {
+                channelManagement.moveClientToChannel(event.getInvokerId(), Channel.APPLICATION_CHANNEL);
+                messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_AFTER_APPLICANT_MOVE);
+                notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
+            }
+        } catch (UserNotFoundException e) {
+            // TODO: send message to user
         }
     }
 }

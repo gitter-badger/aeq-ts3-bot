@@ -27,13 +27,10 @@ import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
-import de.esports.aeq.ts3.bot.privilege.Role;
+import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.Privilege;
 import de.esports.aeq.ts3.bot.workflow.api.TeamWorkflow;
-import de.esports.aeq.ts3.bot.workflow.exception.InsufficientPermissionException;
-import de.esports.aeq.ts3.bot.workflow.exception.InvalidTeamNameException;
-import de.esports.aeq.ts3.bot.workflow.exception.UnresolvedGameTypeException;
-import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
+import de.esports.aeq.ts3.bot.workflow.exception.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -98,9 +95,13 @@ public class CTeam implements Command {
      * @param event the {@link TextMessageEvent} that triggered this {@link Command}
      */
     private void handleCreateType(@NotNull TextMessageEvent event) {
-        if (!privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Role.RECRUIT)) {
-            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_TEAM_T_CREATE_INVALID_USER_GROUP);
-            return;
+        try {
+            if (!privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Roles.RECRUIT)) {
+                messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_TEAM_T_CREATE_INVALID_USER_GROUP);
+                return;
+            }
+        } catch (WorkflowException e) {
+            // TODO: send message to user
         }
         try {
             workflow.createTeam(event.getInvokerUniqueId(), teamName);

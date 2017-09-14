@@ -51,6 +51,9 @@ public class User {
     @Column(name = "access_key")
     private String accessKey;
 
+    @Column(name = "role")
+    private Role role;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_bot_configuration_id")
     private UserBotConfiguration configuration;
@@ -119,6 +122,14 @@ public class User {
 
     public void setAccessKey(String accessKey) {
         this.accessKey = accessKey;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public UserBotConfiguration getConfiguration() {

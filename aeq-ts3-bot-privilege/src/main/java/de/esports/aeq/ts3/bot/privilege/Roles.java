@@ -23,47 +23,37 @@ package de.esports.aeq.ts3.bot.privilege;
 /**
  * @author Lukas Kannenberg
  */
-public enum Role {
+public enum Roles {
 
-    DEVELOPER(9, new int[]{0}),
+    DEVELOPER("developer"),
+    CAO("cao"),
+    DIRECTOR("director"),
+    EVENT_SPECIALIST("event_specialist"),
+    SUPPORTER("supporter"),
+    TRUSTED_MEMBER("trusted_member"),
+    MEMBER("member"),
+    RECRUIT("recruit"),
+    APPLICANT("applicant"),
+    GUEST("guest");
 
-    CAO(8, new int[]{0}),
+    /**
+     * The database name of this role.
+     */
+    private String name;
 
-    DIRECTOR(7, new int[]{0}),
-
-    EVENT_SPECIALIST(6, new int[]{0}),
-
-    SUPPORTER(5, new int[]{0}),
-
-    TRUSTED_MEMBER(4, new int[]{0}),
-
-    MEMBER(3, new int[]{0}),
-
-    RECRUIT(2, new int[]{0}),
-
-    APPLICANT(1, new int[]{0}),
-
-    GUEST(0, new int[]{0});
-
-    private int power;
-    private int[] groupIds;
-
-    Role(int power, int[] groupIds) {
-        this.power = power;
-        this.groupIds = groupIds;
+    /**
+     * Constructs a new role with a name.
+     *
+     * @param name the name of the role
+     */
+    Roles(String name) {
+        this.name = name;
     }
 
-    public static boolean hasPrivilege(Role requiredRole, int[] powers) {
-        for (int i : powers)
-            if (i >= requiredRole.getPower()) return true;
-        return false;
-    }
-
-    public int getPower() {
-        return power;
-    }
-
-    public int[] getGroupIds() {
-        return groupIds;
+    /**
+     * @return the database name of the role
+     */
+    public String getName() {
+        return name;
     }
 }
