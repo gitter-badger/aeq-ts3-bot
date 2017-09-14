@@ -21,10 +21,18 @@
 package de.esports.aeq.ts3.bot.privilege;
 
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
+import de.esports.aeq.ts3.bot.dataprovider.api.UserRepository;
+import de.esports.aeq.ts3.bot.model.Role;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
+import de.esports.aeq.ts3.bot.model.User;
 import de.esports.aeq.ts3.bot.privilege.api.Privilege;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
+import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
+import org.apache.commons.lang.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * @author Lukas Kannenberg
@@ -33,25 +41,63 @@ import org.springframework.stereotype.Component;
 public class PrivilegeBean implements Privilege {
 
     private TS3Bot ts3Bot;
+    private UserRepository userRepository;
 
-    @Autowired
-    public PrivilegeBean(TS3Bot ts3Bot) {
+    public PrivilegeBean(TS3Bot ts3Bot, UserRepository userRepository) {
         this.ts3Bot = ts3Bot;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public boolean hasRequiredPrivileges(String clientUniqueId, Role requiredRole) {
-        ClientInfo info = ts3Bot.getTs3Api().getClientByUId(clientUniqueId);
-        return info != null && Role.hasPrivilege(requiredRole, info.getServerGroups());
-    }
-
-    @Override
-    public boolean hasRole(String uniqueClientId, Role role) {
+    @Deprecated
+    public boolean hasRole(@NotNull String uniqueClientId, @NotNull Roles role) {
         return false;
     }
 
     @Override
-    public void updateServerGroups(String clientUniqueId) {
+    public boolean isMemberOfRole(@NotNull String uniqueClientId, @NotNull Roles role) throws UserNotFoundException {
+        checkRoleForNull(role);
+        return getUser(uniqueClientId).getRole().getName().equals(role.getName());
+    }
 
+    @Override
+    public boolean hasRequiredPrivileges(@NotNull String uniqueClientId, @NotNull Roles role) throws
+            UserNotFoundException, WorkflowException {
+        // TODO: remove general exception and use specific one
+        checkRoleForNull(role);
+        ClientInfo clientInfo = ts3Bot.getTs3Api().getClientByUId(uniqueClientId);
+        if (clientInfo == null) {
+            throw new WorkflowException("client must not be null");
+        }
+        Role currentRole = getUser(uniqueClientId).getRole();
+        while (currentRole != null) {
+            int[] roles = currentRole.getServerGroups().stream().mapToInt(i -> i).toArray();
+            for (int i : roles) {
+                if (ArrayUtils.contains(clientInfo.getServerGroups(), i)) {
+                    return true;
+                }
+            }
+            currentRole = currentRole.getParent();
+        }
+        return false;
+    }
+
+    @Override
+    public void updateServerGroups(@NotNull String clientUniqueId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @NotNull
+    private User getUser(@NotNull String uniqueClientId) throws UserNotFoundException {
+        Objects.requireNonNull(uniqueClientId, "unique client id must not be null");
+        User user = userRepository.getFirstByTs3Id(uniqueClientId);
+        if (user == null) {
+            throw new UserNotFoundException("cannot find user with uid " + uniqueClientId);
+        }
+        return user;
+    }
+
+    private void checkRoleForNull(Roles role) {
+        Objects.requireNonNull(role, "role must not be null");
     }
 }

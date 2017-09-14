@@ -8,7 +8,7 @@ Teamspeak 3 Bot for AeQ eSports.
 
 ## Current Status
 
-This project is currently under active development.
+This project is currently in pre-alpha and under active development. During this phase, api is not consistent and may be changed regularly. Also, new features may be rolled out or removed entirely.
 
 ## Quicklinks
 
@@ -20,4 +20,4 @@ Before contributing, please have a look at the [contribution guidelines]().
 
 Bugs, feature requests or proposals can be submitted through [a new issue](https://github.com/glains/aeq-esports-ts3-bot/issues/new) or [pull-request](https://github.com/glains/aeq-esports-ts3-bot/compare).
 
-Pull requests can only be merged from a new branch to master if they have been reviewed. 
+Pull requests can only be merged from a new branch to master if they have been reviewed.

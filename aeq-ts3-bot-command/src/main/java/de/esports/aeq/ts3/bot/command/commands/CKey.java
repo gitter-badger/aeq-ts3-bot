@@ -26,11 +26,12 @@ import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
-import de.esports.aeq.ts3.bot.privilege.Role;
+import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.Privilege;
 import de.esports.aeq.ts3.bot.workflow.api.UserManagement;
 import de.esports.aeq.ts3.bot.workflow.exception.InsufficientPermissionException;
 import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
+import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,10 +62,14 @@ public class CKey implements Command {
     public void execute(TextMessageEvent event) throws CommandExecutionException {
         String id = null;
         if (ts3Id != null && !ts3Id.isEmpty()) {
-            if (!privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Role.CAO)) {
-                messaging.fetchAndSendMessage(event.getInvokerId(), Messages.COMMAND_INVALID_PERMISSIONS, event
-                        .getMap());
-                return;
+            try {
+                if (!privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Roles.CAO)) {
+                    messaging.fetchAndSendMessage(event.getInvokerId(), Messages.COMMAND_INVALID_PERMISSIONS, event
+                            .getMap());
+                    return;
+                }
+            } catch (WorkflowException e) {
+                // TODO: return message to user
             }
             id = ts3Id;
         } else {

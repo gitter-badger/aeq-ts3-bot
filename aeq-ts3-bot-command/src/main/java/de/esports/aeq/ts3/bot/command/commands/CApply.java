@@ -27,10 +27,11 @@ import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
-import de.esports.aeq.ts3.bot.privilege.Role;
+import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.Privilege;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
+import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -40,7 +41,7 @@ import org.springframework.stereotype.Component;
  * Command to be used by applicants.
  * <p>
  * If the client has his online account already linked to his teamspeak account, the he will be moved into the channel
- * for applicants. Also, all clients matching {@link Role#SUPPORTER} will be notified about that client.
+ * for applicants. Also, all clients matching {@link Roles#SUPPORTER} will be notified about that client.
  * <p>
  * If the client does not have his online account linked, a message will be displayed to do that first.
  *
@@ -78,9 +79,13 @@ public class CApply implements Command {
     @Override
     public void execute(@NotNull TextMessageEvent event) throws CommandExecutionException {
         // members should not be able to use this command, no need to apply
-        if (privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Role.MEMBER)) {
-            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_APPLY_ALREADY_MEMBER);
-            return;
+        try {
+            if (privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Roles.MEMBER)) {
+                messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_APPLY_ALREADY_MEMBER);
+                return;
+            }
+        } catch (WorkflowException e) {
+            // TODO: send message to user
         }
 
         if (!workflow.isAccountLinked(event.getInvokerUniqueId())) {
