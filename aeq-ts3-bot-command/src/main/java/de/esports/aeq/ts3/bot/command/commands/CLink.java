@@ -29,9 +29,10 @@ import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Roles;
-import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
+import de.esports.aeq.ts3.bot.workflow.exception.ClientNotFoundException;
 import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class CLink implements Command {
     private static final Logger LOG = LoggerFactory.getLogger(CLink.class);
     private static final String PREFIX = "link";
 
-    private Privilege privilege;
+    private PrivilegeApi privilege;
     private Messaging messaging;
     private AdmittanceWorkflow workflow;
     private ChannelManagement channelManagement;
@@ -83,6 +84,8 @@ public class CLink implements Command {
                 notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
             }
         } catch (UserNotFoundException e) {
+            // TODO: send message to user
+        } catch (ClientNotFoundException e) {
             // TODO: send message to user
         }
     }

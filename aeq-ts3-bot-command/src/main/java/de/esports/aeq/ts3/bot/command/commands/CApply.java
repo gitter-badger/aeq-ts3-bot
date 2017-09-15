@@ -28,7 +28,7 @@ import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Roles;
-import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
@@ -55,14 +55,14 @@ public class CApply implements Command {
 
     private static final String PREFIX = "apply";
 
-    private Privilege privilege;
+    private PrivilegeApi privilege;
     private Messaging messaging;
     private AdmittanceWorkflow workflow;
     private AdmittanceNotifications notifications;
     private ChannelManagement channelManagement;
 
     @Autowired
-    public CApply(Privilege privilege, Messaging messaging, AdmittanceWorkflow workflow, AdmittanceNotifications
+    public CApply(PrivilegeApi privilege, Messaging messaging, AdmittanceWorkflow workflow, AdmittanceNotifications
             notifications, ChannelManagement channelManagement) {
         this.privilege = privilege;
         this.messaging = messaging;

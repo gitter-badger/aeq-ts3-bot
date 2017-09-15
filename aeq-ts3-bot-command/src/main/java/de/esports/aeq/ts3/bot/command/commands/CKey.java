@@ -27,7 +27,7 @@ import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Roles;
-import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
 import de.esports.aeq.ts3.bot.workflow.api.UserManagement;
 import de.esports.aeq.ts3.bot.workflow.exception.InsufficientPermissionException;
 import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
@@ -48,7 +48,7 @@ public class CKey implements Command {
 
     private UserManagement userManagement;
     private Messaging messaging;
-    private Privilege privilege;
+    private PrivilegeApi privilege;
 
     @Parameter(names = {"--ts3Id", "-id"})
     private String ts3Id;

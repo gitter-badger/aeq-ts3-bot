@@ -28,7 +28,7 @@ import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Roles;
-import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
 import de.esports.aeq.ts3.bot.workflow.api.TeamWorkflow;
 import de.esports.aeq.ts3.bot.workflow.exception.*;
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +49,7 @@ public class CTeam implements Command {
     private static String PREFIX = "team";
 
     private Messaging messaging;
-    private Privilege privilege;
+    private PrivilegeApi privilege;
     private TeamWorkflow workflow;
     @Parameter(names = {"--target", "-t"})
     private String type;

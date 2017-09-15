@@ -18,50 +18,49 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.privilege;
+package de.esports.aeq.ts3.bot.workflow.exception;
 
-import de.esports.aeq.ts3.bot.model.Role;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * Maps a {@link Role} to a specific enum constant.
- * <p>
- * Use either of this constants instead of string literals.
+ * Exception thrown whenever a teamspeak client cannot be found.
  *
  * @author Lukas Kannenberg
  * @version 1.0
- * @since 09.09.2017
+ * @since 15.09.2017
  */
-public enum Roles {
-
-    DEVELOPER("developer"),
-    CAO("cao"),
-    DIRECTOR("director"),
-    EVENT_SPECIALIST("event_specialist"),
-    SUPPORTER("supporter"),
-    TRUSTED_MEMBER("trusted_member"),
-    MEMBER("member"),
-    RECRUIT("recruit"),
-    APPLICANT("applicant"),
-    GUEST("guest");
+public class ClientNotFoundException extends WorkflowException {
 
     /**
-     * The database name of this role.
+     * The unique id of the client.
      */
-    private String name;
+    private final String clientUniqueId;
 
     /**
-     * Constructs a new role with a name.
+     * Constructs a new {@link ClientNotFoundException} with a client unique id.
      *
-     * @param name the name of the role
+     * @param clientUniqueId the unique client if that can not been found
      */
-    Roles(String name) {
-        this.name = name;
+    public ClientNotFoundException(String clientUniqueId) {
+        this.clientUniqueId = clientUniqueId;
     }
 
     /**
-     * @return the database name of the role
+     * Constructs a new {@link ClientNotFoundException} with message and a client unique id.
+     *
+     * @param message        the message
+     * @param clientUniqueId the unique client if that can not been found
      */
-    public String getName() {
-        return name;
+    public ClientNotFoundException(String message, String clientUniqueId) {
+        super(message);
+        this.clientUniqueId = clientUniqueId;
+    }
+
+    /**
+     * @return the unique id of the client
+     */
+    @NotNull
+    public String getClientUniqueId() {
+        return clientUniqueId;
     }
 }

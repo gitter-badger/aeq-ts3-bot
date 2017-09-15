@@ -22,8 +22,8 @@ package de.esports.aeq.ts3.bot.privilege.api;
 
 import de.esports.aeq.ts3.bot.model.Role;
 import de.esports.aeq.ts3.bot.privilege.Roles;
+import de.esports.aeq.ts3.bot.workflow.exception.ClientNotFoundException;
 import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
-import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -31,19 +31,7 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0
  * @since 09.09.2017
  */
-public interface Privilege {
-
-    /**
-     * Validates whether a client owns a specific {@link Roles}.
-     *
-     * @param uniqueClientId the unique id of the client
-     * @param role           the required {@link Roles}
-     * @return true if the clients owns the specific {@link Roles}, otherwise false
-     * @deprecated use {@link #isMemberOfRole(String, Roles)} instead, this method will not be implemented and always
-     * return false
-     */
-    @Deprecated
-    boolean hasRole(@NotNull String uniqueClientId, @NotNull Roles role);
+public interface PrivilegeApi {
 
     /**
      * Validates whether a client is member of the a specific {@link Role}.
@@ -56,7 +44,8 @@ public interface Privilege {
      * @param role           the single role to check for
      * @return true if the client is member of exactly the provided role, otherwise false
      */
-    boolean isMemberOfRole(@NotNull String uniqueClientId, @NotNull Roles role) throws UserNotFoundException;
+    boolean isMemberOfRole(@NotNull String uniqueClientId, @NotNull Roles role) throws UserNotFoundException,
+            ClientNotFoundException;
 
     /**
      * Validates whether a client has privileges for a specific {@link Role}.
@@ -69,7 +58,8 @@ public interface Privilege {
      * @param role           the minimum required role of the client
      * @return true if the client has the required privileges, otherwise false
      */
-    boolean hasRequiredPrivileges(@NotNull String uniqueClientId, @NotNull Roles role) throws WorkflowException;
+    boolean hasRequiredPrivileges(@NotNull String uniqueClientId, @NotNull Roles role) throws UserNotFoundException,
+            ClientNotFoundException;
 
     /**
      * Updates the permissions of a client.

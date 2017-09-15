@@ -25,11 +25,12 @@ import de.esports.aeq.ts3.bot.dataprovider.api.UserRepository;
 import de.esports.aeq.ts3.bot.model.Role;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.model.User;
-import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
+import de.esports.aeq.ts3.bot.workflow.exception.ClientNotFoundException;
 import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
-import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.apache.commons.lang.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -38,7 +39,7 @@ import java.util.Objects;
  * @author Lukas Kannenberg
  */
 @Component
-public class PrivilegeBean implements Privilege {
+public class PrivilegeBean implements PrivilegeApi {
 
     private TS3Bot ts3Bot;
     private UserRepository userRepository;
@@ -49,34 +50,22 @@ public class PrivilegeBean implements Privilege {
     }
 
     @Override
-    @Deprecated
-    public boolean hasRole(@NotNull String uniqueClientId, @NotNull Roles role) {
-        return false;
-    }
-
-    @Override
-    public boolean isMemberOfRole(@NotNull String uniqueClientId, @NotNull Roles role) throws UserNotFoundException {
+    public boolean isMemberOfRole(@NotNull String uniqueClientId, @NotNull Roles role) throws
+            ClientNotFoundException, UserNotFoundException {
         checkRoleForNull(role);
-        return getUser(uniqueClientId).getRole().getName().equals(role.getName());
+        Role userRole = getUser(uniqueClientId).getRole();
+        ClientInfo clientInfo = getClientInfo(uniqueClientId);
+        return checkRoleForServerGroups(userRole, clientInfo.getServerGroups());
     }
 
     @Override
     public boolean hasRequiredPrivileges(@NotNull String uniqueClientId, @NotNull Roles role) throws
-            UserNotFoundException, WorkflowException {
-        // TODO: remove general exception and use specific one
+            ClientNotFoundException, UserNotFoundException {
         checkRoleForNull(role);
-        ClientInfo clientInfo = ts3Bot.getTs3Api().getClientByUId(uniqueClientId);
-        if (clientInfo == null) {
-            throw new WorkflowException("client must not be null");
-        }
+        ClientInfo clientInfo = getClientInfo(uniqueClientId);
         Role currentRole = getUser(uniqueClientId).getRole();
         while (currentRole != null) {
-            int[] roles = currentRole.getServerGroups().stream().mapToInt(i -> i).toArray();
-            for (int i : roles) {
-                if (ArrayUtils.contains(clientInfo.getServerGroups(), i)) {
-                    return true;
-                }
-            }
+            if (checkRoleForServerGroups(currentRole, clientInfo.getServerGroups())) return true;
             currentRole = currentRole.getParent();
         }
         return false;
@@ -87,6 +76,22 @@ public class PrivilegeBean implements Privilege {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Validates whether a {@link Role} contains one of the given server groups.
+     *
+     * @param serverGroups the array of server groups
+     * @param role         the {@link Role} to check
+     * @return true if the {@link Role} does contain at least one of the given server groups, otherwise false
+     */
+    private boolean checkRoleForServerGroups(@Nullable Role role, @NotNull int[] serverGroups) {
+        if (role == null) return false;
+        int[] roles = role.getServerGroups().stream().mapToInt(i -> i).toArray();
+        for (int i : roles)
+            if (ArrayUtils.contains(serverGroups, i))
+                return true;
+        return false;
+    }
+
     @NotNull
     private User getUser(@NotNull String uniqueClientId) throws UserNotFoundException {
         Objects.requireNonNull(uniqueClientId, "unique client id must not be null");
@@ -95,6 +100,14 @@ public class PrivilegeBean implements Privilege {
             throw new UserNotFoundException("cannot find user with uid " + uniqueClientId);
         }
         return user;
+    }
+
+    @NotNull
+    private ClientInfo getClientInfo(String uniqueClientId) throws ClientNotFoundException {
+        ClientInfo clientInfo = ts3Bot.getTs3Api().getClientByUId(uniqueClientId);
+        if (clientInfo == null)
+            throw new ClientNotFoundException(uniqueClientId);
+        return clientInfo;
     }
 
     private void checkRoleForNull(Roles role) {
