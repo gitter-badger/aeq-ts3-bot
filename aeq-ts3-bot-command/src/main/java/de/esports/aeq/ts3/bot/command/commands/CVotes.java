@@ -37,6 +37,8 @@ import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Map;
 
 /**
@@ -65,6 +67,7 @@ public class CVotes implements Command {
     @Parameter
     private String ts3Id;
 
+    @Autowired
     public CVotes(TS3Bot ts3Bot) {
         this.ts3Bot = ts3Bot;
     }

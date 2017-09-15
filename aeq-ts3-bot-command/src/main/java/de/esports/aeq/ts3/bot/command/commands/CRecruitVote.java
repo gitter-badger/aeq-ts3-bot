@@ -34,6 +34,7 @@ import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by Lukas on 27.07.2017.
@@ -58,6 +59,7 @@ public class CRecruitVote implements Command {
     @Parameter(names = {"--comment", "-c"})
     private String comment;
 
+    @Autowired
     public CRecruitVote(TS3Bot ts3Bot) {
         this.ts3Bot = ts3Bot;
     }
