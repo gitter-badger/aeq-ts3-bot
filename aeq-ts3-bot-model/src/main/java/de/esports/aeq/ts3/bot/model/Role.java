@@ -36,6 +36,8 @@ import java.util.Set;
  * @version 1.0
  * @since 13.09.2017
  */
+@Entity
+@Table(name = "aeq_role")
 public class Role {
 
     @Id
