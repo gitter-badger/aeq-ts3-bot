@@ -29,10 +29,11 @@ import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.model.RecruitVote;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.model.message.Message;
-import de.esports.aeq.ts3.bot.privilege.Role;
+import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.Privilege;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.workflow.api.UserManagement;
+import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,23 +76,28 @@ public class CVotes implements Command {
 
     @Override
     public void execute(TextMessageEvent event) throws CommandExecutionException {
-        if (privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Role.SUPPORTER) && ts3Id != null && !ts3Id.isEmpty()) {
-            Map<String, String> properties = event.getMap();
-            properties.put("client_uid", ts3Id);
-            RecruitVote clientVotes = workflow.getVotes(ts3Id);
+        try {
+            if (privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Roles.SUPPORTER) && ts3Id != null && !ts3Id.isEmpty()) {
+                Map<String, String> properties = event.getMap();
+                properties.put("client_uid", ts3Id);
+                RecruitVote clientVotes = workflow.getVotes(ts3Id);
 
-            properties.put("votes_positive", String.valueOf(clientVotes.getCurrentPositiveVotes()));
-            properties.put("votes_negative", String.valueOf(clientVotes.getCurrentPositiveVotes()));
-            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_VOTES_SUPPORT_REPLY, properties);
-            return;
-        }
+                properties.put("votes_positive", String.valueOf(clientVotes.getCurrentPositiveVotes()));
+                properties.put("votes_negative", String.valueOf(clientVotes.getCurrentNegativeVotes()));
+                messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_VOTES_SUPPORT_REPLY, properties);
+                return;
+            }
 
-        if (privilege.hasRole(event.getInvokerUniqueId(), Role.RECRUIT)) {
-            Map<String, String> properties = event.getMap();
-            RecruitVote clientVotes = workflow.getVotes(event.getInvokerUniqueId());
-            properties.put("votes_positive", String.valueOf(clientVotes.getCurrentPositiveVotes()));
-            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_VOTES_RECRUIT_REPLY, properties);
-            return;
+            if (privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Roles.RECRUIT)) {
+                Map<String, String> properties = event.getMap();
+                RecruitVote clientVotes = workflow.getVotes(event.getInvokerUniqueId());
+                properties.put("votes_positive", String.valueOf(clientVotes.getCurrentPositiveVotes()));
+                messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_VOTES_RECRUIT_REPLY, properties);
+                return;
+            }
+
+        }catch (WorkflowException e){
+            //TEMP
         }
     }
 }

@@ -83,7 +83,7 @@ public class CLink implements Command {
                 notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
             }
         } catch (UserNotFoundException e) {
-            // TODO: send message to user
+            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_FAILED, event.getMap());
         }
     }
 }
