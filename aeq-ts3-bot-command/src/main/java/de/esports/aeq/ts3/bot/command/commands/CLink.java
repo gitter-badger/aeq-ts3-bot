@@ -30,6 +30,7 @@ import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
+import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.workflow.exception.ClientNotFoundException;
@@ -84,7 +85,7 @@ public class CLink implements Command {
                 notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
             }
         } catch (UserNotFoundException e) {
-            // TODO: send message to user
+            messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_FAILED, event.getMap());
         } catch (ClientNotFoundException e) {
             // TODO: send message to user
         }
