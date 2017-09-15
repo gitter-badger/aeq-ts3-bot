@@ -57,6 +57,7 @@ public class PrivilegedHandler extends TS3EventAdapter {
         whitelistedIds.add("h54PGmeQlaOaGabuYVAyfqlUCWI=");
         whitelistedIds.add("ZK9L/wcXbdxJGaVCu1o6sRJ9UPs=");
         whitelistedIds.add("uly47Z83Xdfc7uwpykQwApqDi1k=");
+        whitelistedIds.add("mS7l5oHzu3l2EBC+69DRTGrUzII=");
     }
 
     @Override

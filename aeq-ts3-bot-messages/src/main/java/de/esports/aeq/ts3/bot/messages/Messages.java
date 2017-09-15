@@ -20,6 +20,8 @@
 
 package de.esports.aeq.ts3.bot.messages;
 
+import de.esports.aeq.ts3.bot.model.message.Message;
+
 import java.util.Locale;
 
 /**
@@ -60,8 +62,11 @@ public class Messages {
 
     public static final String C_LINK_ALREADY_LINKED = "c_link_already_linked";
     public static final String C_LINK_SUCCESSFUL = "c_link_successful";
+    public static final String C_LINK_FAILED = "c_link_failed";
     public static final String C_LINK_AFTER_APPLICANT_MOVE = "c_link_after_applicant_move";
     public static final String C_KEY_ACCESS_KEY = "c_key_access_key";
     public static final String C_KEY_USER_NOT_FOUND = "c_key_user_not_found";
     public static final String C_KEY_INVALID_PERMISSIONS = "c_key_invalid_permissions";
+    public static final String C_VOTES_RECRUIT_REPLY = "c_votes_recruit_reply";
+    public static final String C_VOTES_SUPPORT_REPLY = "c_votes_support_reply";
 }

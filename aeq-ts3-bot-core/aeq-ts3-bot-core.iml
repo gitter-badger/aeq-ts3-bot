@@ -32,7 +32,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.3.11.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.3.11.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.3.11.RELEASE" level="project" />
-    <orderEntry type="module" module-name="aeq-ts3-bot-channels" />
+    <orderEntry type="module" module-name="channels" />
     <orderEntry type="module" module-name="aeq-ts3-bot-messages" />
     <orderEntry type="module" module-name="aeq-ts3-bot-model" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.2.10.Final" level="project" />

@@ -29,6 +29,7 @@ import de.esports.aeq.ts3.bot.configuration.BotConfiguration;
 import de.esports.aeq.ts3.bot.configuration.ConfigurationBuildException;
 import de.esports.aeq.ts3.bot.configuration.XmlConfigurationBuilder;
 import de.esports.aeq.ts3.bot.core.event.DefaultTextMessageHandler;
+import de.esports.aeq.ts3.bot.core.event.EchoTextMessageHandler;
 import de.esports.aeq.ts3.bot.core.event.PrivilegedHandler;
 import de.esports.aeq.ts3.bot.core.event.WelcomeClientJoinHandler;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
@@ -121,6 +122,7 @@ public class AeqTS3Bot implements TS3Bot {
     private void initEventHandlers() {
         final WelcomeClientJoinHandler welcomeClientJoinHandler = context.getBean(WelcomeClientJoinHandler.class);
         final DefaultTextMessageHandler defaultTextMessageHandler = context.getBean(DefaultTextMessageHandler.class);
+
 
         // We wrap a privileged handler around for testing purposes
         api.addTS3Listeners(new PrivilegedHandler(this, welcomeClientJoinHandler));

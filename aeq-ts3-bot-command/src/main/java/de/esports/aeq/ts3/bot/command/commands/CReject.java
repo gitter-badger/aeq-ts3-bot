@@ -24,6 +24,8 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
+import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,8 @@ public class CReject implements Command {
     public static final String PREFIX = "reject";
     private static final Logger log = LoggerFactory.getLogger(CReject.class);
     private TS3Bot ts3Bot;
+    private AdmittanceWorkflow workflow;
+    private Privilege privilege;
 
     public CReject(TS3Bot ts3Bot) {
         this.ts3Bot = ts3Bot;
@@ -48,6 +52,7 @@ public class CReject implements Command {
 
     @Override
     public void execute(TextMessageEvent e) throws CommandExecutionException {
+
         // TODO(glains)
         log.debug("executing command {}", CReject.class.getSimpleName());
         //String message = Messages.getTranslatedString(Messages.ERROR_NOT_IMPLEMENTED);
