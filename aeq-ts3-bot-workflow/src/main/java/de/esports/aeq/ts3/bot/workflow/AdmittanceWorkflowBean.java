@@ -75,11 +75,22 @@ public class AdmittanceWorkflowBean implements AdmittanceWorkflow {
     }
 
     @Override
+    public void addPositiveVote(String clientUniqueId, String comment) {
+
+    }
+
+    @Override
     public void addNegativeVote(String clientUniqueId) {
         // check if the client has the server group recruit
 
         // add a negative vote for the recruit
     }
+
+    @Override
+    public void addNegativeVote(String clientUniqueId, String comment) {
+
+    }
+
 
     @Override
     public RecruitVote getVotes(String clientUniqueId) {

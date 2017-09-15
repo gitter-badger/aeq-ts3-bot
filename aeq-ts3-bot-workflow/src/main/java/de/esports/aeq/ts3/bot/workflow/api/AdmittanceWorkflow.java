@@ -54,7 +54,11 @@ public interface AdmittanceWorkflow {
 
     void addPositiveVote(String clientUniqueId);
 
+    void addPositiveVote(String clientUniqueId, String comment);
+
     void addNegativeVote(String clientUniqueId);
+
+    void addNegativeVote(String clientUniqueId, String comment);
 
     RecruitVote getVotes(String clientUniqueId);
 
