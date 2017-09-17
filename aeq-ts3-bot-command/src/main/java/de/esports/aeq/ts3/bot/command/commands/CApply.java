@@ -21,6 +21,7 @@
 package de.esports.aeq.ts3.bot.command.commands;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import de.esports.aeq.ts3.bot.admittance.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.channels.Channel;
 import de.esports.aeq.ts3.bot.channels.api.ChannelManagement;
 import de.esports.aeq.ts3.bot.command.api.Command;
@@ -29,8 +30,6 @@ import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
-import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
-import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,16 +57,14 @@ public class CApply implements Command {
     private PrivilegeApi privilege;
     private Messaging messaging;
     private AdmittanceWorkflow workflow;
-    private AdmittanceNotifications notifications;
     private ChannelManagement channelManagement;
 
     @Autowired
-    public CApply(PrivilegeApi privilege, Messaging messaging, AdmittanceWorkflow workflow, AdmittanceNotifications
-            notifications, ChannelManagement channelManagement) {
+    public CApply(PrivilegeApi privilege, Messaging messaging, AdmittanceWorkflow workflow, ChannelManagement
+            channelManagement) {
         this.privilege = privilege;
         this.messaging = messaging;
         this.workflow = workflow;
-        this.notifications = notifications;
         this.channelManagement = channelManagement;
     }
 
@@ -92,7 +89,7 @@ public class CApply implements Command {
             messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_APPLY_NOT_LINKED, event.getMap());
         } else {
             channelManagement.moveClientToChannel(event.getInvokerId(), Channel.APPLICATION_CHANNEL);
-            notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
+            workflow.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
         }
     }
 

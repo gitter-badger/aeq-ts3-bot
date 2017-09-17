@@ -29,43 +29,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>command</artifactId>
+    <artifactId>admittance</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>com.github.theholywaffle</groupId>
-            <artifactId>teamspeak3-api</artifactId>
-        </dependency>
         <dependency>
             <groupId>de.esports.aeq</groupId>
             <artifactId>workflow</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>messages</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>privilege</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>channels</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>channels</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>channels</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>de.esports.aeq</groupId>
-            <artifactId>admittance</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

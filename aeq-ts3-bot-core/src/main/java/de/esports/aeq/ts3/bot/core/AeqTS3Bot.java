@@ -29,7 +29,6 @@ import de.esports.aeq.ts3.bot.configuration.BotConfiguration;
 import de.esports.aeq.ts3.bot.configuration.ConfigurationBuildException;
 import de.esports.aeq.ts3.bot.configuration.XmlConfigurationBuilder;
 import de.esports.aeq.ts3.bot.core.event.DefaultTextMessageHandler;
-import de.esports.aeq.ts3.bot.core.event.EchoTextMessageHandler;
 import de.esports.aeq.ts3.bot.core.event.PrivilegedHandler;
 import de.esports.aeq.ts3.bot.core.event.WelcomeClientJoinHandler;
 import de.esports.aeq.ts3.bot.model.TS3Bot;

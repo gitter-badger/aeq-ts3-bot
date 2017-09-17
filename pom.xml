@@ -70,6 +70,7 @@
         <module>aeq-ts3-bot-privilege</module>
         <module>aeq-ts3-bot-channels</module>
         <module>aeq-ts3-bot-command</module>
+        <module>aeq-ts3-bot-admittance</module>
     </modules>
 
     <dependencyManagement>

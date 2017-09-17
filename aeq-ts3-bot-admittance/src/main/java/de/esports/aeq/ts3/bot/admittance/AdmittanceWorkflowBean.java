@@ -18,11 +18,12 @@
  * IN THE SOFTWARE.
  */
 
-package de.esports.aeq.ts3.bot.workflow;
+package de.esports.aeq.ts3.bot.admittance;
 
+import de.esports.aeq.ts3.bot.admittance.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.model.RecruitVote;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
-import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
+import de.esports.aeq.ts3.bot.workflow.exception.InvalidUserGroupException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -128,6 +129,21 @@ public class AdmittanceWorkflowBean implements AdmittanceWorkflow {
 
     @Override
     public void promoteToSupporter(String uniqueClientId) {
+
+    }
+
+    @Override
+    public void advertiseMembership(int clientId) {
+        
+    }
+
+    @Override
+    public void notifyMemberRecruitersAboutApplicant(String clientUniqueId) {
+
+    }
+
+    @Override
+    public void notifyMemberRecruitersAboutRecruitsStatus() {
 
     }
 }

@@ -20,8 +20,6 @@
 
 package de.esports.aeq.ts3.bot.messages;
 
-import de.esports.aeq.ts3.bot.model.message.Message;
-
 import java.util.Locale;
 
 /**

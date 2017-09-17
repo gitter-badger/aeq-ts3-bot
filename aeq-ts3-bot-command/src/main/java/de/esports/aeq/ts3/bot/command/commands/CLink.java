@@ -22,6 +22,7 @@ package de.esports.aeq.ts3.bot.command.commands;
 
 import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import de.esports.aeq.ts3.bot.admittance.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.channels.Channel;
 import de.esports.aeq.ts3.bot.channels.api.ChannelManagement;
 import de.esports.aeq.ts3.bot.command.api.Command;
@@ -30,14 +31,12 @@ import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
-import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
-import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
-import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.workflow.exception.ClientNotFoundException;
 import de.esports.aeq.ts3.bot.workflow.exception.UserNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -55,13 +54,21 @@ public class CLink implements Command {
     private Messaging messaging;
     private AdmittanceWorkflow workflow;
     private ChannelManagement channelManagement;
-    private AdmittanceNotifications notifications;
 
     /**
      * The access key that is used by the member.
      */
     @Parameter
     private String key;
+
+    @Autowired
+    public CLink(PrivilegeApi privilege, Messaging messaging, AdmittanceWorkflow workflow, ChannelManagement
+            channelManagement) {
+        this.privilege = privilege;
+        this.messaging = messaging;
+        this.workflow = workflow;
+        this.channelManagement = channelManagement;
+    }
 
     @Override
     public @NotNull String getPrefix() {
@@ -82,7 +89,7 @@ public class CLink implements Command {
             if (privilege.isMemberOfRole(event.getInvokerUniqueId(), Roles.APPLICANT)) {
                 channelManagement.moveClientToChannel(event.getInvokerId(), Channel.APPLICATION_CHANNEL);
                 messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_AFTER_APPLICANT_MOVE);
-                notifications.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
+                workflow.notifyMemberRecruitersAboutApplicant(event.getInvokerUniqueId());
             }
         } catch (UserNotFoundException e) {
             messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_FAILED, event.getMap());

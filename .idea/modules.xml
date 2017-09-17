@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-admittance/aeq-ts3-bot-admittance.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-admittance/aeq-ts3-bot-admittance.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-channels/aeq-ts3-bot-channels.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-channels/aeq-ts3-bot-channels.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-command/aeq-ts3-bot-command.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-command/aeq-ts3-bot-command.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-configuration/aeq-ts3-bot-configuration.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-configuration/aeq-ts3-bot-configuration.iml" />
