@@ -30,7 +30,6 @@ import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
-import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceNotifications;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.workflow.exception.ClientNotFoundException;

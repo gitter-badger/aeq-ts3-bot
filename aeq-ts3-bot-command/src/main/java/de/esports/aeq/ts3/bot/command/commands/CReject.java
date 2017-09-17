@@ -24,7 +24,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
-import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class CReject implements Command {
     private static final Logger log = LoggerFactory.getLogger(CReject.class);
     private TS3Bot ts3Bot;
     private AdmittanceWorkflow workflow;
-    private Privilege privilege;
+    private PrivilegeApi privilege;
 
     public CReject(TS3Bot ts3Bot) {
         this.ts3Bot = ts3Bot;

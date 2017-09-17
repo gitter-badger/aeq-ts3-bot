@@ -24,11 +24,10 @@ import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
-import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.privilege.Roles;
-import de.esports.aeq.ts3.bot.privilege.api.Privilege;
+import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
 import de.esports.aeq.ts3.bot.workflow.api.AdmittanceWorkflow;
 import de.esports.aeq.ts3.bot.workflow.exception.WorkflowException;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +45,7 @@ public class CRecruitVote implements Command {
     private TS3Bot ts3Bot;
 
     private Messaging messaging;
-    private Privilege privilege;
+    private PrivilegeApi privilege;
     private AdmittanceWorkflow workflow;
 
 
@@ -82,18 +81,18 @@ public class CRecruitVote implements Command {
                 }
 
                 //Check if uid is correct and user is Recruit
-                if( userUID == null || userUID.isEmpty() || privilege.isMemberOfRole(userUID, Roles.RECRUIT)){
+                if (userUID == null || userUID.isEmpty() || privilege.isMemberOfRole(userUID, Roles.RECRUIT)) {
                     //TODO Send user message that user is no recruit or formatiing of uid is wrong
                     return;
                 }
 
                 Boolean vote = voteResult.equalsIgnoreCase("yes");
-                if(vote){
+                if (vote) {
                     workflow.addPositiveVote(userUID);
                     //TODO Send user message that vote was successfull
                     return;
-                }else{
-                    if( comment == null || comment.isEmpty()){
+                } else {
+                    if (comment == null || comment.isEmpty()) {
                         //TODO Send user message that comment is [ENG: nötig]
                         return;
                     }

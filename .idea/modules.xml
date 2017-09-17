@@ -13,7 +13,6 @@
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-privilege/aeq-ts3-bot-privilege.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-privilege/aeq-ts3-bot-privilege.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-util/aeq-ts3-bot-util.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-util/aeq-ts3-bot-util.iml" />
       <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-workflow/aeq-ts3-bot-workflow.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-workflow/aeq-ts3-bot-workflow.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aeq-ts3-bot-channels/channels.iml" filepath="$PROJECT_DIR$/aeq-ts3-bot-channels/channels.iml" />
       <module fileurl="file://$PROJECT_DIR$/ts3bot.iml" filepath="$PROJECT_DIR$/ts3bot.iml" />
     </modules>
   </component>
