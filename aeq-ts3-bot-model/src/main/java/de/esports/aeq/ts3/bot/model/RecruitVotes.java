@@ -25,15 +25,15 @@ import java.util.List;
 /**
  * @author Lukas Kannenberg
  */
-public class RecruitVote {
+public class RecruitVotes {
 
     private int currentPositiveVotes;
     private int currentNegativeVotes;
     private int requiredVotes;
     private List<RecruitVoteComment> comments;
 
-    public RecruitVote(int currentPositiveVotes, int currentNegativeVotes, int requiredVotes,
-                       List<RecruitVoteComment> comments) {
+    public RecruitVotes(int currentPositiveVotes, int currentNegativeVotes, int requiredVotes,
+                        List<RecruitVoteComment> comments) {
         this.currentPositiveVotes = currentPositiveVotes;
         this.currentNegativeVotes = currentNegativeVotes;
         this.requiredVotes = requiredVotes;

@@ -21,7 +21,7 @@
 package de.esports.aeq.ts3.bot.admittance;
 
 import de.esports.aeq.ts3.bot.admittance.api.AdmittanceWorkflow;
-import de.esports.aeq.ts3.bot.model.RecruitVote;
+import de.esports.aeq.ts3.bot.model.RecruitVotes;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.workflow.exception.InvalidUserGroupException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +94,7 @@ public class AdmittanceWorkflowBean implements AdmittanceWorkflow {
 
 
     @Override
-    public RecruitVote getVotes(String clientUniqueId) {
+    public RecruitVotes getVotes(String clientUniqueId) {
         // check if the client has the server group recruit
 
         // return the amount of votes
@@ -102,7 +102,7 @@ public class AdmittanceWorkflowBean implements AdmittanceWorkflow {
     }
 
     @Override
-    public void setVotes(String clientUniqueId, RecruitVote votes) {
+    public void setVotes(String clientUniqueId, RecruitVotes votes) {
         // check if the client has the server group recruit
 
         // set the amount of votes
@@ -134,7 +134,7 @@ public class AdmittanceWorkflowBean implements AdmittanceWorkflow {
 
     @Override
     public void advertiseMembership(int clientId) {
-        
+
     }
 
     @Override

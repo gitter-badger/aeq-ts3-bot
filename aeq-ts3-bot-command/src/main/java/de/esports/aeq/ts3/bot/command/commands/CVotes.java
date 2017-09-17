@@ -27,7 +27,7 @@ import de.esports.aeq.ts3.bot.command.api.Command;
 import de.esports.aeq.ts3.bot.command.exception.CommandExecutionException;
 import de.esports.aeq.ts3.bot.messages.Messages;
 import de.esports.aeq.ts3.bot.messages.api.Messaging;
-import de.esports.aeq.ts3.bot.model.RecruitVote;
+import de.esports.aeq.ts3.bot.model.RecruitVotes;
 import de.esports.aeq.ts3.bot.model.TS3Bot;
 import de.esports.aeq.ts3.bot.privilege.Roles;
 import de.esports.aeq.ts3.bot.privilege.api.PrivilegeApi;
@@ -80,7 +80,7 @@ public class CVotes implements Command {
                     !ts3Id.isEmpty()) {
                 Map<String, String> properties = event.getMap();
                 properties.put("client_uid", ts3Id);
-                RecruitVote clientVotes = workflow.getVotes(ts3Id);
+                RecruitVotes clientVotes = workflow.getVotes(ts3Id);
 
                 properties.put("votes_positive", String.valueOf(clientVotes.getCurrentPositiveVotes()));
                 properties.put("votes_negative", String.valueOf(clientVotes.getCurrentNegativeVotes()));
@@ -90,7 +90,7 @@ public class CVotes implements Command {
 
             if (privilege.hasRequiredPrivileges(event.getInvokerUniqueId(), Roles.RECRUIT)) {
                 Map<String, String> properties = event.getMap();
-                RecruitVote clientVotes = workflow.getVotes(event.getInvokerUniqueId());
+                RecruitVotes clientVotes = workflow.getVotes(event.getInvokerUniqueId());
                 properties.put("votes_positive", String.valueOf(clientVotes.getCurrentPositiveVotes()));
                 messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_VOTES_RECRUIT_REPLY, properties);
                 return;
