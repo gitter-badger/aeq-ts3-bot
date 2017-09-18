@@ -23,6 +23,7 @@ package de.esports.aeq.ts3.bot.command.commands;
 import com.beust.jcommander.Parameter;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import de.esports.aeq.ts3.bot.admittance.api.AdmittanceWorkflow;
+import de.esports.aeq.ts3.bot.admittance.exception.AccountAlreadyLinkedException;
 import de.esports.aeq.ts3.bot.channels.Channel;
 import de.esports.aeq.ts3.bot.channels.api.ChannelManagement;
 import de.esports.aeq.ts3.bot.command.api.Command;
@@ -81,7 +82,13 @@ public class CLink implements Command {
             messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_ALREADY_LINKED, event.getMap());
             return;
         }
-        workflow.linkAccount(event.getInvokerUniqueId(), key);
+        try {
+            workflow.linkAccount(event.getInvokerUniqueId(), key);
+        } catch (UserNotFoundException e) {
+            // TODO: send message to user
+        } catch (AccountAlreadyLinkedException e) {
+            // TODO: send message to user
+        }
         privilege.updateServerGroups(event.getInvokerUniqueId());
         messaging.fetchAndSendMessage(event.getInvokerId(), Messages.C_LINK_SUCCESSFUL, event.getMap());
 
